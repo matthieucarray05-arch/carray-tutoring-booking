@@ -44,6 +44,26 @@
     "continueToPayment": "Continue to payment",
     "mockNotice": "Demo module: calendar and prices use sample data. Payment will be wired up in the next step."
   },
+  "Reviews": {
+    "title": "What Clients Say",
+    "items": [
+      {
+        "name": "Client Name",
+        "quote": "Lessons that were clear, encouraging and genuinely moved my level forward.",
+        "rating": 5
+      },
+      {
+        "name": "Client Name",
+        "quote": "Structured, patient and always focused on what I actually needed to practise.",
+        "rating": 5
+      },
+      {
+        "name": "Client Name",
+        "quote": "I finally feel confident speaking — the sessions fit perfectly around my schedule.",
+        "rating": 5
+      }
+    ]
+  },
   "Footer": {
     "rights": "All rights reserved.",
     "contact": "Contact"

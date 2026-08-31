@@ -124,7 +124,7 @@ export default function BookingPage() {
           </section>
         </div>
 
-        <aside className="h-fit rounded-xl border border-border p-6">
+        <aside className="h-fit rounded-2xl border border-border p-6 shadow-[0_1px_2px_rgba(21,17,15,0.03),0_16px_32px_-24px_rgba(21,17,15,0.18)]">
           <h2 className="text-lg font-medium">{t("summaryTitle")}</h2>
           {!product || !selectedSlot ? (
             <p className="mt-3 text-sm text-muted-foreground">
@@ -164,7 +164,7 @@ export default function BookingPage() {
           <button
             type="button"
             disabled={!product || !selectedSlot}
-            className="mt-6 w-full rounded-full bg-accent px-4 py-2.5 text-sm font-medium text-accent-foreground transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+            className="mt-6 w-full rounded-full bg-accent px-4 py-2.5 text-sm font-medium text-accent-foreground transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-40"
           >
             {t("continueToPayment")}
           </button>

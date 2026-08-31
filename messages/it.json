@@ -44,6 +44,26 @@
     "continueToPayment": "Continua al pagamento",
     "mockNotice": "Modulo dimostrativo: calendario e prezzi con dati di esempio. Il pagamento sarà collegato nel prossimo step."
   },
+  "Reviews": {
+    "title": "Cosa dicono i clienti",
+    "items": [
+      {
+        "name": "Nome Cliente",
+        "quote": "Lezioni chiare, incoraggianti e che hanno davvero fatto progredire il mio livello.",
+        "rating": 5
+      },
+      {
+        "name": "Nome Cliente",
+        "quote": "Metodo strutturato, molta pazienza e sempre focalizzato su ciò di cui avevo davvero bisogno.",
+        "rating": 5
+      },
+      {
+        "name": "Nome Cliente",
+        "quote": "Finalmente parlo con sicurezza — le lezioni si adattano perfettamente ai miei impegni.",
+        "rating": 5
+      }
+    ]
+  },
   "Footer": {
     "rights": "Tutti i diritti riservati.",
     "contact": "Contatto"

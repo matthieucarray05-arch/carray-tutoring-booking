@@ -44,6 +44,26 @@
     "continueToPayment": "Weiter zur Zahlung",
     "mockNotice": "Demo-Modul: Kalender und Preise mit Beispieldaten. Die Zahlung wird im nächsten Schritt angebunden."
   },
+  "Reviews": {
+    "title": "Was unsere Kunden sagen",
+    "items": [
+      {
+        "name": "Kundenname",
+        "quote": "Klarer, motivierender Unterricht, der mein Niveau wirklich vorangebracht hat.",
+        "rating": 5
+      },
+      {
+        "name": "Kundenname",
+        "quote": "Strukturiert, geduldig und immer genau auf das ausgerichtet, was ich wirklich brauchte.",
+        "rating": 5
+      },
+      {
+        "name": "Kundenname",
+        "quote": "Ich spreche endlich mit Selbstvertrauen — die Stunden passen sich perfekt meinem Alltag an.",
+        "rating": 5
+      }
+    ]
+  },
   "Footer": {
     "rights": "Alle Rechte vorbehalten.",
     "contact": "Kontakt"

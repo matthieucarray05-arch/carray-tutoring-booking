@@ -64,7 +64,7 @@ export function ProductSelector({
               onClick={() => selectCredits(c)}
               className={`rounded-lg border px-4 py-1.5 text-sm font-medium transition-colors ${
                 creditsCount === c
-                  ? "border-accent bg-accent/10 text-accent"
+                  ? "border-accent bg-accent-soft text-accent"
                   : "border-border text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -87,9 +87,9 @@ export function ProductSelector({
               key={product.id}
               type="button"
               onClick={() => onChange(product)}
-              className={`rounded-xl border p-4 text-left transition-colors ${
+              className={`rounded-2xl border p-5 text-left shadow-[0_1px_2px_rgba(21,17,15,0.03),0_16px_32px_-24px_rgba(21,17,15,0.18)] transition-colors ${
                 isSelected
-                  ? "border-accent bg-accent/5"
+                  ? "border-accent bg-accent-soft"
                   : "border-border hover:border-accent/50"
               }`}
             >
@@ -113,7 +113,7 @@ export function ProductSelector({
                 )}
               </div>
               {savingsCents > 0 && (
-                <span className="mt-1.5 inline-block rounded-full bg-accent/10 px-2 py-0.5 text-xs font-medium text-accent">
+                <span className="mt-1.5 inline-block rounded-full bg-accent-soft px-2 py-0.5 text-xs font-semibold text-accent">
                   {t("save", {
                     amount: formatPrice(savingsCents, product.currency, locale),
                   })}
