@@ -5,9 +5,10 @@ import { usePathname, useRouter } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 
 const LABELS: Record<(typeof routing.locales)[number], string> = {
-  it: "IT",
-  de: "DE",
   en: "EN",
+  it: "IT",
+  fr: "FR",
+  de: "DE",
 };
 
 export function LanguageSwitcher() {

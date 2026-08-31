@@ -1,0 +1,51 @@
+{
+  "Nav": {
+    "brand": "Carray Tutoring",
+    "home": "Accueil",
+    "booking": "Réserver un cours"
+  },
+  "Home": {
+    "heroTitle": "Learn Languages. Build Confidence. Go Further.",
+    "heroSubtitle": "Personalised 1-to-1 language tutoring in English, French, Italian and German — tailored to your goals, level and learning style.",
+    "heroCta": "Réserver maintenant",
+    "howItWorksTitle": "Comment ça marche",
+    "step1Title": "1. Choisissez un cours ou un forfait",
+    "step1Body": "Un cours unique de 60 minutes, ou un forfait à prix réduit de 4 ou 8 cours.",
+    "step2Title": "2. Réservez votre créneau",
+    "step2Body": "Choisissez une date et une heure libres dans le calendrier, affichées automatiquement dans votre fuseau horaire.",
+    "step3Title": "3. Payez en ligne en toute sécurité",
+    "step3Body": "Paiement sécurisé par carte. Vous recevrez une confirmation par e-mail et une facture automatique.",
+    "languagesTitle": "Langues enseignées",
+    "languagesBody": "Anglais, italien, français et allemand — d'autres combinaisons sont disponibles sur demande."
+  },
+  "Booking": {
+    "title": "Réserver un cours",
+    "subtitle": "Choisissez le type de cours, puis un créneau disponible.",
+    "productSectionTitle": "1. Choisissez un cours ou un forfait",
+    "singleLesson": "Cours unique",
+    "package": "Forfait",
+    "duration60": "60 minutes",
+    "creditsLabel": "{count} cours",
+    "perLesson": "par cours",
+    "save": "Économisez {amount}",
+    "calendarSectionTitle": "2. Choisissez la date et l'heure",
+    "timezoneLabel": "Fuseau horaire",
+    "noSlotsForDay": "Aucun créneau libre ce jour-là.",
+    "pickDate": "Choisissez une date dans le calendrier pour voir les horaires disponibles.",
+    "selectProductFirst": "Choisissez d'abord le type de cours pour voir les créneaux disponibles.",
+    "morning": "Matin",
+    "afternoon": "Après-midi",
+    "evening": "Soir",
+    "summaryTitle": "Récapitulatif",
+    "summaryProduct": "Cours",
+    "summarySlot": "Horaire",
+    "summaryPrice": "Prix",
+    "summaryEmpty": "Sélectionnez un cours et un horaire pour voir le récapitulatif.",
+    "continueToPayment": "Continuer vers le paiement",
+    "mockNotice": "Module de démonstration : calendrier et prix avec des données d'exemple. Le paiement sera intégré à l'étape suivante."
+  },
+  "Footer": {
+    "rights": "Tous droits réservés.",
+    "contact": "Contact"
+  }
+}

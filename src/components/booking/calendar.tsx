@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useLocale } from "next-intl";
-import { de, enUS, it } from "date-fns/locale";
+import { de, enUS, fr, it } from "date-fns/locale";
 import {
   addDays,
   addMonths,
@@ -18,7 +18,7 @@ import {
   subMonths,
 } from "date-fns";
 
-const DATE_FNS_LOCALES = { it, de, en: enUS };
+const DATE_FNS_LOCALES = { en: enUS, it, fr, de };
 
 export function Calendar({
   selectedDate,
