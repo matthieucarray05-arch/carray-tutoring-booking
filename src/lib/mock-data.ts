@@ -12,62 +12,44 @@ export const TUTOR_TIMEZONE = "Europe/Berlin";
 
 export type ProductType = "single_lesson" | "lesson_package";
 
+/** All lessons are 60 minutes — the only duration currently sold. */
+export const LESSON_DURATION_MINUTES = 60;
+
 export interface Product {
   id: string;
   type: ProductType;
-  durationMinutes: 45 | 60;
+  durationMinutes: typeof LESSON_DURATION_MINUTES;
   creditsCount: number;
   priceCents: number;
+  /** Set when the pack is discounted vs. buying that many single lessons — used for the strikethrough price. */
+  compareAtPriceCents?: number;
   currency: "EUR";
 }
 
 export const MOCK_PRODUCTS: Product[] = [
   {
-    id: "single-45",
-    type: "single_lesson",
-    durationMinutes: 45,
-    creditsCount: 1,
-    priceCents: 3000,
-    currency: "EUR",
-  },
-  {
     id: "single-60",
     type: "single_lesson",
-    durationMinutes: 60,
+    durationMinutes: LESSON_DURATION_MINUTES,
     creditsCount: 1,
-    priceCents: 4000,
+    priceCents: 1600,
     currency: "EUR",
   },
   {
-    id: "package-45-5",
+    id: "package-60-4",
     type: "lesson_package",
-    durationMinutes: 45,
-    creditsCount: 5,
-    priceCents: 13500,
+    durationMinutes: LESSON_DURATION_MINUTES,
+    creditsCount: 4,
+    priceCents: 6400,
     currency: "EUR",
   },
   {
-    id: "package-45-10",
+    id: "package-60-8",
     type: "lesson_package",
-    durationMinutes: 45,
-    creditsCount: 10,
-    priceCents: 24000,
-    currency: "EUR",
-  },
-  {
-    id: "package-60-5",
-    type: "lesson_package",
-    durationMinutes: 60,
-    creditsCount: 5,
-    priceCents: 18000,
-    currency: "EUR",
-  },
-  {
-    id: "package-60-10",
-    type: "lesson_package",
-    durationMinutes: 60,
-    creditsCount: 10,
-    priceCents: 32000,
+    durationMinutes: LESSON_DURATION_MINUTES,
+    creditsCount: 8,
+    priceCents: 11500,
+    compareAtPriceCents: 12800,
     currency: "EUR",
   },
 ];
@@ -132,7 +114,7 @@ function bookingSlot(
 
 export const MOCK_BOOKINGS: ExistingBooking[] = [
   bookingSlot(2, "09:00", 60),
-  bookingSlot(2, "10:30", 45),
+  bookingSlot(2, "10:30", 60),
   bookingSlot(4, "14:30", 60),
-  bookingSlot(5, "09:30", 45),
+  bookingSlot(5, "09:30", 60),
 ];

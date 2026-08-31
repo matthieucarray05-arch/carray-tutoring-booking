@@ -137,9 +137,7 @@ export default function BookingPage() {
                   {t("summaryProduct")}
                 </dt>
                 <dd className="font-medium">
-                  {product.durationMinutes === 45
-                    ? t("duration45")
-                    : t("duration60")}
+                  {t("duration60")}
                   {product.type === "lesson_package" &&
                     ` · ${t("creditsLabel", { count: product.creditsCount })}`}
                 </dd>
