@@ -1,0 +1,51 @@
+{
+  "Nav": {
+    "brand": "Carray Tutoring",
+    "home": "Startseite",
+    "booking": "Unterrichtsstunde buchen"
+  },
+  "Home": {
+    "heroTitle": "Individueller Sprachunterricht, online",
+    "heroSubtitle": "Privater Unterricht mit einem muttersprachlichen Tutor, ganz nach deinem Bedarf. Wähle deine Zeit, in deiner Zeitzone.",
+    "heroCta": "Jetzt buchen",
+    "howItWorksTitle": "So funktioniert es",
+    "step1Title": "1. Einzelstunde oder Paket wählen",
+    "step1Body": "Einzelstunde à 45 oder 60 Minuten, oder ein vergünstigtes Paket mit 5 oder 10 Stunden.",
+    "step2Title": "2. Termin buchen",
+    "step2Body": "Wähle Datum und Uhrzeit aus dem Kalender — automatisch in deiner Zeitzone angezeigt.",
+    "step3Title": "3. Sicher online bezahlen",
+    "step3Body": "Sichere Kartenzahlung. Du erhältst eine Bestätigung per E-Mail und automatisch eine Rechnung.",
+    "languagesTitle": "Unterrichtete Sprachen",
+    "languagesBody": "Italienisch, Deutsch, Englisch — weitere Kombinationen auf Anfrage."
+  },
+  "Booking": {
+    "title": "Unterrichtsstunde buchen",
+    "subtitle": "Wähle zuerst die Art der Stunde, dann einen freien Termin.",
+    "productSectionTitle": "1. Einzelstunde oder Paket wählen",
+    "singleLesson": "Einzelstunde",
+    "package": "Paket",
+    "duration45": "45 Minuten",
+    "duration60": "60 Minuten",
+    "creditsLabel": "{count} Stunden",
+    "perLesson": "pro Stunde",
+    "calendarSectionTitle": "2. Datum und Uhrzeit wählen",
+    "timezoneLabel": "Zeitzone",
+    "noSlotsForDay": "Keine freien Termine an diesem Tag.",
+    "pickDate": "Wähle ein Datum im Kalender, um verfügbare Uhrzeiten zu sehen.",
+    "selectProductFirst": "Wähle zuerst die Art der Stunde, um verfügbare Termine zu sehen.",
+    "morning": "Vormittag",
+    "afternoon": "Nachmittag",
+    "evening": "Abend",
+    "summaryTitle": "Zusammenfassung",
+    "summaryProduct": "Unterricht",
+    "summarySlot": "Termin",
+    "summaryPrice": "Preis",
+    "summaryEmpty": "Wähle Unterricht und Termin, um die Zusammenfassung zu sehen.",
+    "continueToPayment": "Weiter zur Zahlung",
+    "mockNotice": "Demo-Modul: Kalender und Preise mit Beispieldaten. Die Zahlung wird im nächsten Schritt angebunden."
+  },
+  "Footer": {
+    "rights": "Alle Rechte vorbehalten.",
+    "contact": "Kontakt"
+  }
+}

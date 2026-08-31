@@ -1,0 +1,51 @@
+{
+  "Nav": {
+    "brand": "Carray Tutoring",
+    "home": "Home",
+    "booking": "Book a lesson"
+  },
+  "Home": {
+    "heroTitle": "One-on-one language lessons, online",
+    "heroSubtitle": "Private lessons tailored to you, with a native-speaking tutor. Choose your time, in your own timezone.",
+    "heroCta": "Book now",
+    "howItWorksTitle": "How it works",
+    "step1Title": "1. Choose a lesson or a package",
+    "step1Body": "A single 45 or 60 minute lesson, or a discounted package of 5 or 10 lessons.",
+    "step2Title": "2. Book your slot",
+    "step2Body": "Pick a free date and time from the calendar, shown automatically in your timezone.",
+    "step3Title": "3. Pay securely online",
+    "step3Body": "Secure card payment. You'll get an email confirmation and an automatic invoice.",
+    "languagesTitle": "Languages taught",
+    "languagesBody": "Italian, German, English — other combinations available on request."
+  },
+  "Booking": {
+    "title": "Book a lesson",
+    "subtitle": "Choose the lesson type, then an available slot.",
+    "productSectionTitle": "1. Choose a lesson or a package",
+    "singleLesson": "Single lesson",
+    "package": "Package",
+    "duration45": "45 minutes",
+    "duration60": "60 minutes",
+    "creditsLabel": "{count} lessons",
+    "perLesson": "per lesson",
+    "calendarSectionTitle": "2. Choose date and time",
+    "timezoneLabel": "Timezone",
+    "noSlotsForDay": "No free slots on this day.",
+    "pickDate": "Choose a date on the calendar to see available times.",
+    "selectProductFirst": "Choose a lesson type first to see available slots.",
+    "morning": "Morning",
+    "afternoon": "Afternoon",
+    "evening": "Evening",
+    "summaryTitle": "Summary",
+    "summaryProduct": "Lesson",
+    "summarySlot": "Time",
+    "summaryPrice": "Price",
+    "summaryEmpty": "Select a lesson and a time to see the summary.",
+    "continueToPayment": "Continue to payment",
+    "mockNotice": "Demo module: calendar and prices use sample data. Payment will be wired up in the next step."
+  },
+  "Footer": {
+    "rights": "All rights reserved.",
+    "contact": "Contact"
+  }
+}

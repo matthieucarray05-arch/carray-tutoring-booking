@@ -1,0 +1,51 @@
+{
+  "Nav": {
+    "brand": "Carray Tutoring",
+    "home": "Home",
+    "booking": "Prenota una lezione"
+  },
+  "Home": {
+    "heroTitle": "Lezioni di lingua individuali, online",
+    "heroSubtitle": "Lezioni private su misura, con un tutor madrelingua. Scegli il tuo orario, nel tuo fuso orario.",
+    "heroCta": "Prenota ora",
+    "howItWorksTitle": "Come funziona",
+    "step1Title": "1. Scegli lezione o pacchetto",
+    "step1Body": "Lezione singola da 45 o 60 minuti, oppure un pacchetto scontato da 5 o 10 lezioni.",
+    "step2Title": "2. Prenota il tuo slot",
+    "step2Body": "Scegli data e ora libere dal calendario, mostrate automaticamente nel tuo fuso orario.",
+    "step3Title": "3. Paga online in sicurezza",
+    "step3Body": "Pagamento sicuro con carta. Ricevi conferma via email e fattura automatica.",
+    "languagesTitle": "Lingue insegnate",
+    "languagesBody": "Italiano, tedesco, inglese — su richiesta anche altre combinazioni."
+  },
+  "Booking": {
+    "title": "Prenota una lezione",
+    "subtitle": "Scegli il tipo di lezione, poi uno slot disponibile.",
+    "productSectionTitle": "1. Scegli lezione o pacchetto",
+    "singleLesson": "Lezione singola",
+    "package": "Pacchetto",
+    "duration45": "45 minuti",
+    "duration60": "60 minuti",
+    "creditsLabel": "{count} lezioni",
+    "perLesson": "a lezione",
+    "calendarSectionTitle": "2. Scegli data e ora",
+    "timezoneLabel": "Fuso orario",
+    "noSlotsForDay": "Nessuno slot libero per questo giorno.",
+    "pickDate": "Scegli una data nel calendario per vedere gli orari disponibili.",
+    "selectProductFirst": "Scegli prima il tipo di lezione per vedere gli slot disponibili.",
+    "morning": "Mattina",
+    "afternoon": "Pomeriggio",
+    "evening": "Sera",
+    "summaryTitle": "Riepilogo",
+    "summaryProduct": "Lezione",
+    "summarySlot": "Orario",
+    "summaryPrice": "Prezzo",
+    "summaryEmpty": "Seleziona lezione e orario per vedere il riepilogo.",
+    "continueToPayment": "Continua al pagamento",
+    "mockNotice": "Modulo dimostrativo: calendario e prezzi con dati di esempio. Il pagamento sarà collegato nel prossimo step."
+  },
+  "Footer": {
+    "rights": "Tutti i diritti riservati.",
+    "contact": "Contatto"
+  }
+}
