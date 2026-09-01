@@ -114,6 +114,7 @@ export async function POST(request: NextRequest) {
       slotStartUtc: slotStart.toISOString(),
       slotEndUtc: slotEnd.toISOString(),
       customerTimezone,
+      locale,
     },
     locale: (STRIPE_LOCALES[locale] ?? "auto") as "en" | "it" | "fr" | "de" | "auto",
     success_url: `${origin}/${locale}/booking?checkout=success&session_id={CHECKOUT_SESSION_ID}`,

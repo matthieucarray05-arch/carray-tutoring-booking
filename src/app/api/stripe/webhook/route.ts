@@ -5,6 +5,8 @@ import { db } from "@/lib/db/client";
 import { orders, lessonCredits, bookings } from "@/lib/db/schema";
 import { getStripe } from "@/lib/stripe/client";
 import { notifyNewBooking, notifySlotConflict } from "@/lib/notifications";
+import { routing } from "@/i18n/routing";
+import { TUTOR_TIMEZONE } from "@/lib/config";
 
 export const dynamic = "force-dynamic";
 
@@ -55,6 +57,11 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
   const slotStartUtc = metadata.slotStartUtc;
   const slotEndUtc = metadata.slotEndUtc;
   const customerTimezone = metadata.customerTimezone || null;
+  const locale = routing.locales.includes(
+    metadata.locale as (typeof routing.locales)[number],
+  )
+    ? metadata.locale
+    : routing.defaultLocale;
 
   if (
     !productId ||
@@ -128,7 +135,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
     );
 
   if (conflicting.length > 0) {
-    notifySlotConflict({
+    await notifySlotConflict({
       customerEmail,
       requestedStartAt: slotStart,
       requestedEndAt: slotEnd,
@@ -159,7 +166,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
     .set({ status: "used", bookingId: booking.id })
     .where(eq(lessonCredits.id, firstCredit.id));
 
-  notifyNewBooking({
+  await notifyNewBooking({
     customerName,
     customerEmail,
     companyName,
@@ -172,6 +179,8 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
     currency: (session.currency ?? "eur").toUpperCase(),
     bookingStartAt: slotStart,
     bookingEndAt: slotEnd,
+    customerTimezone: customerTimezone ?? TUTOR_TIMEZONE,
+    locale,
     remainingCredits: creditsCount - 1,
   });
 }
