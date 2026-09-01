@@ -7,7 +7,7 @@ import { Calendar } from "@/components/booking/calendar";
 import { SlotPicker } from "@/components/booking/slot-picker";
 import { TimezoneSelector } from "@/components/booking/timezone-selector";
 import { detectBrowserTimezone, formatInTz } from "@/lib/timezone";
-import { getAvailableSlots, type AvailableSlot } from "@/lib/availability";
+import type { AvailableSlot } from "@/lib/availability";
 import type { Product } from "@/lib/mock-data";
 import { formatPrice } from "@/lib/format";
 
@@ -21,6 +21,8 @@ export default function BookingPage() {
   const [timezone, setTimezone] = useState("UTC");
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedSlot, setSelectedSlot] = useState<AvailableSlot | null>(null);
+  const [slots, setSlots] = useState<AvailableSlot[]>([]);
+  const [isLoadingSlots, setIsLoadingSlots] = useState(false);
 
   useEffect(() => {
     // Defaults to UTC on the server to avoid a hydration mismatch, then
@@ -29,16 +31,45 @@ export default function BookingPage() {
     setTimezone(detectBrowserTimezone());
   }, []);
 
-  const slots = useMemo(() => {
-    if (!product) return [];
+  useEffect(() => {
+    // product starts null (nothing selected yet) and is never reset back to
+    // null, so there's no state to unwind here — just skip the fetch.
+    if (!product) return;
+
     const from = new Date();
     const to = new Date();
     to.setDate(to.getDate() + BOOKING_WINDOW_DAYS);
-    return getAvailableSlots({
-      fromDate: from,
-      toDate: to,
-      durationMinutes: product.durationMinutes,
+
+    const params = new URLSearchParams({
+      duration: String(product.durationMinutes),
+      from: from.toISOString(),
+      to: to.toISOString(),
     });
+
+    let cancelled = false;
+    // Fetching data on a dependency change is the canonical effect use case;
+    // the loading flag just tracks that in-flight request.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsLoadingSlots(true);
+
+    fetch(`/api/availability?${params.toString()}`)
+      .then((res) => res.json())
+      .then((data: { startUtc: string; endUtc: string }[]) => {
+        if (cancelled) return;
+        setSlots(
+          data.map((slot) => ({
+            startUtc: new Date(slot.startUtc),
+            endUtc: new Date(slot.endUtc),
+          })),
+        );
+      })
+      .finally(() => {
+        if (!cancelled) setIsLoadingSlots(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, [product]);
 
   const availableDates = useMemo(() => {
@@ -98,6 +129,8 @@ export default function BookingPage() {
               <p className="text-sm text-muted-foreground">
                 {t("selectProductFirst")}
               </p>
+            ) : isLoadingSlots && slots.length === 0 ? (
+              <p className="text-sm text-muted-foreground">{t("loadingSlots")}</p>
             ) : (
               <div className="grid gap-8 sm:grid-cols-2">
                 <Calendar

@@ -43,7 +43,8 @@
     "summaryPrice": "Prezzo",
     "summaryEmpty": "Seleziona lezione e orario per vedere il riepilogo.",
     "continueToPayment": "Continua al pagamento",
-    "mockNotice": "Modulo dimostrativo: calendario e prezzi con dati di esempio. Il pagamento sarà collegato nel prossimo step."
+    "mockNotice": "I prezzi mostrati qui sono dati di esempio — il pagamento sarà collegato in uno step successivo.",
+    "loadingSlots": "Caricamento orari disponibili…"
   },
   "Reviews": {
     "title": "Cosa dicono i clienti",

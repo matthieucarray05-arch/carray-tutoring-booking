@@ -43,7 +43,8 @@
     "summaryPrice": "Preis",
     "summaryEmpty": "Wähle Unterricht und Termin, um die Zusammenfassung zu sehen.",
     "continueToPayment": "Weiter zur Zahlung",
-    "mockNotice": "Demo-Modul: Kalender und Preise mit Beispieldaten. Die Zahlung wird im nächsten Schritt angebunden."
+    "mockNotice": "Die hier gezeigten Preise sind Beispieldaten — die Zahlung wird in einem späteren Schritt angebunden.",
+    "loadingSlots": "Verfügbare Zeiten werden geladen…"
   },
   "Reviews": {
     "title": "Was unsere Kunden sagen",

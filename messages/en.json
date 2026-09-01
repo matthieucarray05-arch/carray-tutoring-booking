@@ -43,7 +43,8 @@
     "summaryPrice": "Price",
     "summaryEmpty": "Select a lesson and a time to see the summary.",
     "continueToPayment": "Continue to payment",
-    "mockNotice": "Demo module: calendar and prices use sample data. Payment will be wired up in the next step."
+    "mockNotice": "Prices shown here are sample data for now — payment will be wired up in a later step.",
+    "loadingSlots": "Loading available times…"
   },
   "Reviews": {
     "title": "What Clients Say",
