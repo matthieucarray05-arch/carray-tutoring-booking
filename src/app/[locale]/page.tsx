@@ -35,6 +35,9 @@ export default async function HomePage({
         >
           {t("heroCta")}
         </Link>
+        <p className="mt-4 text-sm font-light italic text-muted-foreground">
+          {t("heroTagline")}
+        </p>
       </section>
 
       <section className="bg-muted">
@@ -57,11 +60,15 @@ export default async function HomePage({
       </section>
 
       <section>
-        <div className="mx-auto max-w-4xl px-6 py-20 text-center sm:py-24">
+        <div className="mx-auto max-w-3xl px-6 py-20 text-center sm:py-24">
           <p className="kicker justify-center">{t("languagesTitle")}</p>
-          <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground">
-            {t("languagesBody")}
-          </p>
+          <div className="mt-6 space-y-4 text-justify text-[15px] leading-relaxed text-foreground">
+            {t("languagesBody")
+              .split("\n\n")
+              .map((paragraph) => (
+                <p key={paragraph.slice(0, 24)}>{paragraph}</p>
+              ))}
+          </div>
         </div>
       </section>
 
