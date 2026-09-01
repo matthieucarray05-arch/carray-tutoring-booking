@@ -43,7 +43,11 @@
     "summaryPrice": "Prezzo",
     "summaryEmpty": "Seleziona lezione e orario per vedere il riepilogo.",
     "continueToPayment": "Continua al pagamento",
-    "mockNotice": "I prezzi mostrati qui sono dati di esempio — il pagamento sarà collegato in uno step successivo.",
+    "continueToPaymentLoading": "Reindirizzamento al pagamento…",
+    "checkoutError": "Qualcosa è andato storto nell'avviare il pagamento. Riprova.",
+    "checkoutSuccessTitle": "Pagamento ricevuto!",
+    "checkoutSuccessBody": "Stiamo confermando la tua prenotazione — riceverai un'email di conferma a breve.",
+    "checkoutCanceled": "Pagamento annullato — la tua carta non è stata addebitata.",
     "loadingSlots": "Caricamento orari disponibili…"
   },
   "Reviews": {

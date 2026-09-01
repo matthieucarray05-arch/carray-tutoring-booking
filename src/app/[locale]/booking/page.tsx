@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { ProductSelector } from "@/components/booking/product-selector";
 import { Calendar } from "@/components/booking/calendar";
 import { SlotPicker } from "@/components/booking/slot-picker";
 import { TimezoneSelector } from "@/components/booking/timezone-selector";
+import { CheckoutStatusBanner } from "@/components/booking/checkout-status-banner";
 import { detectBrowserTimezone, formatInTz } from "@/lib/timezone";
 import type { AvailableSlot } from "@/lib/availability";
 import type { Product } from "@/lib/mock-data";
@@ -23,6 +24,8 @@ export default function BookingPage() {
   const [selectedSlot, setSelectedSlot] = useState<AvailableSlot | null>(null);
   const [slots, setSlots] = useState<AvailableSlot[]>([]);
   const [isLoadingSlots, setIsLoadingSlots] = useState(false);
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [checkoutError, setCheckoutError] = useState(false);
 
   useEffect(() => {
     // Defaults to UTC on the server to avoid a hydration mismatch, then
@@ -100,13 +103,51 @@ export default function BookingPage() {
     setSelectedSlot(null);
   }
 
+  async function handleCheckout() {
+    if (!product || !selectedSlot) return;
+
+    setIsCheckingOut(true);
+    setCheckoutError(false);
+
+    try {
+      const res = await fetch("/api/stripe/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          productId: product.id,
+          slotStartUtc: selectedSlot.startUtc.toISOString(),
+          slotEndUtc: selectedSlot.endUtc.toISOString(),
+          customerTimezone: timezone,
+          locale,
+        }),
+      });
+
+      if (!res.ok) {
+        // The slot may have just been taken by someone else — refresh the
+        // list so the calendar reflects reality instead of retrying blind.
+        setSelectedSlot(null);
+        setProduct((current) => (current ? { ...current } : current));
+        setCheckoutError(true);
+        setIsCheckingOut(false);
+        return;
+      }
+
+      const data = (await res.json()) as { url: string };
+      window.location.href = data.url;
+    } catch {
+      setCheckoutError(true);
+      setIsCheckingOut(false);
+    }
+  }
+
   return (
     <div className="mx-auto max-w-5xl px-6 py-12">
       <h1 className="text-3xl font-semibold tracking-tight">{t("title")}</h1>
       <p className="mt-2 text-muted-foreground">{t("subtitle")}</p>
-      <p className="mt-4 rounded-lg bg-muted px-4 py-3 text-sm text-muted-foreground">
-        {t("mockNotice")}
-      </p>
+
+      <Suspense fallback={null}>
+        <CheckoutStatusBanner />
+      </Suspense>
 
       <div className="mt-10 grid gap-10 lg:grid-cols-[2fr_1fr]">
         <div className="space-y-10">
@@ -194,12 +235,16 @@ export default function BookingPage() {
               </div>
             </dl>
           )}
+          {checkoutError && (
+            <p className="mt-3 text-sm text-accent">{t("checkoutError")}</p>
+          )}
           <button
             type="button"
-            disabled={!product || !selectedSlot}
+            onClick={handleCheckout}
+            disabled={!product || !selectedSlot || isCheckingOut}
             className="mt-6 w-full rounded-full bg-accent px-4 py-2.5 text-sm font-medium text-accent-foreground transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-40"
           >
-            {t("continueToPayment")}
+            {isCheckingOut ? t("continueToPaymentLoading") : t("continueToPayment")}
           </button>
         </aside>
       </div>

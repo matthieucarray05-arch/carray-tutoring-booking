@@ -43,7 +43,11 @@
     "summaryPrice": "Price",
     "summaryEmpty": "Select a lesson and a time to see the summary.",
     "continueToPayment": "Continue to payment",
-    "mockNotice": "Prices shown here are sample data for now — payment will be wired up in a later step.",
+    "continueToPaymentLoading": "Redirecting to payment…",
+    "checkoutError": "Something went wrong starting checkout. Please try again.",
+    "checkoutSuccessTitle": "Payment received!",
+    "checkoutSuccessBody": "We're confirming your booking — you'll get a confirmation email shortly.",
+    "checkoutCanceled": "Checkout was canceled — your card was not charged.",
     "loadingSlots": "Loading available times…"
   },
   "Reviews": {

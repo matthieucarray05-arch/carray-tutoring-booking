@@ -43,7 +43,11 @@
     "summaryPrice": "Preis",
     "summaryEmpty": "Wähle Unterricht und Termin, um die Zusammenfassung zu sehen.",
     "continueToPayment": "Weiter zur Zahlung",
-    "mockNotice": "Die hier gezeigten Preise sind Beispieldaten — die Zahlung wird in einem späteren Schritt angebunden.",
+    "continueToPaymentLoading": "Weiterleitung zur Zahlung…",
+    "checkoutError": "Beim Starten der Zahlung ist etwas schiefgelaufen. Bitte versuche es erneut.",
+    "checkoutSuccessTitle": "Zahlung erhalten!",
+    "checkoutSuccessBody": "Wir bestätigen deine Buchung — du erhältst in Kürze eine Bestätigungs-E-Mail.",
+    "checkoutCanceled": "Zahlung abgebrochen — deine Karte wurde nicht belastet.",
     "loadingSlots": "Verfügbare Zeiten werden geladen…"
   },
   "Reviews": {

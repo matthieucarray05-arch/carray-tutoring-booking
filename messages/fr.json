@@ -43,7 +43,11 @@
     "summaryPrice": "Prix",
     "summaryEmpty": "Sélectionnez un cours et un horaire pour voir le récapitulatif.",
     "continueToPayment": "Continuer vers le paiement",
-    "mockNotice": "Les prix affichés ici sont des données d'exemple — le paiement sera intégré à une étape ultérieure.",
+    "continueToPaymentLoading": "Redirection vers le paiement…",
+    "checkoutError": "Une erreur est survenue au démarrage du paiement. Veuillez réessayer.",
+    "checkoutSuccessTitle": "Paiement reçu !",
+    "checkoutSuccessBody": "Nous confirmons votre réservation — vous recevrez un e-mail de confirmation sous peu.",
+    "checkoutCanceled": "Paiement annulé — votre carte n'a pas été débitée.",
     "loadingSlots": "Chargement des horaires disponibles…"
   },
   "Reviews": {
