@@ -90,7 +90,13 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
       ? session.payment_intent
       : (session.payment_intent?.id ?? null);
 
-  const [order] = await db
+  // The plain SELECT above is just a fast path — Stripe (or a slow response,
+  // e.g. while we're waiting on the email calls below) can redeliver this
+  // event a second time before the first delivery's insert has committed.
+  // onConflictDoNothing makes the insert itself the source of truth: if a
+  // concurrent delivery already created this order, ours returns no row and
+  // we bail out below instead of crashing on the unique constraint.
+  const insertedOrders = await db
     .insert(orders)
     .values({
       stripeCheckoutSessionId: session.id,
@@ -107,7 +113,13 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
       vatId,
       billingAddress,
     })
+    .onConflictDoNothing({ target: orders.stripeCheckoutSessionId })
     .returning();
+
+  if (insertedOrders.length === 0) {
+    return;
+  }
+  const order = insertedOrders[0];
 
   const createdCredits = await db
     .insert(lessonCredits)
