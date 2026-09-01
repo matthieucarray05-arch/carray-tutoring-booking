@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { eq } from "drizzle-orm";
 import { db } from "@/lib/db/client";
-import { availabilityRules, blockedDates, bookings } from "@/lib/db/schema";
+import { availabilityDates, bookings } from "@/lib/db/schema";
 import { getAvailableSlots } from "@/lib/availability";
 import { TUTOR_TIMEZONE } from "@/lib/config";
 
@@ -23,9 +23,8 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Invalid date range" }, { status: 400 });
   }
 
-  const [rules, blocked, confirmedBookings] = await Promise.all([
-    db.select().from(availabilityRules),
-    db.select().from(blockedDates),
+  const [dates, confirmedBookings] = await Promise.all([
+    db.select().from(availabilityDates),
     db.select().from(bookings).where(eq(bookings.status, "confirmed")),
   ]);
 
@@ -34,8 +33,7 @@ export async function GET(request: NextRequest) {
     toDate,
     durationMinutes,
     tutorTimezone: TUTOR_TIMEZONE,
-    rules,
-    blockedDates: blocked,
+    availabilityDates: dates,
     bookings: confirmedBookings,
   });
 

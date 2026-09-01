@@ -1,31 +1,16 @@
 import { pgTable, serial, integer, text, timestamp, date } from "drizzle-orm/pg-core";
 
 /**
- * Recurring weekly availability, e.g. "every Monday 09:00-12:00". Times are
- * "HH:mm" strings in the tutor's fixed timezone (see lib/config.ts) — no
- * timezone math happens on this side, only when computing customer-facing
- * slots.
+ * Availability set per specific calendar date — not recurring. Each row is
+ * one time range on one date, e.g. "2026-11-06, 18:00-20:00". Dates/times
+ * are in the tutor's fixed timezone (see lib/config.ts) — no timezone math
+ * happens on this side, only when computing customer-facing slots.
  */
-export const availabilityRules = pgTable("availability_rules", {
-  id: serial("id").primaryKey(),
-  /** ISO weekday: 1 = Monday ... 7 = Sunday. */
-  weekday: integer("weekday").notNull(),
-  startTime: text("start_time").notNull(),
-  endTime: text("end_time").notNull(),
-  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
-});
-
-/**
- * One-off exceptions to the recurring schedule: a full blocked day, or a
- * specific time range on a specific date. Also in the tutor's timezone.
- */
-export const blockedDates = pgTable("blocked_dates", {
+export const availabilityDates = pgTable("availability_dates", {
   id: serial("id").primaryKey(),
   date: date("date", { mode: "string" }).notNull(),
-  /** Null start/end = the entire day is blocked. */
-  startTime: text("start_time"),
-  endTime: text("end_time"),
-  reason: text("reason"),
+  startTime: text("start_time").notNull(),
+  endTime: text("end_time").notNull(),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
 });
 

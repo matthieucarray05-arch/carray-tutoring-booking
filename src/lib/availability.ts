@@ -9,18 +9,10 @@ export interface AvailableSlot {
   endUtc: Date;
 }
 
-export interface AvailabilityRuleInput {
-  /** ISO weekday: 1 = Monday ... 7 = Sunday, evaluated in tutorTimezone. */
-  weekday: number;
+export interface AvailabilityDateInput {
+  date: string;
   startTime: string;
   endTime: string;
-}
-
-export interface BlockedDateInput {
-  date: string;
-  /** Omit both times to block the whole day. */
-  startTime?: string | null;
-  endTime?: string | null;
 }
 
 export interface ExistingBookingInput {
@@ -41,28 +33,13 @@ function minutesToTime(totalMinutes: number): string {
   return `${h}:${m}`;
 }
 
-/** 1 = Monday ... 7 = Sunday. Uses a fixed UTC noon to sidestep DST edge cases. */
-function isoWeekday(dateStr: string): number {
-  const day = new Date(`${dateStr}T12:00:00Z`).getUTCDay();
-  return day === 0 ? 7 : day;
-}
-
-function intervalsOverlap(
-  aStart: number,
-  aEnd: number,
-  bStart: number,
-  bEnd: number,
-): boolean {
-  return aStart < bEnd && bStart < aEnd;
-}
-
 /**
  * Computes bookable slots between fromDate and toDate (inclusive, by
- * calendar day) for a given lesson duration, applying the tutor's recurring
- * availability, blocked dates, minimum notice and already-booked slots.
+ * calendar day) for a given lesson duration, applying the tutor's
+ * per-date availability, minimum notice and already-booked slots.
  * Returns UTC instants — convert to the customer's timezone only for display.
  *
- * Pure function: rules/blockedDates/bookings are passed in (from the DB in
+ * Pure function: availabilityDates/bookings are passed in (from the DB in
  * production) rather than imported, so this has no data-source dependency.
  */
 export function getAvailableSlots({
@@ -70,8 +47,7 @@ export function getAvailableSlots({
   toDate,
   durationMinutes,
   tutorTimezone,
-  rules,
-  blockedDates,
+  availabilityDates,
   bookings,
   now = new Date(),
 }: {
@@ -79,8 +55,7 @@ export function getAvailableSlots({
   toDate: Date;
   durationMinutes: number;
   tutorTimezone: string;
-  rules: AvailabilityRuleInput[];
-  blockedDates: BlockedDateInput[];
+  availabilityDates: AvailabilityDateInput[];
   bookings: ExistingBookingInput[];
   now?: Date;
 }): AvailableSlot[] {
@@ -97,39 +72,19 @@ export function getAvailableSlots({
       ),
     );
     const dateStr = day.toISOString().slice(0, 10);
-    const weekday = isoWeekday(dateStr);
 
-    const dayRules = rules.filter((rule) => rule.weekday === weekday);
-    if (dayRules.length === 0) continue;
+    const dayEntries = availabilityDates.filter((entry) => entry.date === dateStr);
+    if (dayEntries.length === 0) continue;
 
-    const blockedForDay = blockedDates.filter((blocked) => blocked.date === dateStr);
-    const isFullDayBlocked = blockedForDay.some(
-      (blocked) => !blocked.startTime && !blocked.endTime,
-    );
-    if (isFullDayBlocked) continue;
-
-    for (const rule of dayRules) {
-      const ruleStart = timeToMinutes(rule.startTime);
-      const ruleEnd = timeToMinutes(rule.endTime);
+    for (const entry of dayEntries) {
+      const entryStart = timeToMinutes(entry.startTime);
+      const entryEnd = timeToMinutes(entry.endTime);
 
       for (
-        let start = ruleStart;
-        start + durationMinutes <= ruleEnd;
+        let start = entryStart;
+        start + durationMinutes <= entryEnd;
         start += SLOT_STEP_MINUTES
       ) {
-        const end = start + durationMinutes;
-
-        const overlapsBlock = blockedForDay.some((blocked) => {
-          if (!blocked.startTime || !blocked.endTime) return true;
-          return intervalsOverlap(
-            start,
-            end,
-            timeToMinutes(blocked.startTime),
-            timeToMinutes(blocked.endTime),
-          );
-        });
-        if (overlapsBlock) continue;
-
         const startUtc = zonedToUtc(
           `${dateStr}T${minutesToTime(start)}:00`,
           tutorTimezone,

@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { eq } from "drizzle-orm";
 import { db } from "@/lib/db/client";
-import { availabilityRules, blockedDates } from "@/lib/db/schema";
+import { availabilityDates } from "@/lib/db/schema";
 import { ADMIN_SESSION_COOKIE, verifySessionToken } from "@/lib/admin-auth";
 
 const TIME_RE = /^([01]\d|2[0-3]):[0-5]\d$/;
@@ -19,15 +19,15 @@ async function assertAdmin() {
   }
 }
 
-export async function addAvailabilityRule(formData: FormData) {
+export async function addAvailabilityDate(formData: FormData) {
   await assertAdmin();
 
-  const weekday = Number(formData.get("weekday"));
+  const date = String(formData.get("date") ?? "");
   const startTime = String(formData.get("startTime") ?? "");
   const endTime = String(formData.get("endTime") ?? "");
 
-  if (!Number.isInteger(weekday) || weekday < 1 || weekday > 7) {
-    throw new Error("Invalid weekday");
+  if (!DATE_RE.test(date)) {
+    throw new Error("Invalid date");
   }
   if (!TIME_RE.test(startTime) || !TIME_RE.test(endTime)) {
     throw new Error("Invalid time");
@@ -36,42 +36,13 @@ export async function addAvailabilityRule(formData: FormData) {
     throw new Error("Start time must be before end time");
   }
 
-  await db.insert(availabilityRules).values({ weekday, startTime, endTime });
+  await db.insert(availabilityDates).values({ date, startTime, endTime });
   revalidatePath("/admin/availability");
 }
 
-export async function deleteAvailabilityRule(formData: FormData) {
+export async function deleteAvailabilityDate(formData: FormData) {
   await assertAdmin();
   const id = Number(formData.get("id"));
-  await db.delete(availabilityRules).where(eq(availabilityRules.id, id));
-  revalidatePath("/admin/availability");
-}
-
-export async function addBlockedDate(formData: FormData) {
-  await assertAdmin();
-
-  const date = String(formData.get("date") ?? "");
-  const startTime = String(formData.get("startTime") ?? "") || null;
-  const endTime = String(formData.get("endTime") ?? "") || null;
-  const reason = String(formData.get("reason") ?? "") || null;
-
-  if (!DATE_RE.test(date)) {
-    throw new Error("Invalid date");
-  }
-  if ((startTime && !TIME_RE.test(startTime)) || (endTime && !TIME_RE.test(endTime))) {
-    throw new Error("Invalid time");
-  }
-  if (startTime && endTime && startTime >= endTime) {
-    throw new Error("Start time must be before end time");
-  }
-
-  await db.insert(blockedDates).values({ date, startTime, endTime, reason });
-  revalidatePath("/admin/availability");
-}
-
-export async function deleteBlockedDate(formData: FormData) {
-  await assertAdmin();
-  const id = Number(formData.get("id"));
-  await db.delete(blockedDates).where(eq(blockedDates.id, id));
+  await db.delete(availabilityDates).where(eq(availabilityDates.id, id));
   revalidatePath("/admin/availability");
 }
