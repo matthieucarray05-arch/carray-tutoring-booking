@@ -9,7 +9,7 @@ import { TimezoneSelector } from "@/components/booking/timezone-selector";
 import { CheckoutStatusBanner } from "@/components/booking/checkout-status-banner";
 import { detectBrowserTimezone, formatInTz } from "@/lib/timezone";
 import type { AvailableSlot } from "@/lib/availability";
-import type { Product } from "@/lib/mock-data";
+import { MOCK_PRODUCTS, type Product } from "@/lib/mock-data";
 import { formatPrice } from "@/lib/format";
 
 const BOOKING_WINDOW_DAYS = 45;
@@ -26,6 +26,21 @@ export default function BookingPage() {
   const [isLoadingSlots, setIsLoadingSlots] = useState(false);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [checkoutError, setCheckoutError] = useState(false);
+
+  const [freeIntroForm, setFreeIntroForm] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+  });
+  const [isSubmittingFreeIntro, setIsSubmittingFreeIntro] = useState(false);
+  const [freeIntroError, setFreeIntroError] = useState<
+    "already_used" | "slot_taken" | "generic" | null
+  >(null);
+  const [freeIntroConfirmation, setFreeIntroConfirmation] = useState<{
+    firstName: string;
+    startUtc: Date;
+    endUtc: Date;
+  } | null>(null);
 
   useEffect(() => {
     // Defaults to UTC on the server to avoid a hydration mismatch, then
@@ -140,6 +155,83 @@ export default function BookingPage() {
     }
   }
 
+  async function handleFreeIntroSubmit() {
+    if (!selectedSlot) return;
+    if (!freeIntroForm.firstName.trim() || !freeIntroForm.lastName.trim() || !freeIntroForm.email.trim()) {
+      return;
+    }
+
+    setIsSubmittingFreeIntro(true);
+    setFreeIntroError(null);
+
+    try {
+      const res = await fetch("/api/free-intro/book", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName: freeIntroForm.firstName.trim(),
+          lastName: freeIntroForm.lastName.trim(),
+          email: freeIntroForm.email.trim(),
+          slotStartUtc: selectedSlot.startUtc.toISOString(),
+          slotEndUtc: selectedSlot.endUtc.toISOString(),
+          customerTimezone: timezone,
+          locale,
+        }),
+      });
+
+      if (!res.ok) {
+        const data = (await res.json().catch(() => ({}))) as { error?: string };
+        if (data.error === "already_used") {
+          setFreeIntroError("already_used");
+        } else if (data.error === "slot_taken") {
+          setFreeIntroError("slot_taken");
+          setSelectedSlot(null);
+          setProduct((current) => (current ? { ...current } : current));
+        } else {
+          setFreeIntroError("generic");
+        }
+        setIsSubmittingFreeIntro(false);
+        return;
+      }
+
+      setFreeIntroConfirmation({
+        firstName: freeIntroForm.firstName.trim(),
+        startUtc: selectedSlot.startUtc,
+        endUtc: selectedSlot.endUtc,
+      });
+    } catch {
+      setFreeIntroError("generic");
+      setIsSubmittingFreeIntro(false);
+    }
+  }
+
+  function switchToSingleLesson() {
+    const singleLesson = MOCK_PRODUCTS.find((p) => p.type === "single_lesson");
+    if (singleLesson) handleProductChange(singleLesson);
+  }
+
+  if (freeIntroConfirmation) {
+    return (
+      <div className="mx-auto max-w-2xl px-6 py-20 text-center">
+        <h1 className="text-3xl font-semibold tracking-tight">
+          {t("freeIntroConfirmTitle", { name: freeIntroConfirmation.firstName })}
+        </h1>
+        <p className="mt-4 text-muted-foreground">{t("freeIntroConfirmBody")}</p>
+        <div className="mt-8 inline-block rounded-2xl border border-border px-6 py-4">
+          <p className="text-sm text-muted-foreground">{t("summarySlot")}</p>
+          <p className="mt-1 text-lg font-medium">
+            {formatInTz(
+              freeIntroConfirmation.startUtc,
+              timezone,
+              "EEEE d MMMM yyyy, HH:mm",
+            )}{" "}
+            ({timezone})
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="mx-auto max-w-5xl px-6 py-12">
       <h1 className="text-3xl font-semibold tracking-tight">{t("title")}</h1>
@@ -211,7 +303,9 @@ export default function BookingPage() {
                   {t("summaryProduct")}
                 </dt>
                 <dd className="font-medium">
-                  {t("duration60")}
+                  {product.type === "free_intro"
+                    ? t("freeIntroSummaryLabel", { minutes: product.durationMinutes })
+                    : t("duration60")}
                   {product.type === "lesson_package" &&
                     ` · ${t("creditsLabel", { count: product.creditsCount })}`}
                 </dd>
@@ -230,22 +324,99 @@ export default function BookingPage() {
               <div>
                 <dt className="text-muted-foreground">{t("summaryPrice")}</dt>
                 <dd className="font-medium">
-                  {formatPrice(product.priceCents, product.currency, locale)}
+                  {product.type === "free_intro"
+                    ? t("freeIntroBadge")
+                    : formatPrice(product.priceCents, product.currency, locale)}
                 </dd>
               </div>
             </dl>
           )}
-          {checkoutError && (
-            <p className="mt-3 text-sm text-accent">{t("checkoutError")}</p>
+
+          {product?.type === "free_intro" && selectedSlot ? (
+            <>
+              <div className="mt-4 space-y-2">
+                <input
+                  type="text"
+                  autoComplete="given-name"
+                  placeholder={t("freeIntroFirstName")}
+                  value={freeIntroForm.firstName}
+                  onChange={(e) =>
+                    setFreeIntroForm((f) => ({ ...f, firstName: e.target.value }))
+                  }
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm outline-none focus:border-accent"
+                />
+                <input
+                  type="text"
+                  autoComplete="family-name"
+                  placeholder={t("freeIntroLastName")}
+                  value={freeIntroForm.lastName}
+                  onChange={(e) =>
+                    setFreeIntroForm((f) => ({ ...f, lastName: e.target.value }))
+                  }
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm outline-none focus:border-accent"
+                />
+                <input
+                  type="email"
+                  autoComplete="email"
+                  placeholder={t("freeIntroEmail")}
+                  value={freeIntroForm.email}
+                  onChange={(e) =>
+                    setFreeIntroForm((f) => ({ ...f, email: e.target.value }))
+                  }
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm outline-none focus:border-accent"
+                />
+              </div>
+
+              {freeIntroError === "already_used" && (
+                <div className="mt-3 rounded-lg bg-muted px-3 py-2.5 text-sm">
+                  <p>{t("freeIntroAlreadyUsedBody")}</p>
+                  <button
+                    type="button"
+                    onClick={switchToSingleLesson}
+                    className="mt-2 font-medium text-accent underline underline-offset-2"
+                  >
+                    {t("freeIntroAlreadyUsedCta")}
+                  </button>
+                </div>
+              )}
+              {freeIntroError === "slot_taken" && (
+                <p className="mt-3 text-sm text-accent">{t("freeIntroSlotTaken")}</p>
+              )}
+              {freeIntroError === "generic" && (
+                <p className="mt-3 text-sm text-accent">{t("freeIntroFormError")}</p>
+              )}
+
+              <button
+                type="button"
+                onClick={handleFreeIntroSubmit}
+                disabled={
+                  isSubmittingFreeIntro ||
+                  !freeIntroForm.firstName.trim() ||
+                  !freeIntroForm.lastName.trim() ||
+                  !freeIntroForm.email.trim()
+                }
+                className="mt-4 w-full rounded-full bg-accent px-4 py-2.5 text-sm font-medium text-accent-foreground transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                {isSubmittingFreeIntro
+                  ? t("freeIntroSubmitLoading")
+                  : t("freeIntroSubmit")}
+              </button>
+            </>
+          ) : (
+            <>
+              {checkoutError && (
+                <p className="mt-3 text-sm text-accent">{t("checkoutError")}</p>
+              )}
+              <button
+                type="button"
+                onClick={handleCheckout}
+                disabled={!product || !selectedSlot || isCheckingOut}
+                className="mt-6 w-full rounded-full bg-accent px-4 py-2.5 text-sm font-medium text-accent-foreground transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                {isCheckingOut ? t("continueToPaymentLoading") : t("continueToPayment")}
+              </button>
+            </>
           )}
-          <button
-            type="button"
-            onClick={handleCheckout}
-            disabled={!product || !selectedSlot || isCheckingOut}
-            className="mt-6 w-full rounded-full bg-accent px-4 py-2.5 text-sm font-medium text-accent-foreground transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-40"
-          >
-            {isCheckingOut ? t("continueToPaymentLoading") : t("continueToPayment")}
-          </button>
         </aside>
       </div>
     </div>

@@ -58,17 +58,16 @@ export const lessonCredits = pgTable("lesson_credits", {
 
 /**
  * Confirmed bookings. Stored in UTC; converted to the tutor's or a
- * customer's timezone only for display. Only ever created by the Stripe
- * webhook after a payment actually succeeds.
+ * customer's timezone only for display. Created either by the Stripe
+ * webhook after a payment succeeds (order_id/credit_id set, booking_type
+ * "single_session"/"pack"), or by the free intro consultation flow
+ * (order_id/credit_id null, booking_type "free_intro").
  */
 export const bookings = pgTable("bookings", {
   id: serial("id").primaryKey(),
-  orderId: integer("order_id")
-    .notNull()
-    .references(() => orders.id),
-  creditId: integer("credit_id")
-    .notNull()
-    .references(() => lessonCredits.id),
+  orderId: integer("order_id").references(() => orders.id),
+  creditId: integer("credit_id").references(() => lessonCredits.id),
+  bookingType: text("booking_type").notNull(),
   startAt: timestamp("start_at", { withTimezone: true }).notNull(),
   endAt: timestamp("end_at", { withTimezone: true }).notNull(),
   durationMinutes: integer("duration_minutes").notNull(),

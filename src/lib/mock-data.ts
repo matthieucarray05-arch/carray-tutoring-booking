@@ -4,21 +4,34 @@
  * bookings moved to Postgres (see lib/db/schema.ts and /api/availability).
  */
 
-export type ProductType = "single_lesson" | "lesson_package";
+export type ProductType = "single_lesson" | "lesson_package" | "free_intro";
 
-/** All lessons are 60 minutes — the only duration currently sold. */
+/** All paid lessons are 60 minutes — the only duration currently sold. */
 export const LESSON_DURATION_MINUTES = 60;
+
+/** The free intro consultation is shorter than a real lesson. */
+export const FREE_INTRO_DURATION_MINUTES = 30;
 
 export interface Product {
   id: string;
   type: ProductType;
-  durationMinutes: typeof LESSON_DURATION_MINUTES;
+  durationMinutes: number;
   creditsCount: number;
   priceCents: number;
   /** Set when the pack is discounted vs. buying that many single lessons — used for the strikethrough price. */
   compareAtPriceCents?: number;
   currency: "EUR";
 }
+
+/** Not a real purchase — booking it skips Stripe entirely (see /api/free-intro/book). */
+export const FREE_INTRO_PRODUCT: Product = {
+  id: "free-intro",
+  type: "free_intro",
+  durationMinutes: FREE_INTRO_DURATION_MINUTES,
+  creditsCount: 1,
+  priceCents: 0,
+  currency: "EUR",
+};
 
 export const MOCK_PRODUCTS: Product[] = [
   {

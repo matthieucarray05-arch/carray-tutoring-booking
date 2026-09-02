@@ -136,6 +136,119 @@ const CUSTOMER_COPY: Record<string, CustomerCopy> = {
   },
 };
 
+export interface FreeIntroEmailDetails {
+  customerName: string;
+  customerEmail: string;
+  bookingStartAt: Date;
+  bookingEndAt: Date;
+  customerTimezone: string;
+}
+
+/** Admin notification for a free intro consultation — always in English. */
+export function buildAdminFreeIntroEmail(details: FreeIntroEmailDetails): {
+  subject: string;
+  html: string;
+  text: string;
+} {
+  const slotLabel = `${formatInTz(details.bookingStartAt, details.customerTimezone, "EEEE d MMMM yyyy, HH:mm")}–${formatInTz(details.bookingEndAt, details.customerTimezone, "HH:mm")} (${details.customerTimezone})`;
+
+  const rows: [string, string][] = [
+    ["Customer", `${details.customerName} <${details.customerEmail}>`],
+    ["Type", "Free intro consultation"],
+    ["Booked slot", slotLabel],
+  ];
+
+  const subject = `New free intro consultation: ${details.customerName} — ${formatInTz(details.bookingStartAt, details.customerTimezone, "d MMM yyyy, HH:mm")}`;
+  const text = ["New free intro consultation booked", "", ...rows.map(([k, v]) => `${k}: ${v}`)].join("\n");
+  const html = `
+    <h2 style="margin:0 0 16px;font-family:sans-serif;">New free intro consultation booked</h2>
+    <table style="font-family:sans-serif;font-size:14px;border-collapse:collapse;">
+      ${rows
+        .map(
+          ([k, v]) =>
+            `<tr><td style="padding:4px 12px 4px 0;color:#666;vertical-align:top;">${escapeHtml(k)}</td><td style="padding:4px 0;">${escapeHtml(v)}</td></tr>`,
+        )
+        .join("")}
+    </table>
+  `;
+
+  return { subject, html, text };
+}
+
+interface FreeIntroCopy {
+  subject: string;
+  greeting: (name: string) => string;
+  intro: string;
+  slotLabel: string;
+  closing: string;
+}
+
+const FREE_INTRO_COPY: Record<string, FreeIntroCopy> = {
+  en: {
+    subject: "Your free intro consultation is confirmed",
+    greeting: (name) => `Hi ${name},`,
+    intro:
+      "Thanks for booking your free intro consultation! It's a chance for us to get to know each other, talk about your goals and see how I can help you improve — no cost, no obligation.",
+    slotLabel: "When",
+    closing: "See you soon!\nCarray Tutoring",
+  },
+  it: {
+    subject: "La tua consulenza gratuita è confermata",
+    greeting: (name) => `Ciao ${name},`,
+    intro:
+      "Grazie per aver prenotato la tua consulenza gratuita! È un'occasione per conoscerci, parlare dei tuoi obiettivi e capire come posso aiutarti a migliorare — senza costi né impegno.",
+    slotLabel: "Quando",
+    closing: "A presto!\nCarray Tutoring",
+  },
+  fr: {
+    subject: "Votre consultation gratuite est confirmée",
+    greeting: (name) => `Bonjour ${name},`,
+    intro:
+      "Merci d'avoir réservé votre consultation gratuite ! C'est l'occasion de faire connaissance, de parler de vos objectifs et de voir comment je peux vous aider à progresser — sans frais ni engagement.",
+    slotLabel: "Quand",
+    closing: "À bientôt !\nCarray Tutoring",
+  },
+  de: {
+    subject: "Deine kostenlose Kennenlernstunde ist bestätigt",
+    greeting: (name) => `Hallo ${name},`,
+    intro:
+      "Danke, dass du deine kostenlose Kennenlernstunde gebucht hast! Das ist eine Gelegenheit, uns kennenzulernen, über deine Ziele zu sprechen und zu sehen, wie ich dir helfen kann — ohne Kosten und ohne Verpflichtung.",
+    slotLabel: "Wann",
+    closing: "Bis bald!\nCarray Tutoring",
+  },
+};
+
+export function buildCustomerFreeIntroEmail(
+  locale: string,
+  details: FreeIntroEmailDetails,
+): { subject: string; html: string; text: string } {
+  const copy = FREE_INTRO_COPY[locale] ?? FREE_INTRO_COPY.en;
+  const slot = `${formatInTz(details.bookingStartAt, details.customerTimezone, "EEEE d MMMM yyyy, HH:mm")}–${formatInTz(details.bookingEndAt, details.customerTimezone, "HH:mm")} (${details.customerTimezone})`;
+
+  const text = [
+    copy.greeting(details.customerName),
+    "",
+    copy.intro,
+    "",
+    `${copy.slotLabel}: ${slot}`,
+    "",
+    copy.closing,
+  ].join("\n");
+
+  const html = `
+    <div style="font-family:sans-serif;font-size:15px;color:#1a1a1a;line-height:1.5;">
+      <p>${escapeHtml(copy.greeting(details.customerName))}</p>
+      <p>${escapeHtml(copy.intro)}</p>
+      <table style="border-collapse:collapse;margin:16px 0;">
+        <tr><td style="padding:4px 12px 4px 0;color:#666;">${escapeHtml(copy.slotLabel)}</td><td style="padding:4px 0;font-weight:600;">${escapeHtml(slot)}</td></tr>
+      </table>
+      <p style="white-space:pre-line;">${escapeHtml(copy.closing)}</p>
+    </div>
+  `;
+
+  return { subject: copy.subject, html, text };
+}
+
 export function buildCustomerConfirmationEmail(
   locale: string,
   details: BookingEmailDetails,

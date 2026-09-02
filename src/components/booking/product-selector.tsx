@@ -1,7 +1,7 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import { MOCK_PRODUCTS, type Product } from "@/lib/mock-data";
+import { FREE_INTRO_PRODUCT, MOCK_PRODUCTS, type Product } from "@/lib/mock-data";
 import { formatPrice } from "@/lib/format";
 
 const CREDIT_COUNTS = [4, 8] as const;
@@ -21,11 +21,13 @@ export function ProductSelector({
 
   function selectType(nextType: Product["type"]) {
     const product =
-      nextType === "single_lesson"
-        ? MOCK_PRODUCTS.find((p) => p.type === "single_lesson")
-        : (MOCK_PRODUCTS.find(
-            (p) => p.type === "lesson_package" && p.creditsCount === creditsCount,
-          ) ?? MOCK_PRODUCTS.find((p) => p.type === "lesson_package"));
+      nextType === "free_intro"
+        ? FREE_INTRO_PRODUCT
+        : nextType === "single_lesson"
+          ? MOCK_PRODUCTS.find((p) => p.type === "single_lesson")
+          : (MOCK_PRODUCTS.find(
+              (p) => p.type === "lesson_package" && p.creditsCount === creditsCount,
+            ) ?? MOCK_PRODUCTS.find((p) => p.type === "lesson_package"));
     if (product) onChange(product);
   }
 
@@ -38,8 +40,8 @@ export function ProductSelector({
 
   return (
     <div className="space-y-4">
-      <div className="inline-flex rounded-full border border-border p-1 text-sm">
-        {(["single_lesson", "lesson_package"] as const).map((t2) => (
+      <div className="inline-flex flex-wrap rounded-full border border-border p-1 text-sm">
+        {(["free_intro", "single_lesson", "lesson_package"] as const).map((t2) => (
           <button
             key={t2}
             type="button"
@@ -50,10 +52,28 @@ export function ProductSelector({
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
-            {t2 === "single_lesson" ? t("singleLesson") : t("package")}
+            {t2 === "free_intro"
+              ? t("freeIntroLabel")
+              : t2 === "single_lesson"
+                ? t("singleLesson")
+                : t("package")}
           </button>
         ))}
       </div>
+
+      {type === "free_intro" && (
+        <div className="rounded-2xl border border-accent bg-accent-soft p-5">
+          <div className="flex items-baseline gap-2">
+            <p className="text-lg font-semibold">{t("freeIntroCardTitle")}</p>
+            <span className="rounded-full bg-accent px-2 py-0.5 text-xs font-semibold text-accent-foreground">
+              {t("freeIntroBadge")}
+            </span>
+          </div>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {t("freeIntroCardBody", { minutes: FREE_INTRO_PRODUCT.durationMinutes })}
+          </p>
+        </div>
+      )}
 
       {type === "lesson_package" && (
         <div className="flex flex-wrap gap-3">

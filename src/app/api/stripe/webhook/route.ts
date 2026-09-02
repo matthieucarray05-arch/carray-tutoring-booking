@@ -163,6 +163,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
     .values({
       orderId: order.id,
       creditId: firstCredit.id,
+      bookingType: productType === "lesson_package" ? "pack" : "single_session",
       startAt: slotStart,
       endAt: slotEnd,
       durationMinutes,

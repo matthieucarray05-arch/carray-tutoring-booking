@@ -4,7 +4,10 @@ import { getResend } from "@/lib/email/client";
 import {
   buildAdminNotificationEmail,
   buildCustomerConfirmationEmail,
+  buildAdminFreeIntroEmail,
+  buildCustomerFreeIntroEmail,
   type BookingEmailDetails,
+  type FreeIntroEmailDetails,
 } from "@/lib/email/templates";
 
 export interface NewBookingNotification {
@@ -72,6 +75,66 @@ export async function notifyNewBooking(
     if (result.status === "rejected") {
       console.error(
         `notifyNewBooking: failed to send ${i === 0 ? "admin" : "customer"} email`,
+        result.reason,
+      );
+    }
+  }
+}
+
+export interface FreeIntroBookingNotification {
+  customerName: string;
+  customerEmail: string;
+  bookingStartAt: Date;
+  bookingEndAt: Date;
+  customerTimezone: string;
+  locale: string;
+}
+
+/**
+ * Sends the admin notification and customer confirmation emails for a free
+ * intro consultation booking — same delivery pattern as notifyNewBooking,
+ * just with the free-intro copy (no billing/pricing details to show).
+ */
+export async function notifyFreeIntroBooking(
+  details: FreeIntroBookingNotification,
+): Promise<void> {
+  const emailDetails: FreeIntroEmailDetails = details;
+  const adminEmail = process.env.ADMIN_EMAIL;
+  const from = process.env.EMAIL_FROM;
+
+  if (!adminEmail || !from) {
+    console.warn(
+      "notifyFreeIntroBooking: ADMIN_EMAIL or EMAIL_FROM not set — skipping email, logging instead.",
+      JSON.stringify(details),
+    );
+    return;
+  }
+
+  const resend = getResend();
+  const admin = buildAdminFreeIntroEmail(emailDetails);
+  const customer = buildCustomerFreeIntroEmail(details.locale, emailDetails);
+
+  const results = await Promise.allSettled([
+    resend.emails.send({
+      from,
+      to: adminEmail,
+      subject: admin.subject,
+      html: admin.html,
+      text: admin.text,
+    }),
+    resend.emails.send({
+      from,
+      to: details.customerEmail,
+      subject: customer.subject,
+      html: customer.html,
+      text: customer.text,
+    }),
+  ]);
+
+  for (const [i, result] of results.entries()) {
+    if (result.status === "rejected") {
+      console.error(
+        `notifyFreeIntroBooking: failed to send ${i === 0 ? "admin" : "customer"} email`,
         result.reason,
       );
     }
