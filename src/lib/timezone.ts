@@ -1,4 +1,12 @@
 import { formatInTimeZone, toZonedTime, fromZonedTime } from "date-fns-tz";
+import { de, enUS, fr, it, type Locale } from "date-fns/locale";
+
+const DATE_FNS_LOCALES: Record<string, Locale> = { en: enUS, it, fr, de };
+
+/** Resolves an app locale code ("en"/"it"/"fr"/"de") to its date-fns Locale, for month/weekday names. */
+export function resolveDateFnsLocale(locale: string): Locale {
+  return DATE_FNS_LOCALES[locale] ?? enUS;
+}
 
 /** Falls back to UTC if the browser can't tell us its timezone. */
 export function detectBrowserTimezone(): string {
@@ -30,13 +38,15 @@ export function listSupportedTimezones(): string[] {
   ];
 }
 
-/** A UTC instant, formatted for display in the given IANA timezone. */
+/** A UTC instant, formatted for display in the given IANA timezone. Pass a
+ * date-fns Locale (see resolveDateFnsLocale) to localize month/weekday names. */
 export function formatInTz(
   utcDate: Date,
   timeZone: string,
   pattern: string,
+  locale?: Locale,
 ): string {
-  return formatInTimeZone(utcDate, timeZone, pattern);
+  return formatInTimeZone(utcDate, timeZone, pattern, locale ? { locale } : undefined);
 }
 
 /** A UTC instant, as a Date whose local fields reflect the given timezone (for calendar-grid math). */

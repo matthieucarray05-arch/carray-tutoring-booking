@@ -7,7 +7,7 @@ import { Calendar } from "@/components/booking/calendar";
 import { SlotPicker } from "@/components/booking/slot-picker";
 import { TimezoneSelector } from "@/components/booking/timezone-selector";
 import { CheckoutStatusBanner } from "@/components/booking/checkout-status-banner";
-import { detectBrowserTimezone, formatInTz } from "@/lib/timezone";
+import { detectBrowserTimezone, formatInTz, resolveDateFnsLocale } from "@/lib/timezone";
 import type { AvailableSlot } from "@/lib/availability";
 import { MOCK_PRODUCTS, type Product } from "@/lib/mock-data";
 import { formatPrice } from "@/lib/format";
@@ -224,6 +224,7 @@ export default function BookingPage() {
               freeIntroConfirmation.startUtc,
               timezone,
               "EEEE d MMMM yyyy, HH:mm",
+              resolveDateFnsLocale(locale),
             )}{" "}
             ({timezone})
           </p>
@@ -317,6 +318,7 @@ export default function BookingPage() {
                     selectedSlot.startUtc,
                     timezone,
                     "EEEE d MMMM yyyy, HH:mm",
+                    resolveDateFnsLocale(locale),
                   )}{" "}
                   ({timezone})
                 </dd>

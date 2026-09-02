@@ -1,4 +1,5 @@
-import { formatInTz } from "@/lib/timezone";
+import { formatInTz, resolveDateFnsLocale } from "@/lib/timezone";
+import { SITE_URL, CONTACT_PHONE } from "@/lib/config";
 
 export interface BookingEmailDetails {
   customerName: string | null;
@@ -32,6 +33,28 @@ function escapeHtml(value: string): string {
     .replace(/'/g, "&#39;");
 }
 
+/** Logo + phone number, left-aligned at the bottom of every outgoing email. */
+function emailFooterHtml(): string {
+  return `
+    <table style="margin-top:28px;border-collapse:collapse;">
+      <tr>
+        <td>
+          <img src="${SITE_URL}/logo.png" alt="Carray Tutoring" height="36" style="display:block;height:36px;width:auto;" />
+        </td>
+      </tr>
+      <tr>
+        <td style="padding-top:8px;font-family:sans-serif;font-size:13px;color:#666;">
+          ${escapeHtml(CONTACT_PHONE)}
+        </td>
+      </tr>
+    </table>
+  `;
+}
+
+function emailFooterText(): string {
+  return `\n\nCarray Tutoring\n${CONTACT_PHONE}`;
+}
+
 /** Admin notification — always in English, mirrors the previous console.log content. */
 export function buildAdminNotificationEmail(details: BookingEmailDetails): {
   subject: string;
@@ -53,7 +76,7 @@ export function buildAdminNotificationEmail(details: BookingEmailDetails): {
 
   const subject = `New booking: ${details.customerName ?? details.customerEmail} — ${formatInTz(details.bookingStartAt, details.customerTimezone, "d MMM yyyy, HH:mm")}`;
 
-  const text = ["New booking paid", "", ...rows.map(([k, v]) => `${k}: ${v}`)].join("\n");
+  const text = ["New booking paid", "", ...rows.map(([k, v]) => `${k}: ${v}`)].join("\n") + emailFooterText();
 
   const html = `
     <h2 style="margin:0 0 16px;font-family:sans-serif;">New booking paid</h2>
@@ -65,6 +88,7 @@ export function buildAdminNotificationEmail(details: BookingEmailDetails): {
         )
         .join("")}
     </table>
+    ${emailFooterHtml()}
   `;
 
   return { subject, html, text };
@@ -159,7 +183,7 @@ export function buildAdminFreeIntroEmail(details: FreeIntroEmailDetails): {
   ];
 
   const subject = `New free intro consultation: ${details.customerName} — ${formatInTz(details.bookingStartAt, details.customerTimezone, "d MMM yyyy, HH:mm")}`;
-  const text = ["New free intro consultation booked", "", ...rows.map(([k, v]) => `${k}: ${v}`)].join("\n");
+  const text = ["New free intro consultation booked", "", ...rows.map(([k, v]) => `${k}: ${v}`)].join("\n") + emailFooterText();
   const html = `
     <h2 style="margin:0 0 16px;font-family:sans-serif;">New free intro consultation booked</h2>
     <table style="font-family:sans-serif;font-size:14px;border-collapse:collapse;">
@@ -170,6 +194,7 @@ export function buildAdminFreeIntroEmail(details: FreeIntroEmailDetails): {
         )
         .join("")}
     </table>
+    ${emailFooterHtml()}
   `;
 
   return { subject, html, text };
@@ -223,7 +248,8 @@ export function buildCustomerFreeIntroEmail(
   details: FreeIntroEmailDetails,
 ): { subject: string; html: string; text: string } {
   const copy = FREE_INTRO_COPY[locale] ?? FREE_INTRO_COPY.en;
-  const slot = `${formatInTz(details.bookingStartAt, details.customerTimezone, "EEEE d MMMM yyyy, HH:mm")}–${formatInTz(details.bookingEndAt, details.customerTimezone, "HH:mm")} (${details.customerTimezone})`;
+  const dateFnsLocale = resolveDateFnsLocale(locale);
+  const slot = `${formatInTz(details.bookingStartAt, details.customerTimezone, "EEEE d MMMM yyyy, HH:mm", dateFnsLocale)}–${formatInTz(details.bookingEndAt, details.customerTimezone, "HH:mm")} (${details.customerTimezone})`;
 
   const text = [
     copy.greeting(details.customerName),
@@ -233,7 +259,7 @@ export function buildCustomerFreeIntroEmail(
     `${copy.slotLabel}: ${slot}`,
     "",
     copy.closing,
-  ].join("\n");
+  ].join("\n") + emailFooterText();
 
   const html = `
     <div style="font-family:sans-serif;font-size:15px;color:#1a1a1a;line-height:1.5;">
@@ -243,6 +269,7 @@ export function buildCustomerFreeIntroEmail(
         <tr><td style="padding:4px 12px 4px 0;color:#666;">${escapeHtml(copy.slotLabel)}</td><td style="padding:4px 0;font-weight:600;">${escapeHtml(slot)}</td></tr>
       </table>
       <p style="white-space:pre-line;">${escapeHtml(copy.closing)}</p>
+      ${emailFooterHtml()}
     </div>
   `;
 
@@ -254,7 +281,8 @@ export function buildCustomerConfirmationEmail(
   details: BookingEmailDetails,
 ): { subject: string; html: string; text: string } {
   const copy = CUSTOMER_COPY[locale] ?? CUSTOMER_COPY.en;
-  const slot = `${formatInTz(details.bookingStartAt, details.customerTimezone, "EEEE d MMMM yyyy, HH:mm")}–${formatInTz(details.bookingEndAt, details.customerTimezone, "HH:mm")} (${details.customerTimezone})`;
+  const dateFnsLocale = resolveDateFnsLocale(locale);
+  const slot = `${formatInTz(details.bookingStartAt, details.customerTimezone, "EEEE d MMMM yyyy, HH:mm", dateFnsLocale)}–${formatInTz(details.bookingEndAt, details.customerTimezone, "HH:mm")} (${details.customerTimezone})`;
   const productLine =
     details.creditsCount > 1
       ? `${details.creditsCount} × 60 min`
@@ -285,8 +313,9 @@ export function buildCustomerConfirmationEmail(
       </table>
       ${remainingLine ? `<p>${escapeHtml(remainingLine)}</p>` : ""}
       <p style="white-space:pre-line;">${escapeHtml(copy.closing)}</p>
+      ${emailFooterHtml()}
     </div>
   `;
 
-  return { subject: copy.subject, html, text: textLines.join("\n") };
+  return { subject: copy.subject, html, text: textLines.join("\n") + emailFooterText() };
 }

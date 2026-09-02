@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useLocale } from "next-intl";
-import { de, enUS, fr, it } from "date-fns/locale";
+import { resolveDateFnsLocale } from "@/lib/timezone";
 import {
   addDays,
   addMonths,
@@ -18,8 +18,6 @@ import {
   subMonths,
 } from "date-fns";
 
-const DATE_FNS_LOCALES = { en: enUS, it, fr, de };
-
 export function Calendar({
   selectedDate,
   onSelect,
@@ -30,8 +28,7 @@ export function Calendar({
   availableDates: Set<string>;
 }) {
   const locale = useLocale();
-  const dateFnsLocale =
-    DATE_FNS_LOCALES[locale as keyof typeof DATE_FNS_LOCALES] ?? enUS;
+  const dateFnsLocale = resolveDateFnsLocale(locale);
   const [month, setMonth] = useState(() => startOfMonth(new Date()));
 
   const gridStart = startOfWeek(startOfMonth(month), { weekStartsOn: 1 });
