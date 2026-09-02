@@ -4,6 +4,8 @@ import type { Locale } from "@/i18n/routing";
 import { ReviewsSection } from "@/components/reviews/reviews-section";
 import { Reveal } from "@/components/motion/reveal";
 import { HoverLift, HoverScale } from "@/components/motion/hover-lift";
+import { ParallaxPhoto } from "@/components/motion/parallax-photo";
+import { IconBook, IconCalendar, IconCard } from "@/components/icons";
 
 export default async function HomePage({
   params,
@@ -16,39 +18,50 @@ export default async function HomePage({
   const t = await getTranslations("Home");
 
   const steps = [
-    { title: t("step1Title"), body: t("step1Body") },
-    { title: t("step2Title"), body: t("step2Body") },
-    { title: t("step3Title"), body: t("step3Body") },
+    { title: t("step1Title"), body: t("step1Body"), Icon: IconBook },
+    { title: t("step2Title"), body: t("step2Body"), Icon: IconCalendar },
+    { title: t("step3Title"), body: t("step3Body"), Icon: IconCard },
   ];
 
   return (
     <div>
-      <section className="mx-auto max-w-4xl px-6 pb-20 pt-24 text-center sm:pb-28 sm:pt-32">
-        <Reveal trigger="mount">
-          <p className="kicker justify-center">Carray Tutoring</p>
-        </Reveal>
-        <Reveal trigger="mount" delay={0.08}>
-          <h1 className="mt-5 text-4xl font-semibold leading-[1.1] tracking-tight sm:text-6xl">
-            {t("heroTitle")}
-          </h1>
-        </Reveal>
-        <Reveal trigger="mount" delay={0.16}>
-          <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
-            {t("heroSubtitle")}
-          </p>
-        </Reveal>
-        <Reveal trigger="mount" delay={0.24}>
-          <HoverScale className="inline-block">
-            <Link
-              href="/booking"
-              className="mt-9 inline-block rounded-full bg-accent px-9 py-3.5 text-sm font-medium tracking-wide text-accent-foreground transition-colors hover:bg-accent-hover"
-            >
-              {t("heroCta")}
-            </Link>
-          </HoverScale>
-          <p className="mt-4 text-sm font-light italic text-muted-foreground">
-            {t("heroTagline")}
-          </p>
+      <section className="mx-auto grid max-w-6xl gap-14 px-6 pb-20 pt-16 sm:pb-28 sm:pt-24 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-10">
+        <div className="text-center lg:text-left">
+          <Reveal trigger="mount">
+            <p className="kicker justify-center lg:justify-start">Carray Tutoring</p>
+          </Reveal>
+          <Reveal trigger="mount" delay={0.08}>
+            <h1 className="font-display mt-5 text-4xl font-medium leading-[1.08] tracking-tight sm:text-6xl">
+              {t("heroTitle")}
+            </h1>
+          </Reveal>
+          <Reveal trigger="mount" delay={0.16}>
+            <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground lg:mx-0">
+              {t("heroSubtitle")}
+            </p>
+          </Reveal>
+          <Reveal trigger="mount" delay={0.24}>
+            <HoverScale className="inline-block">
+              <Link
+                href="/booking"
+                className="mt-9 inline-block rounded-full bg-accent px-9 py-3.5 text-sm font-medium tracking-wide text-accent-foreground transition-colors hover:bg-accent-hover"
+              >
+                {t("heroCta")}
+              </Link>
+            </HoverScale>
+            <p className="mt-4 text-sm font-light italic text-muted-foreground">
+              {t("heroTagline")}
+            </p>
+          </Reveal>
+        </div>
+
+        <Reveal trigger="mount" delay={0.2} className="hidden lg:block">
+          <ParallaxPhoto
+            src="/tutor-photo.jpg"
+            alt="Matthieu Carray"
+            range={40}
+            className="aspect-[4/5] rounded-[2rem] shadow-[0_24px_64px_-24px_rgba(21,17,15,0.35)]"
+          />
         </Reveal>
       </section>
 
@@ -61,8 +74,13 @@ export default async function HomePage({
             {steps.map((step, i) => (
               <Reveal key={step.title} delay={i * 0.1}>
                 <HoverLift className="rounded-2xl border border-border bg-background p-7 shadow-[0_1px_2px_rgba(21,17,15,0.03),0_16px_32px_-24px_rgba(21,17,15,0.18)]">
-                  <h3 className="font-semibold tracking-tight">{step.title}</h3>
-                  <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">
+                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-accent-soft text-accent">
+                    <step.Icon className="h-5 w-5" />
+                  </span>
+                  <h3 className="font-display mt-4 text-lg font-medium tracking-tight">
+                    {step.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                     {step.body}
                   </p>
                 </HoverLift>
@@ -86,6 +104,35 @@ export default async function HomePage({
                 ))}
             </div>
           </Reveal>
+        </div>
+      </section>
+
+      <section className="bg-muted">
+        <div className="mx-auto max-w-5xl px-6 py-20 sm:py-24">
+          <Reveal>
+            <p className="kicker">{t("aboutTitle")}</p>
+          </Reveal>
+          <div className="mt-10 grid gap-10 sm:grid-cols-[0.85fr_1.15fr] sm:items-start sm:gap-14">
+            <Reveal delay={0.1} className="sm:sticky sm:top-24">
+              <ParallaxPhoto
+                src="/tutor-photo.jpg"
+                alt="Matthieu Carray"
+                range={24}
+                className="aspect-[4/5] max-w-sm rounded-[1.5rem] shadow-[0_20px_48px_-20px_rgba(21,17,15,0.3)]"
+              />
+            </Reveal>
+            <Reveal delay={0.2}>
+              <h3 className="font-display text-3xl font-medium tracking-tight">
+                {t("aboutName")}
+              </h3>
+              <p className="mt-1 text-sm font-medium uppercase tracking-wide text-accent">
+                {t("aboutRole")}
+              </p>
+              <p className="mt-6 text-[15px] leading-relaxed text-foreground">
+                {t("aboutBody")}
+              </p>
+            </Reveal>
+          </div>
         </div>
       </section>
 

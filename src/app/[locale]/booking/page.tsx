@@ -219,7 +219,7 @@ export default function BookingPage() {
         transition={{ duration: 0.4, ease: "easeOut" }}
         className="mx-auto max-w-2xl px-6 py-20 text-center"
       >
-        <h1 className="text-3xl font-semibold tracking-tight">
+        <h1 className="font-display text-3xl font-medium tracking-tight">
           {t("freeIntroConfirmTitle", { name: freeIntroConfirmation.firstName })}
         </h1>
         <p className="mt-4 text-muted-foreground">{t("freeIntroConfirmBody")}</p>
@@ -241,7 +241,7 @@ export default function BookingPage() {
 
   return (
     <div className="mx-auto max-w-5xl px-6 py-12">
-      <h1 className="text-3xl font-semibold tracking-tight">{t("title")}</h1>
+      <h1 className="font-display text-3xl font-medium tracking-tight">{t("title")}</h1>
       <p className="mt-2 text-muted-foreground">{t("subtitle")}</p>
 
       <Suspense fallback={null}>
