@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { motion } from "framer-motion";
 import { formatInTz } from "@/lib/timezone";
 import type { AvailableSlot } from "@/lib/availability";
 
@@ -41,10 +42,12 @@ export function SlotPicker({
               const isSelected =
                 selectedSlot?.startUtc.getTime() === slot.startUtc.getTime();
               return (
-                <button
+                <motion.button
                   key={slot.startUtc.toISOString()}
                   type="button"
                   onClick={() => onSelect(slot)}
+                  whileHover={{ scale: 1.06 }}
+                  whileTap={{ scale: 0.94 }}
                   className={`rounded-lg border px-3 py-1.5 text-sm font-medium transition-colors ${
                     isSelected
                       ? "border-accent bg-accent text-accent-foreground"
@@ -52,7 +55,7 @@ export function SlotPicker({
                   }`}
                 >
                   {formatInTz(slot.startUtc, timezone, "HH:mm")}
-                </button>
+                </motion.button>
               );
             })}
           </div>

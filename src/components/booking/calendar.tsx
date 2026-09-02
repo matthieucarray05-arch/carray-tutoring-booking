@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useLocale } from "next-intl";
+import { motion, AnimatePresence } from "framer-motion";
 import { resolveDateFnsLocale } from "@/lib/timezone";
 import {
   addDays,
@@ -73,39 +74,50 @@ export function Calendar({
         ))}
       </div>
 
-      <div className="grid grid-cols-7 gap-1">
-        {days.map((day) => {
-          const dateStr = format(day, "yyyy-MM-dd");
-          const inMonth = isSameMonth(day, month);
-          const isPast = isBefore(day, today);
-          const hasSlots = availableDates.has(dateStr);
-          const isSelected = selectedDate === dateStr;
-          const disabled = isPast || !hasSlots;
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={format(month, "yyyy-MM")}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.15 }}
+          className="grid grid-cols-7 gap-1"
+        >
+          {days.map((day) => {
+            const dateStr = format(day, "yyyy-MM-dd");
+            const inMonth = isSameMonth(day, month);
+            const isPast = isBefore(day, today);
+            const hasSlots = availableDates.has(dateStr);
+            const isSelected = selectedDate === dateStr;
+            const disabled = isPast || !hasSlots;
 
-          return (
-            <button
-              key={dateStr}
-              type="button"
-              disabled={disabled}
-              onClick={() => onSelect(dateStr)}
-              className={`relative aspect-square rounded-lg text-sm transition-colors ${
-                !inMonth ? "text-muted-foreground/40" : ""
-              } ${
-                isSelected
-                  ? "bg-accent text-accent-foreground"
-                  : disabled
-                    ? "cursor-not-allowed text-muted-foreground/30"
-                    : "hover:bg-muted"
-              }`}
-            >
-              {format(day, "d")}
-              {hasSlots && !isSelected && (
-                <span className="absolute bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-accent" />
-              )}
-            </button>
-          );
-        })}
-      </div>
+            return (
+              <motion.button
+                key={dateStr}
+                type="button"
+                disabled={disabled}
+                onClick={() => onSelect(dateStr)}
+                whileHover={disabled ? undefined : { scale: 1.1 }}
+                whileTap={disabled ? undefined : { scale: 0.92 }}
+                className={`relative aspect-square rounded-lg text-sm transition-colors ${
+                  !inMonth ? "text-muted-foreground/40" : ""
+                } ${
+                  isSelected
+                    ? "bg-accent text-accent-foreground"
+                    : disabled
+                      ? "cursor-not-allowed text-muted-foreground/30"
+                      : "hover:bg-muted"
+                }`}
+              >
+                {format(day, "d")}
+                {hasSlots && !isSelected && (
+                  <span className="absolute bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-accent" />
+                )}
+              </motion.button>
+            );
+          })}
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { Suspense, useEffect, useMemo, useState } from "react";
+import { motion } from "framer-motion";
 import { useLocale, useTranslations } from "next-intl";
 import { ProductSelector } from "@/components/booking/product-selector";
 import { Calendar } from "@/components/booking/calendar";
@@ -212,7 +213,12 @@ export default function BookingPage() {
 
   if (freeIntroConfirmation) {
     return (
-      <div className="mx-auto max-w-2xl px-6 py-20 text-center">
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+        className="mx-auto max-w-2xl px-6 py-20 text-center"
+      >
         <h1 className="text-3xl font-semibold tracking-tight">
           {t("freeIntroConfirmTitle", { name: freeIntroConfirmation.firstName })}
         </h1>
@@ -229,7 +235,7 @@ export default function BookingPage() {
             ({timezone})
           </p>
         </div>
-      </div>
+      </motion.div>
     );
   }
 
@@ -388,9 +394,11 @@ export default function BookingPage() {
                 <p className="mt-3 text-sm text-accent">{t("freeIntroFormError")}</p>
               )}
 
-              <button
+              <motion.button
                 type="button"
                 onClick={handleFreeIntroSubmit}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 disabled={
                   isSubmittingFreeIntro ||
                   !freeIntroForm.firstName.trim() ||
@@ -402,21 +410,23 @@ export default function BookingPage() {
                 {isSubmittingFreeIntro
                   ? t("freeIntroSubmitLoading")
                   : t("freeIntroSubmit")}
-              </button>
+              </motion.button>
             </>
           ) : (
             <>
               {checkoutError && (
                 <p className="mt-3 text-sm text-accent">{t("checkoutError")}</p>
               )}
-              <button
+              <motion.button
                 type="button"
                 onClick={handleCheckout}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 disabled={!product || !selectedSlot || isCheckingOut}
                 className="mt-6 w-full rounded-full bg-accent px-4 py-2.5 text-sm font-medium text-accent-foreground transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-40"
               >
                 {isCheckingOut ? t("continueToPaymentLoading") : t("continueToPayment")}
-              </button>
+              </motion.button>
             </>
           )}
         </aside>

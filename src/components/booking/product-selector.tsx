@@ -1,6 +1,7 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
+import { motion } from "framer-motion";
 import { FREE_INTRO_PRODUCT, MOCK_PRODUCTS, type Product } from "@/lib/mock-data";
 import { formatPrice } from "@/lib/format";
 
@@ -42,10 +43,11 @@ export function ProductSelector({
     <div className="space-y-4">
       <div className="inline-flex flex-wrap rounded-full border border-border p-1 text-sm">
         {(["free_intro", "single_lesson", "lesson_package"] as const).map((t2) => (
-          <button
+          <motion.button
             key={t2}
             type="button"
             onClick={() => selectType(t2)}
+            whileTap={{ scale: 0.95 }}
             className={`rounded-full px-4 py-1.5 font-medium transition-colors ${
               type === t2
                 ? "bg-accent text-accent-foreground"
@@ -57,12 +59,17 @@ export function ProductSelector({
               : t2 === "single_lesson"
                 ? t("singleLesson")
                 : t("package")}
-          </button>
+          </motion.button>
         ))}
       </div>
 
       {type === "free_intro" && (
-        <div className="rounded-2xl border border-accent bg-accent-soft p-5">
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.25 }}
+          className="rounded-2xl border border-accent bg-accent-soft p-5"
+        >
           <div className="flex items-baseline gap-2">
             <p className="text-lg font-semibold">{t("freeIntroCardTitle")}</p>
             <span className="rounded-full bg-accent px-2 py-0.5 text-xs font-semibold text-accent-foreground">
@@ -72,7 +79,7 @@ export function ProductSelector({
           <p className="mt-1 text-sm text-muted-foreground">
             {t("freeIntroCardBody", { minutes: FREE_INTRO_PRODUCT.durationMinutes })}
           </p>
-        </div>
+        </motion.div>
       )}
 
       {type === "lesson_package" && (
@@ -103,10 +110,13 @@ export function ProductSelector({
             : 0;
 
           return (
-            <button
+            <motion.button
               key={product.id}
               type="button"
               onClick={() => onChange(product)}
+              whileHover={{ y: -3 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.15 }}
               className={`rounded-2xl border p-5 text-left shadow-[0_1px_2px_rgba(21,17,15,0.03),0_16px_32px_-24px_rgba(21,17,15,0.18)] transition-colors ${
                 isSelected
                   ? "border-accent bg-accent-soft"
@@ -145,7 +155,7 @@ export function ProductSelector({
                   {t("perLesson")}
                 </p>
               )}
-            </button>
+            </motion.button>
           );
         })}
       </div>
