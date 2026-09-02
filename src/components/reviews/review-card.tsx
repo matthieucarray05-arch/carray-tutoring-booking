@@ -18,10 +18,10 @@ export function ReviewCard({
     <motion.div
       whileHover={{ y: -4 }}
       transition={{ duration: 0.2 }}
-      className="rounded-2xl border border-border bg-background p-7 shadow-[0_1px_2px_rgba(21,17,15,0.03),0_16px_32px_-24px_rgba(21,17,15,0.18)]"
+      className="flex h-full flex-col rounded-2xl border border-border bg-background p-7 shadow-[0_1px_2px_rgba(21,17,15,0.03),0_16px_32px_-24px_rgba(21,17,15,0.18)]"
     >
       <StarRating rating={rating} />
-      <p className="mt-4 text-[15px] leading-relaxed text-foreground">
+      <p className="mt-4 flex-1 text-[15px] leading-relaxed text-foreground">
         “{quote}”
       </p>
       <div className="mt-6 flex items-center gap-3">

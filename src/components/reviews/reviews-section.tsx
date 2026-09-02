@@ -18,9 +18,9 @@ export async function ReviewsSection() {
         <Reveal>
           <p className="kicker justify-center">{t("title")}</p>
         </Reveal>
-        <div className="mt-10 grid gap-5 text-left sm:grid-cols-3">
+        <div className="mt-10 grid items-stretch gap-5 text-left sm:grid-cols-3">
           {items.map((item, i) => (
-            <Reveal key={i} delay={i * 0.1}>
+            <Reveal key={i} delay={i * 0.1} className="h-full">
               <ReviewCard
                 name={item.name}
                 quote={item.quote}

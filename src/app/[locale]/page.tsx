@@ -132,7 +132,7 @@ export default async function HomePage({
             <p className="mt-1 text-sm font-medium uppercase tracking-wide text-accent">
               {t("aboutRole")}
             </p>
-            <p className="mx-auto mt-5 max-w-xl text-[15px] leading-relaxed text-foreground">
+            <p className="mx-auto mt-5 max-w-xl text-justify text-[15px] leading-relaxed text-foreground">
               {t("aboutBody")}
             </p>
           </Reveal>
