@@ -11,11 +11,13 @@ export function ParallaxPhoto({
   alt,
   className,
   range = 60,
+  objectPosition = "center",
 }: {
   src: string;
   alt: string;
   className?: string;
   range?: number;
+  objectPosition?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -36,6 +38,7 @@ export function ParallaxPhoto({
           fill
           sizes="(min-width: 1024px) 40vw, 90vw"
           className="object-cover"
+          style={{ objectPosition }}
           priority
         />
       </motion.div>

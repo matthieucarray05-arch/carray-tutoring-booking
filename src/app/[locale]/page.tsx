@@ -1,4 +1,5 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { ReviewsSection } from "@/components/reviews/reviews-section";
@@ -25,32 +26,43 @@ export default async function HomePage({
 
   return (
     <div>
-      <section className="mx-auto max-w-4xl px-6 pb-20 pt-24 text-center sm:pb-28 sm:pt-32">
-        <Reveal trigger="mount">
-          <p className="kicker justify-center">Carray Tutoring</p>
-        </Reveal>
-        <Reveal trigger="mount" delay={0.08}>
-          <h1 className="font-display mt-5 text-4xl font-medium leading-[1.08] tracking-tight sm:text-6xl">
-            {t("heroTitle")}
-          </h1>
-        </Reveal>
-        <Reveal trigger="mount" delay={0.16}>
-          <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
-            {t("heroSubtitle")}
-          </p>
-        </Reveal>
-        <Reveal trigger="mount" delay={0.24}>
-          <HoverScale className="inline-block">
-            <Link
-              href="/booking"
-              className="mt-9 inline-block rounded-full bg-accent px-9 py-3.5 text-sm font-medium tracking-wide text-accent-foreground transition-colors hover:bg-accent-hover"
-            >
-              {t("heroCta")}
-            </Link>
-          </HoverScale>
-          <p className="mt-4 text-sm font-light italic text-muted-foreground">
-            {t("heroTagline")}
-          </p>
+      <section className="mx-auto grid max-w-6xl gap-14 px-6 pb-20 pt-16 sm:pb-28 sm:pt-24 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-10">
+        <div className="text-center lg:text-left">
+          <Reveal trigger="mount">
+            <p className="kicker justify-center lg:justify-start">Carray Tutoring</p>
+          </Reveal>
+          <Reveal trigger="mount" delay={0.08}>
+            <h1 className="font-display mt-5 text-4xl font-medium leading-[1.08] tracking-tight sm:text-6xl">
+              {t("heroTitle")}
+            </h1>
+          </Reveal>
+          <Reveal trigger="mount" delay={0.16}>
+            <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground lg:mx-0">
+              {t("heroSubtitle")}
+            </p>
+          </Reveal>
+          <Reveal trigger="mount" delay={0.24}>
+            <HoverScale className="inline-block">
+              <Link
+                href="/booking"
+                className="mt-9 inline-block rounded-full bg-accent px-9 py-3.5 text-sm font-medium tracking-wide text-accent-foreground transition-colors hover:bg-accent-hover"
+              >
+                {t("heroCta")}
+              </Link>
+            </HoverScale>
+            <p className="mt-4 text-sm font-light italic text-muted-foreground">
+              {t("heroTagline")}
+            </p>
+          </Reveal>
+        </div>
+
+        <Reveal trigger="mount" delay={0.2} className="hidden lg:block">
+          <ParallaxPhoto
+            src="/hero-graphic.jpg"
+            alt=""
+            range={30}
+            className="aspect-square rounded-[2rem] shadow-[0_24px_64px_-24px_rgba(21,17,15,0.35)]"
+          />
         </Reveal>
       </section>
 
@@ -102,12 +114,16 @@ export default async function HomePage({
             <p className="kicker justify-center">{t("aboutTitle")}</p>
           </Reveal>
           <Reveal delay={0.1}>
-            <ParallaxPhoto
-              src="/tutor-photo.jpg"
-              alt="Matthieu Carray"
-              range={16}
-              className="relative mx-auto mt-6 aspect-square w-36 rounded-full shadow-[0_16px_36px_-18px_rgba(21,17,15,0.35)] sm:w-40"
-            />
+            <div className="relative mx-auto mt-6 aspect-square w-36 overflow-hidden rounded-full shadow-[0_16px_36px_-18px_rgba(21,17,15,0.35)] sm:w-40">
+              <Image
+                src="/tutor-photo.jpg"
+                alt="Matthieu Carray"
+                fill
+                sizes="160px"
+                className="object-cover"
+                style={{ objectPosition: "center 12%" }}
+              />
+            </div>
           </Reveal>
           <Reveal delay={0.18}>
             <h3 className="font-display mt-6 text-2xl font-medium tracking-tight">
