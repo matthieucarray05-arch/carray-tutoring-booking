@@ -25,43 +25,32 @@ export default async function HomePage({
 
   return (
     <div>
-      <section className="mx-auto grid max-w-6xl gap-14 px-6 pb-20 pt-16 sm:pb-28 sm:pt-24 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-10">
-        <div className="text-center lg:text-left">
-          <Reveal trigger="mount">
-            <p className="kicker justify-center lg:justify-start">Carray Tutoring</p>
-          </Reveal>
-          <Reveal trigger="mount" delay={0.08}>
-            <h1 className="font-display mt-5 text-4xl font-medium leading-[1.08] tracking-tight sm:text-6xl">
-              {t("heroTitle")}
-            </h1>
-          </Reveal>
-          <Reveal trigger="mount" delay={0.16}>
-            <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground lg:mx-0">
-              {t("heroSubtitle")}
-            </p>
-          </Reveal>
-          <Reveal trigger="mount" delay={0.24}>
-            <HoverScale className="inline-block">
-              <Link
-                href="/booking"
-                className="mt-9 inline-block rounded-full bg-accent px-9 py-3.5 text-sm font-medium tracking-wide text-accent-foreground transition-colors hover:bg-accent-hover"
-              >
-                {t("heroCta")}
-              </Link>
-            </HoverScale>
-            <p className="mt-4 text-sm font-light italic text-muted-foreground">
-              {t("heroTagline")}
-            </p>
-          </Reveal>
-        </div>
-
-        <Reveal trigger="mount" delay={0.2} className="hidden lg:block">
-          <ParallaxPhoto
-            src="/tutor-photo.jpg"
-            alt="Matthieu Carray"
-            range={40}
-            className="aspect-[4/5] rounded-[2rem] shadow-[0_24px_64px_-24px_rgba(21,17,15,0.35)]"
-          />
+      <section className="mx-auto max-w-4xl px-6 pb-20 pt-24 text-center sm:pb-28 sm:pt-32">
+        <Reveal trigger="mount">
+          <p className="kicker justify-center">Carray Tutoring</p>
+        </Reveal>
+        <Reveal trigger="mount" delay={0.08}>
+          <h1 className="font-display mt-5 text-4xl font-medium leading-[1.08] tracking-tight sm:text-6xl">
+            {t("heroTitle")}
+          </h1>
+        </Reveal>
+        <Reveal trigger="mount" delay={0.16}>
+          <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
+            {t("heroSubtitle")}
+          </p>
+        </Reveal>
+        <Reveal trigger="mount" delay={0.24}>
+          <HoverScale className="inline-block">
+            <Link
+              href="/booking"
+              className="mt-9 inline-block rounded-full bg-accent px-9 py-3.5 text-sm font-medium tracking-wide text-accent-foreground transition-colors hover:bg-accent-hover"
+            >
+              {t("heroCta")}
+            </Link>
+          </HoverScale>
+          <p className="mt-4 text-sm font-light italic text-muted-foreground">
+            {t("heroTagline")}
+          </p>
         </Reveal>
       </section>
 
@@ -108,31 +97,29 @@ export default async function HomePage({
       </section>
 
       <section className="bg-muted">
-        <div className="mx-auto max-w-5xl px-6 py-20 sm:py-24">
+        <div className="mx-auto max-w-2xl px-6 py-16 text-center sm:py-20">
           <Reveal>
-            <p className="kicker">{t("aboutTitle")}</p>
+            <p className="kicker justify-center">{t("aboutTitle")}</p>
           </Reveal>
-          <div className="mt-10 grid gap-10 sm:grid-cols-[0.85fr_1.15fr] sm:items-start sm:gap-14">
-            <Reveal delay={0.1} className="sm:sticky sm:top-24">
-              <ParallaxPhoto
-                src="/tutor-photo.jpg"
-                alt="Matthieu Carray"
-                range={24}
-                className="aspect-[4/5] max-w-sm rounded-[1.5rem] shadow-[0_20px_48px_-20px_rgba(21,17,15,0.3)]"
-              />
-            </Reveal>
-            <Reveal delay={0.2}>
-              <h3 className="font-display text-3xl font-medium tracking-tight">
-                {t("aboutName")}
-              </h3>
-              <p className="mt-1 text-sm font-medium uppercase tracking-wide text-accent">
-                {t("aboutRole")}
-              </p>
-              <p className="mt-6 text-[15px] leading-relaxed text-foreground">
-                {t("aboutBody")}
-              </p>
-            </Reveal>
-          </div>
+          <Reveal delay={0.1}>
+            <ParallaxPhoto
+              src="/tutor-photo.jpg"
+              alt="Matthieu Carray"
+              range={16}
+              className="relative mx-auto mt-6 aspect-square w-36 rounded-full shadow-[0_16px_36px_-18px_rgba(21,17,15,0.35)] sm:w-40"
+            />
+          </Reveal>
+          <Reveal delay={0.18}>
+            <h3 className="font-display mt-6 text-2xl font-medium tracking-tight">
+              {t("aboutName")}
+            </h3>
+            <p className="mt-1 text-sm font-medium uppercase tracking-wide text-accent">
+              {t("aboutRole")}
+            </p>
+            <p className="mx-auto mt-5 max-w-xl text-[15px] leading-relaxed text-foreground">
+              {t("aboutBody")}
+            </p>
+          </Reveal>
         </div>
       </section>
 
