@@ -7,9 +7,9 @@
   --accent-hover: #c11e16;
   --accent-foreground: #ffffff;
   --accent-soft: #fbeae8;
-  --muted: #f7f3f0;
-  --muted-foreground: #6b6560;
-  --border: #ece5e0;
+  --muted: #f7f7f7;
+  --muted-foreground: #6b6b6b;
+  --border: #e8e8e8;
 }
 
 @theme inline {
