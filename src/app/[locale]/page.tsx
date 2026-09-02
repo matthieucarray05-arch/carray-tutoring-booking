@@ -80,12 +80,12 @@ export default async function HomePage({
       </section>
 
       <section>
-        <div className="mx-auto max-w-3xl px-6 py-20 text-center sm:py-24">
+        <div className="mx-auto max-w-2xl px-6 py-16 text-center sm:py-20">
           <Reveal>
             <p className="kicker justify-center">{t("languagesTitle")}</p>
           </Reveal>
           <Reveal delay={0.1}>
-            <div className="mt-6 space-y-4 text-justify text-[15px] leading-relaxed text-foreground">
+            <div className="mx-auto mt-6 max-w-xl space-y-4 text-justify text-[15px] leading-relaxed text-foreground">
               {t("languagesBody")
                 .split("\n\n")
                 .map((paragraph) => (
