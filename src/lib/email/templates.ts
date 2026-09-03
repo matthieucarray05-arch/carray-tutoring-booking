@@ -250,6 +250,7 @@ export function buildCustomerFreeIntroEmail(
   const copy = FREE_INTRO_COPY[locale] ?? FREE_INTRO_COPY.en;
   const dateFnsLocale = resolveDateFnsLocale(locale);
   const slot = `${formatInTz(details.bookingStartAt, details.customerTimezone, "EEEE d MMMM yyyy, HH:mm", dateFnsLocale)}–${formatInTz(details.bookingEndAt, details.customerTimezone, "HH:mm")} (${details.customerTimezone})`;
+  const subjectDate = formatInTz(details.bookingStartAt, details.customerTimezone, "d MMM yyyy, HH:mm", dateFnsLocale);
 
   const text = [
     copy.greeting(details.customerName),
@@ -273,7 +274,7 @@ export function buildCustomerFreeIntroEmail(
     </div>
   `;
 
-  return { subject: copy.subject, html, text };
+  return { subject: `${copy.subject} — ${subjectDate}`, html, text };
 }
 
 export function buildCustomerConfirmationEmail(
@@ -283,6 +284,7 @@ export function buildCustomerConfirmationEmail(
   const copy = CUSTOMER_COPY[locale] ?? CUSTOMER_COPY.en;
   const dateFnsLocale = resolveDateFnsLocale(locale);
   const slot = `${formatInTz(details.bookingStartAt, details.customerTimezone, "EEEE d MMMM yyyy, HH:mm", dateFnsLocale)}–${formatInTz(details.bookingEndAt, details.customerTimezone, "HH:mm")} (${details.customerTimezone})`;
+  const subjectDate = formatInTz(details.bookingStartAt, details.customerTimezone, "d MMM yyyy, HH:mm", dateFnsLocale);
   const productLine =
     details.creditsCount > 1
       ? `${details.creditsCount} × 60 min`
@@ -317,5 +319,9 @@ export function buildCustomerConfirmationEmail(
     </div>
   `;
 
-  return { subject: copy.subject, html, text: textLines.join("\n") + emailFooterText() };
+  return {
+    subject: `${copy.subject} — ${subjectDate}`,
+    html,
+    text: textLines.join("\n") + emailFooterText(),
+  };
 }
