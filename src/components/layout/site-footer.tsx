@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 export function SiteFooter() {
   const t = useTranslations("Footer");
@@ -10,12 +11,20 @@ export function SiteFooter() {
         <p>
           © {year} Carray Tutoring. {t("rights")}
         </p>
-        <a
-          href="mailto:info@carraytutoring.com"
-          className="font-medium text-foreground transition-colors hover:text-accent"
-        >
-          {t("contact")}
-        </a>
+        <div className="flex items-center gap-5">
+          <Link
+            href="/impressum"
+            className="font-medium text-foreground transition-colors hover:text-accent"
+          >
+            {t("impressum")}
+          </Link>
+          <a
+            href="mailto:info@carraytutoring.com"
+            className="font-medium text-foreground transition-colors hover:text-accent"
+          >
+            {t("contact")}
+          </a>
+        </div>
       </div>
     </footer>
   );

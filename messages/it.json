@@ -106,7 +106,8 @@
   },
   "Footer": {
     "rights": "Tutti i diritti riservati.",
-    "contact": "Contatto"
+    "contact": "Contatto",
+    "impressum": "Impressum"
   },
   "Manage": {
     "pageTitle": "Cambia sessione",
@@ -126,5 +127,30 @@
     "rebookCta": "Prenota una nuova sessione",
     "tooLateTitle": "Non è più possibile cancellare online",
     "tooLateBody": "Mancano meno di {hours} ore all'inizio della sessione. Scrivici su WhatsApp al {phone} per avvisarci della tua assenza."
+  },
+  "Impressum": {
+    "title": "Impressum (Note legali)",
+    "subtitle": "Informazioni ai sensi del § 5 DDG e § 18 Abs. 2 MStV (legge tedesca)",
+    "providerHeading": "Titolare",
+    "providerName": "Matthieu Carray",
+    "providerAddress": "Friederike Fliedner Weg 154, 40489 Düsseldorf, Germania",
+    "soleProprietorBody": "Questo sito è gestito come ditta individuale (Einzelunternehmen). Ai sensi del § 19 UStG, non viene applicata l'IVA in base al regime dei piccoli imprenditori (Kleinunternehmerregelung), pertanto non viene indicata alcuna Partita IVA.",
+    "taxNumberLabel": "Codice fiscale tedesco (Steuernummer)",
+    "taxNumberValue": "10550396895",
+    "contactHeading": "Contatti",
+    "phoneLabel": "Telefono",
+    "emailLabel": "Email",
+    "emailValue": "[DA INSERIRE: info@carraytutoring.de non appena attiva]",
+    "websiteLabel": "Sito web",
+    "editorialHeading": "Responsabile editoriale",
+    "liabilityContentHeading": "Responsabilità per i contenuti",
+    "liabilityContentBody": "I contenuti di queste pagine sono stati creati con la massima cura. Tuttavia, non possiamo garantire l'accuratezza, la completezza e l'attualità dei contenuti.\n\nIn qualità di fornitore di servizi, siamo responsabili dei contenuti propri su queste pagine secondo le leggi generali, ai sensi del § 7 comma 1 DDG. Tuttavia, ai sensi dei §§ 8-10 DDG, non siamo obbligati a monitorare le informazioni trasmesse o memorizzate di terzi né a ricercare circostanze che indichino un'attività illecita.\n\nGli obblighi di rimozione o blocco dell'uso di informazioni secondo le leggi generali rimangono impregiudicati. Tuttavia, la responsabilità in merito è possibile solo dal momento della conoscenza di una specifica violazione di legge. Non appena veniamo a conoscenza di tali violazioni, rimuoviamo immediatamente questi contenuti.",
+    "liabilityLinksHeading": "Responsabilità per i link",
+    "liabilityLinksBody": "La nostra offerta contiene link a siti web esterni di terzi, sui cui contenuti non abbiamo alcuna influenza. Pertanto non possiamo assumere alcuna responsabilità per questi contenuti esterni. Il rispettivo fornitore o gestore delle pagine è sempre responsabile dei contenuti delle pagine collegate.\n\nLe pagine collegate sono state controllate al momento del collegamento per eventuali violazioni di legge; non sono state riscontrate violazioni in quel momento. Un controllo permanente dei contenuti delle pagine collegate non è ragionevole senza indizi concreti di una violazione. Non appena veniamo a conoscenza di violazioni, rimuoviamo immediatamente tali link.",
+    "copyrightHeading": "Diritto d'autore",
+    "copyrightBody": "I contenuti e le opere create dal gestore del sito su queste pagine sono soggetti al diritto d'autore tedesco. La riproduzione, l'elaborazione, la distribuzione e qualsiasi tipo di utilizzo al di fuori dei limiti del diritto d'autore richiedono il consenso scritto del rispettivo autore o creatore. Download e copie di questa pagina sono consentiti solo per uso privato, non commerciale.\n\nNella misura in cui i contenuti su questa pagina non sono stati creati dal gestore, vengono rispettati i diritti d'autore di terzi e contrassegnati come tali. Se doveste comunque notare una violazione del diritto d'autore, vi preghiamo di segnalarcelo. Non appena veniamo a conoscenza di violazioni, rimuoviamo immediatamente tali contenuti.",
+    "disputeHeading": "Risoluzione delle controversie",
+    "disputeBody": "La Commissione Europea mette a disposizione una piattaforma per la risoluzione online delle controversie (ODR): ec.europa.eu/consumers/odr. Il nostro indirizzo email si trova sopra in questa pagina.\n\nNon siamo disponibili né obbligati a partecipare a procedure di risoluzione delle controversie davanti a un organismo di conciliazione per i consumatori.\n\nCi opponiamo espressamente all'uso dei dati di contatto pubblicati nell'ambito dell'obbligo di Impressum da parte di terzi per l'invio di materiale pubblicitario e informativo non espressamente richiesto.",
+    "footerNote": "Ultimo aggiornamento: Settembre 2026 · Per informazioni sul trattamento dei dati, consulta la nostra Informativa Privacy."
   }
 }
