@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { randomUUID } from "node:crypto";
 import { and, eq, gt, lt, sql } from "drizzle-orm";
 import { db } from "@/lib/db/client";
 import { availabilityDates, bookings } from "@/lib/db/schema";
@@ -84,6 +85,7 @@ export async function POST(request: NextRequest) {
   }
 
   const customerName = `${firstName} ${lastName}`;
+  const manageToken = randomUUID();
 
   let booking;
   try {
@@ -98,6 +100,7 @@ export async function POST(request: NextRequest) {
         customerEmail: email,
         customerTimezone: customerTimezone || null,
         status: "confirmed",
+        manageToken,
       })
       .returning();
   } catch (err) {
@@ -117,6 +120,7 @@ export async function POST(request: NextRequest) {
     bookingEndAt: booking.endAt,
     customerTimezone: customerTimezone || TUTOR_TIMEZONE,
     locale,
+    manageToken,
   });
 
   return NextResponse.json({

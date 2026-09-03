@@ -29,6 +29,7 @@ export interface NewBookingNotification {
   customerTimezone: string;
   locale: string;
   remainingCredits: number;
+  manageToken: string;
 }
 
 /**
@@ -91,6 +92,7 @@ export interface FreeIntroBookingNotification {
   bookingEndAt: Date;
   customerTimezone: string;
   locale: string;
+  manageToken: string;
 }
 
 /**
@@ -152,6 +154,7 @@ export interface CreditBookingNotification {
   customerTimezone: string;
   locale: string;
   remainingCredits: number;
+  manageToken: string;
 }
 
 /**
@@ -245,5 +248,49 @@ export async function notifySlotConflict(details: {
     });
   } catch (err) {
     console.error("notifySlotConflict: failed to send admin alert email", err);
+  }
+}
+
+/**
+ * Emailed to the admin only when a customer self-service cancels a booking
+ * via the manage link — the customer already sees a confirmation on the
+ * cancel page itself, so this is just so the tutor knows the slot freed up.
+ */
+export async function notifyBookingCancelled(details: {
+  customerName: string | null;
+  customerEmail: string;
+  bookingStartAt: Date;
+  bookingEndAt: Date;
+  customerTimezone: string;
+  bookingType: string;
+}): Promise<void> {
+  const adminEmail = process.env.ADMIN_EMAIL;
+  const from = process.env.EMAIL_FROM;
+
+  const slotLabel = `${formatInTz(details.bookingStartAt, details.customerTimezone, "EEEE d MMMM yyyy, HH:mm")}–${formatInTz(details.bookingEndAt, details.customerTimezone, "HH:mm")} (${details.customerTimezone})`;
+  const message = [
+    "=== BOOKING CANCELLED BY CUSTOMER ===",
+    `Customer: ${details.customerName ?? "(no name)"} <${details.customerEmail}>`,
+    `Type: ${details.bookingType}`,
+    `Was booked for: ${slotLabel}`,
+    "This slot is now free again.",
+    "=======================================",
+  ].join("\n");
+
+  if (!adminEmail || !from) {
+    console.warn("notifyBookingCancelled: ADMIN_EMAIL or EMAIL_FROM not set — logging instead.", message);
+    return;
+  }
+
+  try {
+    const resend = getResend();
+    await resend.emails.send({
+      from,
+      to: adminEmail,
+      subject: `Booking cancelled: ${details.customerName ?? details.customerEmail}`,
+      text: message,
+    });
+  } catch (err) {
+    console.error("notifyBookingCancelled: failed to send admin alert email", err);
   }
 }

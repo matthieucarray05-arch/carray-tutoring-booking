@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { randomUUID } from "node:crypto";
 import { and, asc, eq, gt, lt, sql } from "drizzle-orm";
 import { db } from "@/lib/db/client";
 import { availabilityDates, bookings, lessonCredits } from "@/lib/db/schema";
@@ -13,7 +14,7 @@ export const dynamic = "force-dynamic";
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 type ClaimResult =
-  | { ok: true; bookingId: number; remainingCredits: number }
+  | { ok: true; bookingId: number; remainingCredits: number; manageToken: string }
   | { ok: false; reason: "no_credits" | "slot_taken" };
 
 export async function POST(request: NextRequest) {
@@ -105,6 +106,8 @@ export async function POST(request: NextRequest) {
         return { ok: false, reason: "slot_taken" };
       }
 
+      const manageToken = randomUUID();
+
       const [booking] = await tx
         .insert(bookings)
         .values({
@@ -117,6 +120,7 @@ export async function POST(request: NextRequest) {
           customerEmail: email,
           customerTimezone: customerTimezone || null,
           status: "confirmed",
+          manageToken,
         })
         .returning();
 
@@ -135,7 +139,7 @@ export async function POST(request: NextRequest) {
           ),
         );
 
-      return { ok: true, bookingId: booking.id, remainingCredits: remaining.length };
+      return { ok: true, bookingId: booking.id, remainingCredits: remaining.length, manageToken };
     });
   } catch (err) {
     console.error("credits/book: transaction failed", err);
@@ -154,6 +158,7 @@ export async function POST(request: NextRequest) {
     customerTimezone: customerTimezone || TUTOR_TIMEZONE,
     locale,
     remainingCredits: result.remainingCredits,
+    manageToken: result.manageToken,
   });
 
   return NextResponse.json({

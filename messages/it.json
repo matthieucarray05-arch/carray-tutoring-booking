@@ -106,5 +106,24 @@
   "Footer": {
     "rights": "Tutti i diritti riservati.",
     "contact": "Contatto"
+  },
+  "Manage": {
+    "pageTitle": "Gestisci la tua lezione",
+    "whatLabel": "Che cosa",
+    "whenLabel": "Quando",
+    "freeIntroProductLabel": "Consulenza gratuita",
+    "lessonProductLabel": "Lezione",
+    "notFoundTitle": "Link non valido",
+    "notFoundBody": "Questo link di gestione non esiste o non è più valido.",
+    "alreadyCancelledTitle": "Lezione già cancellata",
+    "alreadyCancelledBody": "Questa lezione è già stata cancellata in precedenza.",
+    "cancelButton": "Cancella la lezione",
+    "cancelling": "Cancellazione in corso…",
+    "cancelError": "Qualcosa è andato storto. Riprova.",
+    "cancelSuccessTitle": "Lezione cancellata",
+    "cancelSuccessBody": "La tua lezione è stata cancellata. Se avevi usato un credito o la consulenza gratuita, ora puoi prenotare un nuovo orario.",
+    "rebookCta": "Prenota una nuova lezione",
+    "tooLateTitle": "Non è più possibile cancellare online",
+    "tooLateBody": "Mancano meno di {hours} ore all'inizio della lezione. Scrivici su WhatsApp al {phone} per avvisarci della tua assenza."
   }
 }

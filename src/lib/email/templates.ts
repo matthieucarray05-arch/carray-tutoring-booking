@@ -1,5 +1,5 @@
 import { formatInTz, resolveDateFnsLocale } from "@/lib/timezone";
-import { SITE_URL, CONTACT_PHONE } from "@/lib/config";
+import { SITE_URL, CONTACT_PHONE, MEET_LINK, CANCELLATION_WINDOW_HOURS } from "@/lib/config";
 
 export interface BookingEmailDetails {
   customerName: string | null;
@@ -16,6 +16,7 @@ export interface BookingEmailDetails {
   bookingEndAt: Date;
   customerTimezone: string;
   remainingCredits: number;
+  manageToken: string;
 }
 
 function formatAmount(cents: number, currency: string): string {
@@ -53,6 +54,114 @@ function emailFooterHtml(): string {
 
 function emailFooterText(): string {
   return `\n\nCarray Tutoring\n${CONTACT_PHONE}`;
+}
+
+interface SessionInfoCopy {
+  joinTitle: string;
+  joinBody: string;
+  joinEarly: string;
+  cancelTitle: string;
+  cancelBody: (manageUrl: string, phone: string) => string;
+  cancelLinkLabel: string;
+  lateTitle: string;
+  lateBody: string;
+  staffNote: string;
+}
+
+const SESSION_INFO_COPY: Record<string, SessionInfoCopy> = {
+  en: {
+    joinTitle: "How to join",
+    joinBody: "Click the link below and turn on your mic and camera to join the lesson:",
+    joinEarly: "Please join at least 15 minutes early to test your audio and video.",
+    cancelTitle: "Cancellation policy",
+    cancelBody: (manageUrl, phone) =>
+      `You can cancel or move your lesson up to ${CANCELLATION_WINDOW_HOURS} hours before the scheduled time here: ${manageUrl}. After that, please message us on WhatsApp at ${phone} to let us know you won't be attending.`,
+    cancelLinkLabel: "Cancel or reschedule your lesson",
+    lateTitle: "Running late",
+    lateBody: "If you arrive late, the lesson will not be extended beyond its originally scheduled end time.",
+    staffNote:
+      "Carray Tutoring reserves the right to modify or cancel this appointment at any time for scheduling reasons, with advance notice.",
+  },
+  it: {
+    joinTitle: "Come collegarti",
+    joinBody: "Clicca sul link qui sotto e attiva microfono e webcam per partecipare alla lezione:",
+    joinEarly: "Ti consigliamo di collegarti almeno 15 minuti prima per sistemare audio e video.",
+    cancelTitle: "Policy di cancellazione",
+    cancelBody: (manageUrl, phone) =>
+      `Puoi cancellare o spostare la tua lezione fino a ${CANCELLATION_WINDOW_HOURS} ore prima dell'orario prenotato qui: ${manageUrl}. Oltre questo limite, scrivici su WhatsApp al ${phone} per avvisarci della tua assenza.`,
+    cancelLinkLabel: "Cancella o sposta la tua lezione",
+    lateTitle: "Ritardo",
+    lateBody: "In caso di ritardo, la lezione non verrà prolungata oltre l'orario originariamente prenotato.",
+    staffNote:
+      "Carray Tutoring si riserva il diritto di modificare o cancellare l'appuntamento in qualsiasi momento per esigenze di servizio, con comunicazione preventiva.",
+  },
+  fr: {
+    joinTitle: "Comment se connecter",
+    joinBody: "Cliquez sur le lien ci-dessous et activez votre micro et votre caméra pour rejoindre le cours :",
+    joinEarly: "Merci de vous connecter au moins 15 minutes à l'avance pour tester l'audio et la vidéo.",
+    cancelTitle: "Politique d'annulation",
+    cancelBody: (manageUrl, phone) =>
+      `Vous pouvez annuler ou déplacer votre cours jusqu'à ${CANCELLATION_WINDOW_HOURS} heures avant l'horaire prévu ici : ${manageUrl}. Passé ce délai, merci de nous écrire sur WhatsApp au ${phone} pour nous prévenir de votre absence.`,
+    cancelLinkLabel: "Annuler ou déplacer votre cours",
+    lateTitle: "Retard",
+    lateBody: "En cas de retard, le cours ne sera pas prolongé au-delà de l'heure de fin initialement prévue.",
+    staffNote:
+      "Carray Tutoring se réserve le droit de modifier ou d'annuler ce rendez-vous à tout moment pour des raisons d'organisation, avec préavis.",
+  },
+  de: {
+    joinTitle: "So nimmst du teil",
+    joinBody: "Klicke auf den Link unten und schalte Mikrofon und Kamera ein, um an der Stunde teilzunehmen:",
+    joinEarly: "Bitte melde dich mindestens 15 Minuten vorher an, um Audio und Video zu testen.",
+    cancelTitle: "Stornierungsrichtlinie",
+    cancelBody: (manageUrl, phone) =>
+      `Du kannst deine Stunde bis ${CANCELLATION_WINDOW_HOURS} Stunden vor dem geplanten Termin hier stornieren oder verschieben: ${manageUrl}. Danach schreibe uns bitte auf WhatsApp an ${phone}, um uns über dein Fernbleiben zu informieren.`,
+    cancelLinkLabel: "Stunde stornieren oder verschieben",
+    lateTitle: "Verspätung",
+    lateBody: "Bei Verspätung wird die Stunde nicht über die ursprünglich geplante Endzeit hinaus verlängert.",
+    staffNote:
+      "Carray Tutoring behält sich das Recht vor, diesen Termin jederzeit aus organisatorischen Gründen mit vorheriger Ankündigung zu ändern oder abzusagen.",
+  },
+};
+
+/** Meet link + join reminder + cancellation/lateness policy — appended to every customer-facing booking confirmation email. */
+function sessionInfoBlock(locale: string, manageToken: string): { html: string; text: string } {
+  const copy = SESSION_INFO_COPY[locale] ?? SESSION_INFO_COPY.en;
+  const manageUrl = `${SITE_URL}/${locale}/manage/${manageToken}`;
+  const cancelBody = copy.cancelBody(manageUrl, CONTACT_PHONE);
+
+  const text = [
+    "",
+    `${copy.joinTitle}:`,
+    copy.joinBody,
+    MEET_LINK,
+    copy.joinEarly,
+    "",
+    `${copy.cancelTitle}:`,
+    cancelBody,
+    "",
+    `${copy.lateTitle}:`,
+    copy.lateBody,
+    "",
+    copy.staffNote,
+  ].join("\n");
+
+  const html = `
+    <div style="margin-top:24px;padding-top:20px;border-top:1px solid #e5e5e5;font-family:sans-serif;font-size:14px;color:#333;line-height:1.5;">
+      <p style="font-weight:600;margin:0 0 4px;">${escapeHtml(copy.joinTitle)}</p>
+      <p style="margin:0 0 8px;">${escapeHtml(copy.joinBody)} <a href="${MEET_LINK}">${escapeHtml(MEET_LINK)}</a></p>
+      <p style="margin:0 0 16px;color:#666;">${escapeHtml(copy.joinEarly)}</p>
+
+      <p style="font-weight:600;margin:0 0 4px;">${escapeHtml(copy.cancelTitle)}</p>
+      <p style="margin:0 0 16px;">${cancelBody.replace(manageUrl, `<a href="${manageUrl}">${escapeHtml(copy.cancelLinkLabel)}</a>`)}</p>
+
+      <p style="font-weight:600;margin:0 0 4px;">${escapeHtml(copy.lateTitle)}</p>
+      <p style="margin:0 0 16px;">${escapeHtml(copy.lateBody)}</p>
+
+      <p style="margin:0;color:#888;font-size:12px;">${escapeHtml(copy.staffNote)}</p>
+    </div>
+  `;
+
+  return { html, text };
 }
 
 /** Admin notification — always in English, mirrors the previous console.log content. */
@@ -166,6 +275,7 @@ export interface FreeIntroEmailDetails {
   bookingStartAt: Date;
   bookingEndAt: Date;
   customerTimezone: string;
+  manageToken: string;
 }
 
 /** Admin notification for a free intro consultation — always in English. */
@@ -252,6 +362,8 @@ export function buildCustomerFreeIntroEmail(
   const slot = `${formatInTz(details.bookingStartAt, details.customerTimezone, "EEEE d MMMM yyyy, HH:mm", dateFnsLocale)}–${formatInTz(details.bookingEndAt, details.customerTimezone, "HH:mm")} (${details.customerTimezone})`;
   const subjectDate = formatInTz(details.bookingStartAt, details.customerTimezone, "d MMM yyyy, HH:mm", dateFnsLocale);
 
+  const session = sessionInfoBlock(locale, details.manageToken);
+
   const text = [
     copy.greeting(details.customerName),
     "",
@@ -260,7 +372,7 @@ export function buildCustomerFreeIntroEmail(
     `${copy.slotLabel}: ${slot}`,
     "",
     copy.closing,
-  ].join("\n") + emailFooterText();
+  ].join("\n") + session.text + emailFooterText();
 
   const html = `
     <div style="font-family:sans-serif;font-size:15px;color:#1a1a1a;line-height:1.5;">
@@ -270,6 +382,7 @@ export function buildCustomerFreeIntroEmail(
         <tr><td style="padding:4px 12px 4px 0;color:#666;">${escapeHtml(copy.slotLabel)}</td><td style="padding:4px 0;font-weight:600;">${escapeHtml(slot)}</td></tr>
       </table>
       <p style="white-space:pre-line;">${escapeHtml(copy.closing)}</p>
+      ${session.html}
       ${emailFooterHtml()}
     </div>
   `;
@@ -284,6 +397,7 @@ export interface CreditBookingEmailDetails {
   bookingEndAt: Date;
   customerTimezone: string;
   remainingCredits: number;
+  manageToken: string;
 }
 
 /** Admin notification for a credit redemption — always in English. */
@@ -384,6 +498,7 @@ export function buildCustomerCreditBookingEmail(
   const slot = `${formatInTz(details.bookingStartAt, details.customerTimezone, "EEEE d MMMM yyyy, HH:mm", dateFnsLocale)}–${formatInTz(details.bookingEndAt, details.customerTimezone, "HH:mm")} (${details.customerTimezone})`;
   const subjectDate = formatInTz(details.bookingStartAt, details.customerTimezone, "d MMM yyyy, HH:mm", dateFnsLocale);
   const remainingLine = copy.remaining(details.remainingCredits);
+  const session = sessionInfoBlock(locale, details.manageToken);
 
   const text = [
     copy.greeting(details.customerName),
@@ -395,7 +510,7 @@ export function buildCustomerCreditBookingEmail(
     remainingLine,
     "",
     copy.closing,
-  ].join("\n") + emailFooterText();
+  ].join("\n") + session.text + emailFooterText();
 
   const html = `
     <div style="font-family:sans-serif;font-size:15px;color:#1a1a1a;line-height:1.5;">
@@ -406,6 +521,7 @@ export function buildCustomerCreditBookingEmail(
       </table>
       <p>${escapeHtml(remainingLine)}</p>
       <p style="white-space:pre-line;">${escapeHtml(copy.closing)}</p>
+      ${session.html}
       ${emailFooterHtml()}
     </div>
   `;
@@ -426,6 +542,7 @@ export function buildCustomerConfirmationEmail(
       ? `${details.creditsCount} × 60 min`
       : "60 min";
   const remainingLine = copy.creditsRemaining(details.remainingCredits);
+  const session = sessionInfoBlock(locale, details.manageToken);
 
   const textLines = [
     copy.greeting(details.customerName ?? ""),
@@ -451,6 +568,7 @@ export function buildCustomerConfirmationEmail(
       </table>
       ${remainingLine ? `<p>${escapeHtml(remainingLine)}</p>` : ""}
       <p style="white-space:pre-line;">${escapeHtml(copy.closing)}</p>
+      ${session.html}
       ${emailFooterHtml()}
     </div>
   `;
@@ -458,6 +576,6 @@ export function buildCustomerConfirmationEmail(
   return {
     subject: `${copy.subject} — ${subjectDate}`,
     html,
-    text: textLines.join("\n") + emailFooterText(),
+    text: textLines.join("\n") + session.text + emailFooterText(),
   };
 }

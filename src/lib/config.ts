@@ -13,3 +13,9 @@ export const SITE_URL = "https://carraytutoring.de";
 
 /** Shown in the footer of outgoing emails. */
 export const CONTACT_PHONE = "+39 351 7173870";
+
+/** Fixed Google Meet room, reused for every lesson — see lib/notifications.ts. */
+export const MEET_LINK = "https://meet.google.com/fzc-aewd-kyj";
+
+/** A booking can be self-service cancelled up to this many hours before its start time. */
+export const CANCELLATION_WINDOW_HOURS = 12;

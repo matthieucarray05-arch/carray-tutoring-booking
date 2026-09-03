@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { randomUUID } from "node:crypto";
 import { and, eq, gt, lt } from "drizzle-orm";
 import type Stripe from "stripe";
 import { db } from "@/lib/db/client";
@@ -158,6 +159,8 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
 
   const firstCredit = createdCredits[0];
 
+  const manageToken = randomUUID();
+
   const [booking] = await db
     .insert(bookings)
     .values({
@@ -171,6 +174,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
       customerEmail,
       customerTimezone,
       status: "confirmed",
+      manageToken,
     })
     .returning();
 
@@ -195,5 +199,6 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
     customerTimezone: customerTimezone ?? TUTOR_TIMEZONE,
     locale,
     remainingCredits: creditsCount - 1,
+    manageToken,
   });
 }

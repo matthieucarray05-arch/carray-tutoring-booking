@@ -75,5 +75,7 @@ export const bookings = pgTable("bookings", {
   customerEmail: text("customer_email"),
   customerTimezone: text("customer_timezone"),
   status: text("status").notNull().default("confirmed"),
+  /** Random token for the self-service manage/cancel link sent in confirmation emails. */
+  manageToken: text("manage_token").notNull().unique(),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
 });

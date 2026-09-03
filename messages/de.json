@@ -106,5 +106,24 @@
   "Footer": {
     "rights": "Alle Rechte vorbehalten.",
     "contact": "Kontakt"
+  },
+  "Manage": {
+    "pageTitle": "Deine Stunde verwalten",
+    "whatLabel": "Was",
+    "whenLabel": "Wann",
+    "freeIntroProductLabel": "Kostenlose Kennenlernstunde",
+    "lessonProductLabel": "Unterrichtsstunde",
+    "notFoundTitle": "Ungültiger Link",
+    "notFoundBody": "Dieser Verwaltungslink existiert nicht oder ist nicht mehr gültig.",
+    "alreadyCancelledTitle": "Stunde bereits storniert",
+    "alreadyCancelledBody": "Diese Stunde wurde bereits storniert.",
+    "cancelButton": "Stunde stornieren",
+    "cancelling": "Wird storniert…",
+    "cancelError": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
+    "cancelSuccessTitle": "Stunde storniert",
+    "cancelSuccessBody": "Deine Stunde wurde storniert. Wenn du ein Guthaben oder deine kostenlose Kennenlernstunde genutzt hattest, kannst du jetzt einen neuen Termin buchen.",
+    "rebookCta": "Neue Stunde buchen",
+    "tooLateTitle": "Online-Stornierung ist nicht mehr möglich",
+    "tooLateBody": "Es sind weniger als {hours} Stunden bis zum Beginn der Stunde. Bitte schreibe uns auf WhatsApp an {phone}, um uns über dein Fernbleiben zu informieren."
   }
 }

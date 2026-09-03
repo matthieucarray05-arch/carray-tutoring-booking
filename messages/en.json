@@ -106,5 +106,24 @@
   "Footer": {
     "rights": "All rights reserved.",
     "contact": "Contact"
+  },
+  "Manage": {
+    "pageTitle": "Manage your lesson",
+    "whatLabel": "What",
+    "whenLabel": "When",
+    "freeIntroProductLabel": "Free intro consultation",
+    "lessonProductLabel": "Lesson",
+    "notFoundTitle": "Invalid link",
+    "notFoundBody": "This management link doesn't exist or is no longer valid.",
+    "alreadyCancelledTitle": "Lesson already cancelled",
+    "alreadyCancelledBody": "This lesson has already been cancelled.",
+    "cancelButton": "Cancel lesson",
+    "cancelling": "Cancelling…",
+    "cancelError": "Something went wrong. Please try again.",
+    "cancelSuccessTitle": "Lesson cancelled",
+    "cancelSuccessBody": "Your lesson has been cancelled. If you used a credit or your free intro consultation, you can now book a new time.",
+    "rebookCta": "Book a new lesson",
+    "tooLateTitle": "Online cancellation is no longer available",
+    "tooLateBody": "Less than {hours} hours remain before the lesson starts. Please message us on WhatsApp at {phone} to let us know you won't be attending."
   }
 }
