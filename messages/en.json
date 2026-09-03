@@ -68,7 +68,20 @@
     "freeIntroAlreadyUsedCta": "Book a single lesson",
     "freeIntroSlotTaken": "This slot was just taken — please pick another time.",
     "freeIntroConfirmTitle": "You're all set, {name}!",
-    "freeIntroConfirmBody": "Thanks for booking your free intro consultation. It's a chance for us to get to know each other, talk about your goals and see how I can help you improve — no cost, no obligation. See you soon!"
+    "freeIntroConfirmBody": "Thanks for booking your free intro consultation. It's a chance for us to get to know each other, talk about your goals and see how I can help you improve — no cost, no obligation. See you soon!",
+    "useCreditLabel": "Use a Credit",
+    "useCreditCardTitle": "Already have a package?",
+    "useCreditCardBody": "If you've already bought a lesson package, verify your remaining credits here and book your next session — no payment needed.",
+    "useCreditCheckSubmit": "Check my credits",
+    "useCreditCheckLoading": "Checking…",
+    "useCreditNotFound": "No available credits found for this email.",
+    "useCreditNotFoundCta": "Buy a package",
+    "useCreditAvailableBadge": "{count, plural, one {You have # lesson available} other {You have # lessons available}}",
+    "useCreditSummaryLabel": "Lesson (package credit)",
+    "useCreditPriceLabel": "No payment",
+    "useCreditSubmit": "Confirm booking",
+    "useCreditNoCreditsAtBooking": "No available credits found for this email anymore.",
+    "useCreditConfirmBody": "{count, plural, =0 {Your lesson is confirmed! You have no lessons left in this package.} one {Your lesson is confirmed! You have # lesson left in this package.} other {Your lesson is confirmed! You have # lessons left in this package.}}"
   },
   "Reviews": {
     "title": "What Clients Say",

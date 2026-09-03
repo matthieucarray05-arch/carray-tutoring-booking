@@ -43,6 +43,23 @@ export default function BookingPage() {
     endUtc: Date;
   } | null>(null);
 
+  const [creditEmail, setCreditEmail] = useState("");
+  const [creditCheckStatus, setCreditCheckStatus] = useState<
+    "idle" | "checking" | "verified" | "not_found" | "error"
+  >("idle");
+  const [creditsAvailable, setCreditsAvailable] = useState(0);
+  const [creditForm, setCreditForm] = useState({ firstName: "", lastName: "" });
+  const [isSubmittingCredit, setIsSubmittingCredit] = useState(false);
+  const [creditBookError, setCreditBookError] = useState<
+    "no_credits" | "slot_taken" | "generic" | null
+  >(null);
+  const [creditConfirmation, setCreditConfirmation] = useState<{
+    firstName: string;
+    startUtc: Date;
+    endUtc: Date;
+    remainingCredits: number;
+  } | null>(null);
+
   useEffect(() => {
     // Defaults to UTC on the server to avoid a hydration mismatch, then
     // swaps in the real browser timezone once mounted on the client.
@@ -112,6 +129,11 @@ export default function BookingPage() {
     setProduct(next);
     setSelectedDate(null);
     setSelectedSlot(null);
+    setCreditEmail("");
+    setCreditCheckStatus("idle");
+    setCreditsAvailable(0);
+    setCreditForm({ firstName: "", lastName: "" });
+    setCreditBookError(null);
   }
 
   function handleDateSelect(dateStr: string) {
@@ -211,6 +233,90 @@ export default function BookingPage() {
     if (singleLesson) handleProductChange(singleLesson);
   }
 
+  function switchToPackage() {
+    const pack = MOCK_PRODUCTS.find((p) => p.type === "lesson_package");
+    if (pack) handleProductChange(pack);
+  }
+
+  async function handleCheckCredits() {
+    if (!creditEmail.trim()) return;
+
+    setCreditCheckStatus("checking");
+
+    try {
+      const res = await fetch("/api/credits/check", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: creditEmail.trim() }),
+      });
+
+      if (!res.ok) {
+        setCreditCheckStatus("error");
+        return;
+      }
+
+      const data = (await res.json()) as { available: number };
+      if (data.available > 0) {
+        setCreditsAvailable(data.available);
+        setCreditCheckStatus("verified");
+      } else {
+        setCreditCheckStatus("not_found");
+      }
+    } catch {
+      setCreditCheckStatus("error");
+    }
+  }
+
+  async function handleCreditBookSubmit() {
+    if (!selectedSlot) return;
+    if (!creditForm.firstName.trim() || !creditForm.lastName.trim()) return;
+
+    setIsSubmittingCredit(true);
+    setCreditBookError(null);
+
+    try {
+      const res = await fetch("/api/credits/book", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: creditEmail.trim(),
+          firstName: creditForm.firstName.trim(),
+          lastName: creditForm.lastName.trim(),
+          slotStartUtc: selectedSlot.startUtc.toISOString(),
+          slotEndUtc: selectedSlot.endUtc.toISOString(),
+          customerTimezone: timezone,
+          locale,
+        }),
+      });
+
+      if (!res.ok) {
+        const data = (await res.json().catch(() => ({}))) as { error?: string };
+        if (data.error === "no_credits") {
+          setCreditBookError("no_credits");
+        } else if (data.error === "slot_taken") {
+          setCreditBookError("slot_taken");
+          setSelectedSlot(null);
+          setProduct((current) => (current ? { ...current } : current));
+        } else {
+          setCreditBookError("generic");
+        }
+        setIsSubmittingCredit(false);
+        return;
+      }
+
+      const data = (await res.json()) as { remainingCredits: number };
+      setCreditConfirmation({
+        firstName: creditForm.firstName.trim(),
+        startUtc: selectedSlot.startUtc,
+        endUtc: selectedSlot.endUtc,
+        remainingCredits: data.remainingCredits,
+      });
+    } catch {
+      setCreditBookError("generic");
+      setIsSubmittingCredit(false);
+    }
+  }
+
   if (freeIntroConfirmation) {
     return (
       <motion.div
@@ -228,6 +334,36 @@ export default function BookingPage() {
           <p className="mt-1 text-lg font-medium">
             {formatInTz(
               freeIntroConfirmation.startUtc,
+              timezone,
+              "EEEE d MMMM yyyy, HH:mm",
+              resolveDateFnsLocale(locale),
+            )}{" "}
+            ({timezone})
+          </p>
+        </div>
+      </motion.div>
+    );
+  }
+
+  if (creditConfirmation) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+        className="mx-auto max-w-2xl px-6 py-20 text-center"
+      >
+        <h1 className="font-display text-3xl font-medium tracking-tight">
+          {t("freeIntroConfirmTitle", { name: creditConfirmation.firstName })}
+        </h1>
+        <p className="mt-4 text-muted-foreground">
+          {t("useCreditConfirmBody", { count: creditConfirmation.remainingCredits })}
+        </p>
+        <div className="mt-8 inline-block rounded-2xl border border-border px-6 py-4">
+          <p className="text-sm text-muted-foreground">{t("summarySlot")}</p>
+          <p className="mt-1 text-lg font-medium">
+            {formatInTz(
+              creditConfirmation.startUtc,
               timezone,
               "EEEE d MMMM yyyy, HH:mm",
               resolveDateFnsLocale(locale),
@@ -269,10 +405,56 @@ export default function BookingPage() {
               <p className="text-sm text-muted-foreground">
                 {t("selectProductFirst")}
               </p>
+            ) : product.type === "use_credit" && creditCheckStatus !== "verified" ? (
+              <div className="max-w-sm space-y-3">
+                <input
+                  type="email"
+                  autoComplete="email"
+                  placeholder={t("freeIntroEmail")}
+                  value={creditEmail}
+                  onChange={(e) => {
+                    setCreditEmail(e.target.value);
+                    if (creditCheckStatus !== "idle") setCreditCheckStatus("idle");
+                  }}
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm outline-none focus:border-accent"
+                />
+                {creditCheckStatus === "not_found" && (
+                  <div className="rounded-lg bg-muted px-3 py-2.5 text-sm">
+                    <p>{t("useCreditNotFound")}</p>
+                    <button
+                      type="button"
+                      onClick={switchToPackage}
+                      className="mt-2 font-medium text-accent underline underline-offset-2"
+                    >
+                      {t("useCreditNotFoundCta")}
+                    </button>
+                  </div>
+                )}
+                {creditCheckStatus === "error" && (
+                  <p className="text-sm text-accent">{t("freeIntroFormError")}</p>
+                )}
+                <motion.button
+                  type="button"
+                  onClick={handleCheckCredits}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  disabled={creditCheckStatus === "checking" || !creditEmail.trim()}
+                  className="rounded-full bg-accent px-4 py-2.5 text-sm font-medium text-accent-foreground transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-40"
+                >
+                  {creditCheckStatus === "checking"
+                    ? t("useCreditCheckLoading")
+                    : t("useCreditCheckSubmit")}
+                </motion.button>
+              </div>
             ) : isLoadingSlots && slots.length === 0 ? (
               <p className="text-sm text-muted-foreground">{t("loadingSlots")}</p>
             ) : (
               <div className="grid gap-8 sm:grid-cols-2">
+                {product.type === "use_credit" && (
+                  <p className="sm:col-span-2 text-sm font-medium text-accent">
+                    {t("useCreditAvailableBadge", { count: creditsAvailable })}
+                  </p>
+                )}
                 <Calendar
                   selectedDate={selectedDate}
                   onSelect={handleDateSelect}
@@ -312,7 +494,9 @@ export default function BookingPage() {
                 <dd className="font-medium">
                   {product.type === "free_intro"
                     ? t("freeIntroSummaryLabel", { minutes: product.durationMinutes })
-                    : t("duration60")}
+                    : product.type === "use_credit"
+                      ? t("useCreditSummaryLabel")
+                      : t("duration60")}
                   {product.type === "lesson_package" &&
                     ` · ${t("creditsLabel", { count: product.creditsCount })}`}
                 </dd>
@@ -334,7 +518,9 @@ export default function BookingPage() {
                 <dd className="font-medium">
                   {product.type === "free_intro"
                     ? t("freeIntroBadge")
-                    : formatPrice(product.priceCents, product.currency, locale)}
+                    : product.type === "use_credit"
+                      ? t("useCreditPriceLabel")
+                      : formatPrice(product.priceCents, product.currency, locale)}
                 </dd>
               </div>
             </dl>
@@ -410,6 +596,58 @@ export default function BookingPage() {
                 {isSubmittingFreeIntro
                   ? t("freeIntroSubmitLoading")
                   : t("freeIntroSubmit")}
+              </motion.button>
+            </>
+          ) : product?.type === "use_credit" && selectedSlot ? (
+            <>
+              <div className="mt-4 space-y-2">
+                <input
+                  type="text"
+                  autoComplete="given-name"
+                  placeholder={t("freeIntroFirstName")}
+                  value={creditForm.firstName}
+                  onChange={(e) =>
+                    setCreditForm((f) => ({ ...f, firstName: e.target.value }))
+                  }
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm outline-none focus:border-accent"
+                />
+                <input
+                  type="text"
+                  autoComplete="family-name"
+                  placeholder={t("freeIntroLastName")}
+                  value={creditForm.lastName}
+                  onChange={(e) =>
+                    setCreditForm((f) => ({ ...f, lastName: e.target.value }))
+                  }
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm outline-none focus:border-accent"
+                />
+              </div>
+
+              {creditBookError === "no_credits" && (
+                <p className="mt-3 text-sm text-accent">{t("useCreditNoCreditsAtBooking")}</p>
+              )}
+              {creditBookError === "slot_taken" && (
+                <p className="mt-3 text-sm text-accent">{t("freeIntroSlotTaken")}</p>
+              )}
+              {creditBookError === "generic" && (
+                <p className="mt-3 text-sm text-accent">{t("freeIntroFormError")}</p>
+              )}
+
+              <motion.button
+                type="button"
+                onClick={handleCreditBookSubmit}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                disabled={
+                  isSubmittingCredit ||
+                  !creditForm.firstName.trim() ||
+                  !creditForm.lastName.trim()
+                }
+                className="mt-4 w-full rounded-full bg-accent px-4 py-2.5 text-sm font-medium text-accent-foreground transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                {isSubmittingCredit
+                  ? t("freeIntroSubmitLoading")
+                  : t("useCreditSubmit")}
               </motion.button>
             </>
           ) : (

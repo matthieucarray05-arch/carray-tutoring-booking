@@ -68,7 +68,20 @@
     "freeIntroAlreadyUsedCta": "Réserver un cours unique",
     "freeIntroSlotTaken": "Ce créneau vient d'être pris — veuillez en choisir un autre.",
     "freeIntroConfirmTitle": "C'est confirmé, {name} !",
-    "freeIntroConfirmBody": "Merci d'avoir réservé votre consultation gratuite. C'est l'occasion de faire connaissance, de parler de vos objectifs et de voir comment je peux vous aider à progresser — sans frais ni engagement. À bientôt !"
+    "freeIntroConfirmBody": "Merci d'avoir réservé votre consultation gratuite. C'est l'occasion de faire connaissance, de parler de vos objectifs et de voir comment je peux vous aider à progresser — sans frais ni engagement. À bientôt !",
+    "useCreditLabel": "Utiliser un crédit",
+    "useCreditCardTitle": "Vous avez déjà un forfait ?",
+    "useCreditCardBody": "Si vous avez déjà acheté un forfait de cours, vérifiez ici vos crédits restants et réservez votre prochaine séance — sans nouveau paiement.",
+    "useCreditCheckSubmit": "Vérifier mes crédits",
+    "useCreditCheckLoading": "Vérification…",
+    "useCreditNotFound": "Aucun crédit disponible trouvé pour cet email.",
+    "useCreditNotFoundCta": "Acheter un forfait",
+    "useCreditAvailableBadge": "{count, plural, one {Vous avez # cours disponible} other {Vous avez # cours disponibles}}",
+    "useCreditSummaryLabel": "Cours (crédit du forfait)",
+    "useCreditPriceLabel": "Aucun paiement",
+    "useCreditSubmit": "Confirmer la réservation",
+    "useCreditNoCreditsAtBooking": "Il n'y a plus de crédit disponible pour cet email.",
+    "useCreditConfirmBody": "{count, plural, =0 {Votre cours est confirmé ! Il ne vous reste plus de cours dans ce forfait.} one {Votre cours est confirmé ! Il vous reste encore # cours dans ce forfait.} other {Votre cours est confirmé ! Il vous reste encore # cours dans ce forfait.}}"
   },
   "Reviews": {
     "title": "Ce que disent nos clients",

@@ -277,6 +277,142 @@ export function buildCustomerFreeIntroEmail(
   return { subject: `${copy.subject} — ${subjectDate}`, html, text };
 }
 
+export interface CreditBookingEmailDetails {
+  customerName: string;
+  customerEmail: string;
+  bookingStartAt: Date;
+  bookingEndAt: Date;
+  customerTimezone: string;
+  remainingCredits: number;
+}
+
+/** Admin notification for a credit redemption — always in English. */
+export function buildAdminCreditBookingEmail(details: CreditBookingEmailDetails): {
+  subject: string;
+  html: string;
+  text: string;
+} {
+  const slotLabel = `${formatInTz(details.bookingStartAt, details.customerTimezone, "EEEE d MMMM yyyy, HH:mm")}–${formatInTz(details.bookingEndAt, details.customerTimezone, "HH:mm")} (${details.customerTimezone})`;
+
+  const rows: [string, string][] = [
+    ["Customer", `${details.customerName} <${details.customerEmail}>`],
+    ["Type", "Lesson credit redeemed (no payment)"],
+    ["Booked slot", slotLabel],
+    ["Remaining unused credits", String(details.remainingCredits)],
+  ];
+
+  const subject = `Credit lesson booked: ${details.customerName} — ${formatInTz(details.bookingStartAt, details.customerTimezone, "d MMM yyyy, HH:mm")}`;
+  const text = ["Lesson credit redeemed", "", ...rows.map(([k, v]) => `${k}: ${v}`)].join("\n") + emailFooterText();
+  const html = `
+    <h2 style="margin:0 0 16px;font-family:sans-serif;">Lesson credit redeemed</h2>
+    <table style="font-family:sans-serif;font-size:14px;border-collapse:collapse;">
+      ${rows
+        .map(
+          ([k, v]) =>
+            `<tr><td style="padding:4px 12px 4px 0;color:#666;vertical-align:top;">${escapeHtml(k)}</td><td style="padding:4px 0;">${escapeHtml(v)}</td></tr>`,
+        )
+        .join("")}
+    </table>
+    ${emailFooterHtml()}
+  `;
+
+  return { subject, html, text };
+}
+
+interface CreditBookingCopy {
+  subject: string;
+  greeting: (name: string) => string;
+  intro: string;
+  slotLabel: string;
+  remaining: (count: number) => string;
+  closing: string;
+}
+
+const CREDIT_BOOKING_COPY: Record<string, CreditBookingCopy> = {
+  en: {
+    subject: "Your lesson is confirmed",
+    greeting: (name) => `Hi ${name},`,
+    intro: "Your lesson is confirmed — no payment needed, it's from your package.",
+    slotLabel: "When",
+    remaining: (count) =>
+      count > 0
+        ? `You have ${count} more lesson${count === 1 ? "" : "s"} left from this package — get in touch whenever you're ready to book them.`
+        : "This was your last lesson from this package — get in touch if you'd like to book a new one.",
+    closing: "See you soon!\nCarray Tutoring",
+  },
+  it: {
+    subject: "La tua lezione è confermata",
+    greeting: (name) => `Ciao ${name},`,
+    intro: "La tua lezione è confermata — nessun pagamento necessario, fa parte del tuo pacchetto.",
+    slotLabel: "Quando",
+    remaining: (count) =>
+      count > 0
+        ? `Hai ancora ${count} lezion${count === 1 ? "e" : "i"} da questo pacchetto — scrivici quando vuoi prenotarle.`
+        : "Questa era l'ultima lezione di questo pacchetto — scrivici se vuoi prenotarne uno nuovo.",
+    closing: "A presto!\nCarray Tutoring",
+  },
+  fr: {
+    subject: "Votre cours est confirmé",
+    greeting: (name) => `Bonjour ${name},`,
+    intro: "Votre cours est confirmé — aucun paiement nécessaire, il fait partie de votre forfait.",
+    slotLabel: "Quand",
+    remaining: (count) =>
+      count > 0
+        ? `Il vous reste ${count} cours de ce forfait — contactez-nous quand vous voulez les réserver.`
+        : "C'était le dernier cours de ce forfait — contactez-nous si vous souhaitez en réserver un nouveau.",
+    closing: "À bientôt !\nCarray Tutoring",
+  },
+  de: {
+    subject: "Deine Unterrichtsstunde ist bestätigt",
+    greeting: (name) => `Hallo ${name},`,
+    intro: "Deine Unterrichtsstunde ist bestätigt — keine Zahlung nötig, sie stammt aus deinem Paket.",
+    slotLabel: "Wann",
+    remaining: (count) =>
+      count > 0
+        ? `Du hast noch ${count} Stunde${count === 1 ? "" : "n"} aus diesem Paket übrig — melde dich, wenn du sie buchen möchtest.`
+        : "Das war die letzte Stunde aus diesem Paket — melde dich, wenn du ein neues buchen möchtest.",
+    closing: "Bis bald!\nCarray Tutoring",
+  },
+};
+
+export function buildCustomerCreditBookingEmail(
+  locale: string,
+  details: CreditBookingEmailDetails,
+): { subject: string; html: string; text: string } {
+  const copy = CREDIT_BOOKING_COPY[locale] ?? CREDIT_BOOKING_COPY.en;
+  const dateFnsLocale = resolveDateFnsLocale(locale);
+  const slot = `${formatInTz(details.bookingStartAt, details.customerTimezone, "EEEE d MMMM yyyy, HH:mm", dateFnsLocale)}–${formatInTz(details.bookingEndAt, details.customerTimezone, "HH:mm")} (${details.customerTimezone})`;
+  const subjectDate = formatInTz(details.bookingStartAt, details.customerTimezone, "d MMM yyyy, HH:mm", dateFnsLocale);
+  const remainingLine = copy.remaining(details.remainingCredits);
+
+  const text = [
+    copy.greeting(details.customerName),
+    "",
+    copy.intro,
+    "",
+    `${copy.slotLabel}: ${slot}`,
+    "",
+    remainingLine,
+    "",
+    copy.closing,
+  ].join("\n") + emailFooterText();
+
+  const html = `
+    <div style="font-family:sans-serif;font-size:15px;color:#1a1a1a;line-height:1.5;">
+      <p>${escapeHtml(copy.greeting(details.customerName))}</p>
+      <p>${escapeHtml(copy.intro)}</p>
+      <table style="border-collapse:collapse;margin:16px 0;">
+        <tr><td style="padding:4px 12px 4px 0;color:#666;">${escapeHtml(copy.slotLabel)}</td><td style="padding:4px 0;font-weight:600;">${escapeHtml(slot)}</td></tr>
+      </table>
+      <p>${escapeHtml(remainingLine)}</p>
+      <p style="white-space:pre-line;">${escapeHtml(copy.closing)}</p>
+      ${emailFooterHtml()}
+    </div>
+  `;
+
+  return { subject: `${copy.subject} — ${subjectDate}`, html, text };
+}
+
 export function buildCustomerConfirmationEmail(
   locale: string,
   details: BookingEmailDetails,

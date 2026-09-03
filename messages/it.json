@@ -68,7 +68,20 @@
     "freeIntroAlreadyUsedCta": "Prenota una lezione singola",
     "freeIntroSlotTaken": "Questo orario è stato appena preso — scegline un altro.",
     "freeIntroConfirmTitle": "Tutto pronto, {name}!",
-    "freeIntroConfirmBody": "Grazie per aver prenotato la tua consulenza gratuita. È un'occasione per conoscerci, parlare dei tuoi obiettivi e capire come posso aiutarti a migliorare — senza costi né impegno. A presto!"
+    "freeIntroConfirmBody": "Grazie per aver prenotato la tua consulenza gratuita. È un'occasione per conoscerci, parlare dei tuoi obiettivi e capire come posso aiutarti a migliorare — senza costi né impegno. A presto!",
+    "useCreditLabel": "Usa un credito",
+    "useCreditCardTitle": "Hai già un pacchetto?",
+    "useCreditCardBody": "Se hai già acquistato un pacchetto di lezioni, verifica qui i tuoi crediti disponibili e prenota la prossima sessione — senza pagare di nuovo.",
+    "useCreditCheckSubmit": "Verifica i miei crediti",
+    "useCreditCheckLoading": "Verifica in corso…",
+    "useCreditNotFound": "Nessun credito disponibile trovato per questa email.",
+    "useCreditNotFoundCta": "Acquista un pacchetto",
+    "useCreditAvailableBadge": "{count, plural, one {Hai # lezione disponibile} other {Hai # lezioni disponibili}}",
+    "useCreditSummaryLabel": "Lezione (credito pacchetto)",
+    "useCreditPriceLabel": "Nessun pagamento",
+    "useCreditSubmit": "Conferma prenotazione",
+    "useCreditNoCreditsAtBooking": "Non risultano più crediti disponibili per questa email.",
+    "useCreditConfirmBody": "{count, plural, =0 {La tua lezione è confermata! Non hai più lezioni rimanenti in questo pacchetto.} one {La tua lezione è confermata! Ti resta ancora # lezione in questo pacchetto.} other {La tua lezione è confermata! Ti restano ancora # lezioni in questo pacchetto.}}"
   },
   "Reviews": {
     "title": "Cosa dicono i clienti",

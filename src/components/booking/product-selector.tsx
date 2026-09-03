@@ -2,7 +2,7 @@
 
 import { useLocale, useTranslations } from "next-intl";
 import { motion } from "framer-motion";
-import { FREE_INTRO_PRODUCT, MOCK_PRODUCTS, type Product } from "@/lib/mock-data";
+import { FREE_INTRO_PRODUCT, USE_CREDIT_PRODUCT, MOCK_PRODUCTS, type Product } from "@/lib/mock-data";
 import { formatPrice } from "@/lib/format";
 
 const CREDIT_COUNTS = [4, 8] as const;
@@ -24,11 +24,13 @@ export function ProductSelector({
     const product =
       nextType === "free_intro"
         ? FREE_INTRO_PRODUCT
-        : nextType === "single_lesson"
-          ? MOCK_PRODUCTS.find((p) => p.type === "single_lesson")
-          : (MOCK_PRODUCTS.find(
-              (p) => p.type === "lesson_package" && p.creditsCount === creditsCount,
-            ) ?? MOCK_PRODUCTS.find((p) => p.type === "lesson_package"));
+        : nextType === "use_credit"
+          ? USE_CREDIT_PRODUCT
+          : nextType === "single_lesson"
+            ? MOCK_PRODUCTS.find((p) => p.type === "single_lesson")
+            : (MOCK_PRODUCTS.find(
+                (p) => p.type === "lesson_package" && p.creditsCount === creditsCount,
+              ) ?? MOCK_PRODUCTS.find((p) => p.type === "lesson_package"));
     if (product) onChange(product);
   }
 
@@ -42,7 +44,7 @@ export function ProductSelector({
   return (
     <div className="space-y-4">
       <div className="inline-flex flex-wrap rounded-full border border-border p-1 text-sm">
-        {(["free_intro", "single_lesson", "lesson_package"] as const).map((t2) => (
+        {(["free_intro", "single_lesson", "lesson_package", "use_credit"] as const).map((t2) => (
           <motion.button
             key={t2}
             type="button"
@@ -58,7 +60,9 @@ export function ProductSelector({
               ? t("freeIntroLabel")
               : t2 === "single_lesson"
                 ? t("singleLesson")
-                : t("package")}
+                : t2 === "lesson_package"
+                  ? t("package")
+                  : t("useCreditLabel")}
           </motion.button>
         ))}
       </div>
@@ -78,6 +82,20 @@ export function ProductSelector({
           </div>
           <p className="mt-1 text-sm text-muted-foreground">
             {t("freeIntroCardBody", { minutes: FREE_INTRO_PRODUCT.durationMinutes })}
+          </p>
+        </motion.div>
+      )}
+
+      {type === "use_credit" && (
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.25 }}
+          className="rounded-2xl border border-border bg-muted p-5"
+        >
+          <p className="text-lg font-semibold">{t("useCreditCardTitle")}</p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {t("useCreditCardBody")}
           </p>
         </motion.div>
       )}

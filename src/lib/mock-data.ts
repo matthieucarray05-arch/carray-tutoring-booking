@@ -4,7 +4,11 @@
  * bookings moved to Postgres (see lib/db/schema.ts and /api/availability).
  */
 
-export type ProductType = "single_lesson" | "lesson_package" | "free_intro";
+export type ProductType =
+  | "single_lesson"
+  | "lesson_package"
+  | "free_intro"
+  | "use_credit";
 
 /** All paid lessons are 60 minutes — the only duration currently sold. */
 export const LESSON_DURATION_MINUTES = 60;
@@ -28,6 +32,16 @@ export const FREE_INTRO_PRODUCT: Product = {
   id: "free-intro",
   type: "free_intro",
   durationMinutes: FREE_INTRO_DURATION_MINUTES,
+  creditsCount: 1,
+  priceCents: 0,
+  currency: "EUR",
+};
+
+/** Not a real purchase — redeems an existing lesson credit instead of paying (see /api/credits/book). */
+export const USE_CREDIT_PRODUCT: Product = {
+  id: "use-credit",
+  type: "use_credit",
+  durationMinutes: LESSON_DURATION_MINUTES,
   creditsCount: 1,
   priceCents: 0,
   currency: "EUR",

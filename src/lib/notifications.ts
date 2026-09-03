@@ -6,8 +6,11 @@ import {
   buildCustomerConfirmationEmail,
   buildAdminFreeIntroEmail,
   buildCustomerFreeIntroEmail,
+  buildAdminCreditBookingEmail,
+  buildCustomerCreditBookingEmail,
   type BookingEmailDetails,
   type FreeIntroEmailDetails,
+  type CreditBookingEmailDetails,
 } from "@/lib/email/templates";
 
 export interface NewBookingNotification {
@@ -135,6 +138,67 @@ export async function notifyFreeIntroBooking(
     if (result.status === "rejected") {
       console.error(
         `notifyFreeIntroBooking: failed to send ${i === 0 ? "admin" : "customer"} email`,
+        result.reason,
+      );
+    }
+  }
+}
+
+export interface CreditBookingNotification {
+  customerName: string;
+  customerEmail: string;
+  bookingStartAt: Date;
+  bookingEndAt: Date;
+  customerTimezone: string;
+  locale: string;
+  remainingCredits: number;
+}
+
+/**
+ * Sends the admin notification and customer confirmation emails when a
+ * customer redeems an existing lesson credit (no payment involved) —
+ * same delivery pattern as notifyNewBooking/notifyFreeIntroBooking.
+ */
+export async function notifyCreditBooking(
+  details: CreditBookingNotification,
+): Promise<void> {
+  const emailDetails: CreditBookingEmailDetails = details;
+  const adminEmail = process.env.ADMIN_EMAIL;
+  const from = process.env.EMAIL_FROM;
+
+  if (!adminEmail || !from) {
+    console.warn(
+      "notifyCreditBooking: ADMIN_EMAIL or EMAIL_FROM not set — skipping email, logging instead.",
+      JSON.stringify(details),
+    );
+    return;
+  }
+
+  const resend = getResend();
+  const admin = buildAdminCreditBookingEmail(emailDetails);
+  const customer = buildCustomerCreditBookingEmail(details.locale, emailDetails);
+
+  const results = await Promise.allSettled([
+    resend.emails.send({
+      from,
+      to: adminEmail,
+      subject: admin.subject,
+      html: admin.html,
+      text: admin.text,
+    }),
+    resend.emails.send({
+      from,
+      to: details.customerEmail,
+      subject: customer.subject,
+      html: customer.html,
+      text: customer.text,
+    }),
+  ]);
+
+  for (const [i, result] of results.entries()) {
+    if (result.status === "rejected") {
+      console.error(
+        `notifyCreditBooking: failed to send ${i === 0 ? "admin" : "customer"} email`,
         result.reason,
       );
     }

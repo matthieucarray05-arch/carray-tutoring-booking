@@ -68,7 +68,20 @@
     "freeIntroAlreadyUsedCta": "Einzelstunde buchen",
     "freeIntroSlotTaken": "Dieser Termin wurde gerade vergeben — bitte wähle einen anderen.",
     "freeIntroConfirmTitle": "Alles bereit, {name}!",
-    "freeIntroConfirmBody": "Danke, dass du deine kostenlose Kennenlernstunde gebucht hast. Das ist eine Gelegenheit, uns kennenzulernen, über deine Ziele zu sprechen und zu sehen, wie ich dir helfen kann — ohne Kosten und ohne Verpflichtung. Bis bald!"
+    "freeIntroConfirmBody": "Danke, dass du deine kostenlose Kennenlernstunde gebucht hast. Das ist eine Gelegenheit, uns kennenzulernen, über deine Ziele zu sprechen und zu sehen, wie ich dir helfen kann — ohne Kosten und ohne Verpflichtung. Bis bald!",
+    "useCreditLabel": "Guthaben nutzen",
+    "useCreditCardTitle": "Hast du schon ein Paket?",
+    "useCreditCardBody": "Wenn du bereits ein Stundenpaket gekauft hast, überprüfe hier dein verbleibendes Guthaben und buche deine nächste Stunde — ohne erneute Zahlung.",
+    "useCreditCheckSubmit": "Guthaben prüfen",
+    "useCreditCheckLoading": "Wird geprüft…",
+    "useCreditNotFound": "Für diese E-Mail wurde kein verfügbares Guthaben gefunden.",
+    "useCreditNotFoundCta": "Ein Paket kaufen",
+    "useCreditAvailableBadge": "{count, plural, one {Du hast noch # Stunde verfügbar} other {Du hast noch # Stunden verfügbar}}",
+    "useCreditSummaryLabel": "Unterricht (Paket-Guthaben)",
+    "useCreditPriceLabel": "Keine Zahlung",
+    "useCreditSubmit": "Buchung bestätigen",
+    "useCreditNoCreditsAtBooking": "Für diese E-Mail ist kein Guthaben mehr verfügbar.",
+    "useCreditConfirmBody": "{count, plural, =0 {Deine Unterrichtsstunde ist bestätigt! Du hast keine Stunden mehr in diesem Paket.} one {Deine Unterrichtsstunde ist bestätigt! Du hast noch # Stunde in diesem Paket übrig.} other {Deine Unterrichtsstunde ist bestätigt! Du hast noch # Stunden in diesem Paket übrig.}}"
   },
   "Reviews": {
     "title": "Was unsere Kunden sagen",
