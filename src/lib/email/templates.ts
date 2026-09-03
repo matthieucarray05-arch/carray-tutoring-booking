@@ -1,5 +1,6 @@
 import { formatInTz, resolveDateFnsLocale } from "@/lib/timezone";
 import { SITE_URL, CONTACT_PHONE, MEET_LINK, CANCELLATION_WINDOW_HOURS } from "@/lib/config";
+import { formatBookingNumber } from "@/lib/booking-number";
 
 export interface BookingEmailDetails {
   customerName: string | null;
@@ -17,6 +18,7 @@ export interface BookingEmailDetails {
   customerTimezone: string;
   remainingCredits: number;
   manageToken: string;
+  bookingId: number;
 }
 
 function formatAmount(cents: number, currency: string): string {
@@ -55,6 +57,13 @@ function emailFooterHtml(): string {
 function emailFooterText(): string {
   return `\n\nCarray Tutoring\n${CONTACT_PHONE}`;
 }
+
+const BOOKING_NUMBER_LABEL: Record<string, string> = {
+  en: "Booking number",
+  it: "Numero di prenotazione",
+  fr: "Numéro de réservation",
+  de: "Buchungsnummer",
+};
 
 interface SessionInfoCopy {
   joinTitle: string;
@@ -173,6 +182,7 @@ export function buildAdminNotificationEmail(details: BookingEmailDetails): {
   const slotLabel = `${formatInTz(details.bookingStartAt, details.customerTimezone, "EEEE d MMMM yyyy, HH:mm")}–${formatInTz(details.bookingEndAt, details.customerTimezone, "HH:mm")} (${details.customerTimezone})`;
 
   const rows: [string, string][] = [
+    ["Booking number", formatBookingNumber(details.bookingId)],
     ["Customer", `${details.customerName ?? "(no name)"} <${details.customerEmail}>`],
     ...(details.companyName ? ([["Company", details.companyName]] as [string, string][]) : []),
     ...(details.vatId ? ([["VAT ID", details.vatId]] as [string, string][]) : []),
@@ -276,6 +286,7 @@ export interface FreeIntroEmailDetails {
   bookingEndAt: Date;
   customerTimezone: string;
   manageToken: string;
+  bookingId: number;
 }
 
 /** Admin notification for a free intro consultation — always in English. */
@@ -287,6 +298,7 @@ export function buildAdminFreeIntroEmail(details: FreeIntroEmailDetails): {
   const slotLabel = `${formatInTz(details.bookingStartAt, details.customerTimezone, "EEEE d MMMM yyyy, HH:mm")}–${formatInTz(details.bookingEndAt, details.customerTimezone, "HH:mm")} (${details.customerTimezone})`;
 
   const rows: [string, string][] = [
+    ["Booking number", formatBookingNumber(details.bookingId)],
     ["Customer", `${details.customerName} <${details.customerEmail}>`],
     ["Type", "Free intro consultation"],
     ["Booked slot", slotLabel],
@@ -363,12 +375,15 @@ export function buildCustomerFreeIntroEmail(
   const subjectDate = formatInTz(details.bookingStartAt, details.customerTimezone, "d MMM yyyy, HH:mm", dateFnsLocale);
 
   const session = sessionInfoBlock(locale, details.manageToken);
+  const bookingNumberLabel = BOOKING_NUMBER_LABEL[locale] ?? BOOKING_NUMBER_LABEL.en;
+  const bookingNumber = formatBookingNumber(details.bookingId);
 
   const text = [
     copy.greeting(details.customerName),
     "",
     copy.intro,
     "",
+    `${bookingNumberLabel}: ${bookingNumber}`,
     `${copy.slotLabel}: ${slot}`,
     "",
     copy.closing,
@@ -379,6 +394,7 @@ export function buildCustomerFreeIntroEmail(
       <p>${escapeHtml(copy.greeting(details.customerName))}</p>
       <p>${escapeHtml(copy.intro)}</p>
       <table style="border-collapse:collapse;margin:16px 0;">
+        <tr><td style="padding:4px 12px 4px 0;color:#666;">${escapeHtml(bookingNumberLabel)}</td><td style="padding:4px 0;font-weight:600;">${escapeHtml(bookingNumber)}</td></tr>
         <tr><td style="padding:4px 12px 4px 0;color:#666;">${escapeHtml(copy.slotLabel)}</td><td style="padding:4px 0;font-weight:600;">${escapeHtml(slot)}</td></tr>
       </table>
       <p style="white-space:pre-line;">${escapeHtml(copy.closing)}</p>
@@ -398,6 +414,7 @@ export interface CreditBookingEmailDetails {
   customerTimezone: string;
   remainingCredits: number;
   manageToken: string;
+  bookingId: number;
 }
 
 /** Admin notification for a credit redemption — always in English. */
@@ -409,6 +426,7 @@ export function buildAdminCreditBookingEmail(details: CreditBookingEmailDetails)
   const slotLabel = `${formatInTz(details.bookingStartAt, details.customerTimezone, "EEEE d MMMM yyyy, HH:mm")}–${formatInTz(details.bookingEndAt, details.customerTimezone, "HH:mm")} (${details.customerTimezone})`;
 
   const rows: [string, string][] = [
+    ["Booking number", formatBookingNumber(details.bookingId)],
     ["Customer", `${details.customerName} <${details.customerEmail}>`],
     ["Type", "Lesson credit redeemed (no payment)"],
     ["Booked slot", slotLabel],
@@ -499,12 +517,15 @@ export function buildCustomerCreditBookingEmail(
   const subjectDate = formatInTz(details.bookingStartAt, details.customerTimezone, "d MMM yyyy, HH:mm", dateFnsLocale);
   const remainingLine = copy.remaining(details.remainingCredits);
   const session = sessionInfoBlock(locale, details.manageToken);
+  const bookingNumberLabel = BOOKING_NUMBER_LABEL[locale] ?? BOOKING_NUMBER_LABEL.en;
+  const bookingNumber = formatBookingNumber(details.bookingId);
 
   const text = [
     copy.greeting(details.customerName),
     "",
     copy.intro,
     "",
+    `${bookingNumberLabel}: ${bookingNumber}`,
     `${copy.slotLabel}: ${slot}`,
     "",
     remainingLine,
@@ -517,6 +538,7 @@ export function buildCustomerCreditBookingEmail(
       <p>${escapeHtml(copy.greeting(details.customerName))}</p>
       <p>${escapeHtml(copy.intro)}</p>
       <table style="border-collapse:collapse;margin:16px 0;">
+        <tr><td style="padding:4px 12px 4px 0;color:#666;">${escapeHtml(bookingNumberLabel)}</td><td style="padding:4px 0;font-weight:600;">${escapeHtml(bookingNumber)}</td></tr>
         <tr><td style="padding:4px 12px 4px 0;color:#666;">${escapeHtml(copy.slotLabel)}</td><td style="padding:4px 0;font-weight:600;">${escapeHtml(slot)}</td></tr>
       </table>
       <p>${escapeHtml(remainingLine)}</p>
@@ -543,12 +565,15 @@ export function buildCustomerConfirmationEmail(
       : "60 min";
   const remainingLine = copy.creditsRemaining(details.remainingCredits);
   const session = sessionInfoBlock(locale, details.manageToken);
+  const bookingNumberLabel = BOOKING_NUMBER_LABEL[locale] ?? BOOKING_NUMBER_LABEL.en;
+  const bookingNumber = formatBookingNumber(details.bookingId);
 
   const textLines = [
     copy.greeting(details.customerName ?? ""),
     "",
     copy.intro,
     "",
+    `${bookingNumberLabel}: ${bookingNumber}`,
     `${copy.slotLabel}: ${slot}`,
     `${copy.productLabel}: ${productLine}`,
     `${copy.amountLabel}: ${formatAmount(details.amountTotalCents, details.currency)}`,
@@ -562,6 +587,7 @@ export function buildCustomerConfirmationEmail(
       <p>${escapeHtml(copy.greeting(details.customerName ?? ""))}</p>
       <p>${escapeHtml(copy.intro)}</p>
       <table style="border-collapse:collapse;margin:16px 0;">
+        <tr><td style="padding:4px 12px 4px 0;color:#666;">${escapeHtml(bookingNumberLabel)}</td><td style="padding:4px 0;font-weight:600;">${escapeHtml(bookingNumber)}</td></tr>
         <tr><td style="padding:4px 12px 4px 0;color:#666;">${escapeHtml(copy.slotLabel)}</td><td style="padding:4px 0;font-weight:600;">${escapeHtml(slot)}</td></tr>
         <tr><td style="padding:4px 12px 4px 0;color:#666;">${escapeHtml(copy.productLabel)}</td><td style="padding:4px 0;">${escapeHtml(productLine)}</td></tr>
         <tr><td style="padding:4px 12px 4px 0;color:#666;">${escapeHtml(copy.amountLabel)}</td><td style="padding:4px 0;">${escapeHtml(formatAmount(details.amountTotalCents, details.currency))}</td></tr>

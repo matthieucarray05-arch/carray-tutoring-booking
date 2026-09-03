@@ -8,6 +8,7 @@ import { LESSON_DURATION_MINUTES } from "@/lib/mock-data";
 import { TUTOR_TIMEZONE } from "@/lib/config";
 import { routing } from "@/i18n/routing";
 import { notifyCreditBooking } from "@/lib/notifications";
+import { formatBookingNumber } from "@/lib/booking-number";
 
 export const dynamic = "force-dynamic";
 
@@ -159,11 +160,13 @@ export async function POST(request: NextRequest) {
     locale,
     remainingCredits: result.remainingCredits,
     manageToken: result.manageToken,
+    bookingId: result.bookingId,
   });
 
   return NextResponse.json({
     startUtc: slotStart.toISOString(),
     endUtc: slotEnd.toISOString(),
     remainingCredits: result.remainingCredits,
+    bookingNumber: formatBookingNumber(result.bookingId),
   });
 }

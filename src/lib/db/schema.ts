@@ -77,5 +77,7 @@ export const bookings = pgTable("bookings", {
   status: text("status").notNull().default("confirmed"),
   /** Random token for the self-service manage/cancel link sent in confirmation emails. */
   manageToken: text("manage_token").notNull().unique(),
+  /** Set when a customer self-service cancels via the manage link — null while still confirmed. */
+  cancelledAt: timestamp("cancelled_at", { withTimezone: true }),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
 });

@@ -41,6 +41,7 @@ export default function BookingPage() {
     firstName: string;
     startUtc: Date;
     endUtc: Date;
+    bookingNumber: string;
   } | null>(null);
 
   const [creditEmail, setCreditEmail] = useState("");
@@ -58,6 +59,7 @@ export default function BookingPage() {
     startUtc: Date;
     endUtc: Date;
     remainingCredits: number;
+    bookingNumber: string;
   } | null>(null);
 
   useEffect(() => {
@@ -217,10 +219,12 @@ export default function BookingPage() {
         return;
       }
 
+      const data = (await res.json()) as { bookingNumber: string };
       setFreeIntroConfirmation({
         firstName: freeIntroForm.firstName.trim(),
         startUtc: selectedSlot.startUtc,
         endUtc: selectedSlot.endUtc,
+        bookingNumber: data.bookingNumber,
       });
     } catch {
       setFreeIntroError("generic");
@@ -304,12 +308,13 @@ export default function BookingPage() {
         return;
       }
 
-      const data = (await res.json()) as { remainingCredits: number };
+      const data = (await res.json()) as { remainingCredits: number; bookingNumber: string };
       setCreditConfirmation({
         firstName: creditForm.firstName.trim(),
         startUtc: selectedSlot.startUtc,
         endUtc: selectedSlot.endUtc,
         remainingCredits: data.remainingCredits,
+        bookingNumber: data.bookingNumber,
       });
     } catch {
       setCreditBookError("generic");
@@ -329,8 +334,10 @@ export default function BookingPage() {
           {t("freeIntroConfirmTitle", { name: freeIntroConfirmation.firstName })}
         </h1>
         <p className="mt-4 text-muted-foreground">{t("freeIntroConfirmBody")}</p>
-        <div className="mt-8 inline-block rounded-2xl border border-border px-6 py-4">
-          <p className="text-sm text-muted-foreground">{t("summarySlot")}</p>
+        <div className="mt-8 inline-block rounded-2xl border border-border px-6 py-4 text-left">
+          <p className="text-sm text-muted-foreground">{t("bookingNumberLabel")}</p>
+          <p className="text-lg font-medium">{freeIntroConfirmation.bookingNumber}</p>
+          <p className="mt-3 text-sm text-muted-foreground">{t("summarySlot")}</p>
           <p className="mt-1 text-lg font-medium">
             {formatInTz(
               freeIntroConfirmation.startUtc,
@@ -359,8 +366,10 @@ export default function BookingPage() {
         <p className="mt-4 text-muted-foreground">
           {t("useCreditConfirmBody", { count: creditConfirmation.remainingCredits })}
         </p>
-        <div className="mt-8 inline-block rounded-2xl border border-border px-6 py-4">
-          <p className="text-sm text-muted-foreground">{t("summarySlot")}</p>
+        <div className="mt-8 inline-block rounded-2xl border border-border px-6 py-4 text-left">
+          <p className="text-sm text-muted-foreground">{t("bookingNumberLabel")}</p>
+          <p className="text-lg font-medium">{creditConfirmation.bookingNumber}</p>
+          <p className="mt-3 text-sm text-muted-foreground">{t("summarySlot")}</p>
           <p className="mt-1 text-lg font-medium">
             {formatInTz(
               creditConfirmation.startUtc,

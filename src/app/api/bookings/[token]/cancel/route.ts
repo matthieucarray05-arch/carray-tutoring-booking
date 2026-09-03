@@ -34,7 +34,7 @@ export async function POST(
   await db.transaction(async (tx) => {
     await tx
       .update(bookings)
-      .set({ status: "cancelled" })
+      .set({ status: "cancelled", cancelledAt: new Date() })
       .where(eq(bookings.id, booking.id));
 
     if (booking.creditId) {

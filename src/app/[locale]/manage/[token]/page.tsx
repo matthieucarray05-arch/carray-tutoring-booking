@@ -5,6 +5,7 @@ import { bookings } from "@/lib/db/schema";
 import type { Locale } from "@/i18n/routing";
 import { CANCELLATION_WINDOW_HOURS, CONTACT_PHONE, TUTOR_TIMEZONE } from "@/lib/config";
 import { formatInTz, resolveDateFnsLocale } from "@/lib/timezone";
+import { formatBookingNumber } from "@/lib/booking-number";
 import { CancelBookingButton } from "@/components/manage/cancel-booking-button";
 
 export default async function ManageBookingPage({
@@ -35,10 +36,7 @@ export default async function ManageBookingPage({
 
   const timezone = booking.customerTimezone || TUTOR_TIMEZONE;
   const slotLabel = `${formatInTz(booking.startAt, timezone, "EEEE d MMMM yyyy, HH:mm", resolveDateFnsLocale(locale))} (${timezone})`;
-  const productLabel =
-    booking.bookingType === "free_intro"
-      ? t("freeIntroProductLabel")
-      : t("lessonProductLabel");
+  const bookingNumber = formatBookingNumber(booking.id);
 
   if (booking.status !== "confirmed") {
     return (
@@ -63,7 +61,7 @@ export default async function ManageBookingPage({
       <dl className="mt-8 space-y-3 text-left">
         <div className="rounded-2xl border border-border p-5">
           <dt className="text-sm text-muted-foreground">{t("whatLabel")}</dt>
-          <dd className="mt-0.5 font-medium">{productLabel}</dd>
+          <dd className="mt-0.5 font-medium">{bookingNumber}</dd>
         </div>
         <div className="rounded-2xl border border-border p-5">
           <dt className="text-sm text-muted-foreground">{t("whenLabel")}</dt>

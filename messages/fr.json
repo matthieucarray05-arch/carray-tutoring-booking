@@ -81,7 +81,8 @@
     "useCreditPriceLabel": "Aucun paiement",
     "useCreditSubmit": "Confirmer la réservation",
     "useCreditNoCreditsAtBooking": "Il n'y a plus de crédit disponible pour cet email.",
-    "useCreditConfirmBody": "{count, plural, =0 {Votre cours est confirmé ! Il ne vous reste plus de cours dans ce forfait.} one {Votre cours est confirmé ! Il vous reste encore # cours dans ce forfait.} other {Votre cours est confirmé ! Il vous reste encore # cours dans ce forfait.}}"
+    "useCreditConfirmBody": "{count, plural, =0 {Votre cours est confirmé ! Il ne vous reste plus de cours dans ce forfait.} one {Votre cours est confirmé ! Il vous reste encore # cours dans ce forfait.} other {Votre cours est confirmé ! Il vous reste encore # cours dans ce forfait.}}",
+    "bookingNumberLabel": "Numéro de réservation"
   },
   "Reviews": {
     "title": "Ce que disent nos clients",

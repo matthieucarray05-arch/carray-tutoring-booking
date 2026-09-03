@@ -1,4 +1,4 @@
-import { asc, eq } from "drizzle-orm";
+import { asc, desc, eq } from "drizzle-orm";
 import { db } from "@/lib/db/client";
 import { availabilityDates, bookings } from "@/lib/db/schema";
 import { TUTOR_TIMEZONE } from "@/lib/config";
@@ -6,6 +6,7 @@ import { formatInTz } from "@/lib/timezone";
 import { AvailabilityCalendar } from "@/components/admin/availability-calendar";
 import { DayEditor } from "@/components/admin/day-editor";
 import { UpcomingBookings } from "@/components/admin/upcoming-bookings";
+import { RecentlyCancelled } from "@/components/admin/recently-cancelled";
 
 export const dynamic = "force-dynamic";
 
@@ -26,7 +27,7 @@ export default async function AdminAvailabilityPage({
   const { month: monthParam, date: selectedDate } = await searchParams;
   const monthStart = parseMonthParam(monthParam);
 
-  const [dates, confirmedBookings] = await Promise.all([
+  const [dates, confirmedBookings, cancelledBookings] = await Promise.all([
     db
       .select()
       .from(availabilityDates)
@@ -36,6 +37,12 @@ export default async function AdminAvailabilityPage({
       .from(bookings)
       .where(eq(bookings.status, "confirmed"))
       .orderBy(asc(bookings.startAt)),
+    db
+      .select()
+      .from(bookings)
+      .where(eq(bookings.status, "cancelled"))
+      .orderBy(desc(bookings.cancelledAt))
+      .limit(10),
   ]);
 
   const now = new Date();
@@ -75,9 +82,14 @@ export default async function AdminAvailabilityPage({
         </div>
       </section>
 
-      <section className="mt-12 pb-16">
+      <section className="mt-12">
         <h2 className="text-lg font-medium">Upcoming bookings</h2>
         <UpcomingBookings bookings={upcomingBookings} />
+      </section>
+
+      <section className="mt-12 pb-16">
+        <h2 className="text-lg font-medium">Recently cancelled</h2>
+        <RecentlyCancelled bookings={cancelledBookings} />
       </section>
     </div>
   );

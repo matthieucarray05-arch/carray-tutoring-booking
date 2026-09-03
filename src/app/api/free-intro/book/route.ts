@@ -8,6 +8,7 @@ import { FREE_INTRO_DURATION_MINUTES } from "@/lib/mock-data";
 import { TUTOR_TIMEZONE } from "@/lib/config";
 import { routing } from "@/i18n/routing";
 import { notifyFreeIntroBooking } from "@/lib/notifications";
+import { formatBookingNumber } from "@/lib/booking-number";
 
 export const dynamic = "force-dynamic";
 
@@ -121,10 +122,12 @@ export async function POST(request: NextRequest) {
     customerTimezone: customerTimezone || TUTOR_TIMEZONE,
     locale,
     manageToken,
+    bookingId: booking.id,
   });
 
   return NextResponse.json({
     startUtc: booking.startAt.toISOString(),
     endUtc: booking.endAt.toISOString(),
+    bookingNumber: formatBookingNumber(booking.id),
   });
 }

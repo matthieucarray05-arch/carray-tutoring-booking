@@ -81,7 +81,8 @@
     "useCreditPriceLabel": "No payment",
     "useCreditSubmit": "Confirm booking",
     "useCreditNoCreditsAtBooking": "No available credits found for this email anymore.",
-    "useCreditConfirmBody": "{count, plural, =0 {Your lesson is confirmed! You have no lessons left in this package.} one {Your lesson is confirmed! You have # lesson left in this package.} other {Your lesson is confirmed! You have # lessons left in this package.}}"
+    "useCreditConfirmBody": "{count, plural, =0 {Your lesson is confirmed! You have no lessons left in this package.} one {Your lesson is confirmed! You have # lesson left in this package.} other {Your lesson is confirmed! You have # lessons left in this package.}}",
+    "bookingNumberLabel": "Booking number"
   },
   "Reviews": {
     "title": "What Clients Say",

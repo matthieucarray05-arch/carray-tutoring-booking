@@ -200,5 +200,6 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
     locale,
     remainingCredits: creditsCount - 1,
     manageToken,
+    bookingId: booking.id,
   });
 }

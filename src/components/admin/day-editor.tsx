@@ -1,6 +1,7 @@
 import { addAvailabilityDate, deleteAvailabilityDate } from "@/lib/admin/actions";
 import { formatInTz } from "@/lib/timezone";
 import { TUTOR_TIMEZONE } from "@/lib/config";
+import { formatBookingNumber } from "@/lib/booking-number";
 
 interface AvailabilityEntry {
   id: number;
@@ -54,6 +55,7 @@ export function DayEditor({
           </p>
           {bookingsForDay.map((b) => (
             <p key={b.id} className="text-sm">
+              <span className="text-muted-foreground">{formatBookingNumber(b.id)} ·</span>{" "}
               {formatInTz(b.startAt, TUTOR_TIMEZONE, "HH:mm")}–
               {formatInTz(b.endAt, TUTOR_TIMEZONE, "HH:mm")}
               {b.customerName ? ` · ${b.customerName}` : ""}

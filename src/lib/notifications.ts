@@ -30,6 +30,7 @@ export interface NewBookingNotification {
   locale: string;
   remainingCredits: number;
   manageToken: string;
+  bookingId: number;
 }
 
 /**
@@ -93,6 +94,7 @@ export interface FreeIntroBookingNotification {
   customerTimezone: string;
   locale: string;
   manageToken: string;
+  bookingId: number;
 }
 
 /**
@@ -155,6 +157,7 @@ export interface CreditBookingNotification {
   locale: string;
   remainingCredits: number;
   manageToken: string;
+  bookingId: number;
 }
 
 /**

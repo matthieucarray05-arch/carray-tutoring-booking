@@ -81,7 +81,8 @@
     "useCreditPriceLabel": "Nessun pagamento",
     "useCreditSubmit": "Conferma prenotazione",
     "useCreditNoCreditsAtBooking": "Non risultano più crediti disponibili per questa email.",
-    "useCreditConfirmBody": "{count, plural, =0 {La tua lezione è confermata! Non hai più lezioni rimanenti in questo pacchetto.} one {La tua lezione è confermata! Ti resta ancora # lezione in questo pacchetto.} other {La tua lezione è confermata! Ti restano ancora # lezioni in questo pacchetto.}}"
+    "useCreditConfirmBody": "{count, plural, =0 {La tua lezione è confermata! Non hai più lezioni rimanenti in questo pacchetto.} one {La tua lezione è confermata! Ti resta ancora # lezione in questo pacchetto.} other {La tua lezione è confermata! Ti restano ancora # lezioni in questo pacchetto.}}",
+    "bookingNumberLabel": "Numero di prenotazione"
   },
   "Reviews": {
     "title": "Cosa dicono i clienti",
