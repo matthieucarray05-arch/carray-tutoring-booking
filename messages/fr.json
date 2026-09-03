@@ -112,18 +112,18 @@
     "whatLabel": "Quoi",
     "whenLabel": "Quand",
     "freeIntroProductLabel": "Consultation gratuite",
-    "lessonProductLabel": "Cours",
+    "lessonProductLabel": "Séance",
     "notFoundTitle": "Lien invalide",
     "notFoundBody": "Ce lien de gestion n'existe pas ou n'est plus valide.",
-    "alreadyCancelledTitle": "Cours déjà annulé",
-    "alreadyCancelledBody": "Ce cours a déjà été annulé.",
-    "cancelButton": "Annuler le cours",
+    "alreadyCancelledTitle": "Séance déjà annulée",
+    "alreadyCancelledBody": "Cette séance a déjà été annulée.",
+    "cancelButton": "Annuler la séance",
     "cancelling": "Annulation en cours…",
     "cancelError": "Une erreur s'est produite. Veuillez réessayer.",
-    "cancelSuccessTitle": "Cours annulé",
-    "cancelSuccessBody": "Votre cours a été annulé. Si vous aviez utilisé un crédit ou votre consultation gratuite, vous pouvez maintenant réserver un nouveau créneau.",
-    "rebookCta": "Réserver un nouveau cours",
+    "cancelSuccessTitle": "Séance annulée",
+    "cancelSuccessBody": "Votre séance a été annulée. Si vous aviez utilisé un crédit ou votre consultation gratuite, vous pouvez maintenant réserver un nouveau créneau.",
+    "rebookCta": "Réserver une nouvelle séance",
     "tooLateTitle": "L'annulation en ligne n'est plus possible",
-    "tooLateBody": "Il reste moins de {hours} heures avant le début du cours. Merci de nous écrire sur WhatsApp au {phone} pour nous prévenir de votre absence."
+    "tooLateBody": "Il reste moins de {hours} heures avant le début de la séance. Merci de nous écrire sur WhatsApp au {phone} pour nous prévenir de votre absence."
   }
 }

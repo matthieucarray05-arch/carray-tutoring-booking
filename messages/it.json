@@ -112,18 +112,18 @@
     "whatLabel": "Che cosa",
     "whenLabel": "Quando",
     "freeIntroProductLabel": "Consulenza gratuita",
-    "lessonProductLabel": "Lezione",
+    "lessonProductLabel": "Sessione",
     "notFoundTitle": "Link non valido",
     "notFoundBody": "Questo link di gestione non esiste o non è più valido.",
-    "alreadyCancelledTitle": "Lezione già cancellata",
-    "alreadyCancelledBody": "Questa lezione è già stata cancellata in precedenza.",
-    "cancelButton": "Cancella la lezione",
+    "alreadyCancelledTitle": "Sessione già cancellata",
+    "alreadyCancelledBody": "Questa sessione è già stata cancellata in precedenza.",
+    "cancelButton": "Cancella la sessione",
     "cancelling": "Cancellazione in corso…",
     "cancelError": "Qualcosa è andato storto. Riprova.",
-    "cancelSuccessTitle": "Lezione cancellata",
-    "cancelSuccessBody": "La tua lezione è stata cancellata. Se avevi usato un credito o la consulenza gratuita, ora puoi prenotare un nuovo orario.",
-    "rebookCta": "Prenota una nuova lezione",
+    "cancelSuccessTitle": "Sessione cancellata",
+    "cancelSuccessBody": "La tua sessione è stata cancellata. Se avevi usato un credito o la consulenza gratuita, ora puoi prenotare un nuovo orario.",
+    "rebookCta": "Prenota una nuova sessione",
     "tooLateTitle": "Non è più possibile cancellare online",
-    "tooLateBody": "Mancano meno di {hours} ore all'inizio della lezione. Scrivici su WhatsApp al {phone} per avvisarci della tua assenza."
+    "tooLateBody": "Mancano meno di {hours} ore all'inizio della sessione. Scrivici su WhatsApp al {phone} per avvisarci della tua assenza."
   }
 }

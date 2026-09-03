@@ -71,53 +71,53 @@ interface SessionInfoCopy {
 const SESSION_INFO_COPY: Record<string, SessionInfoCopy> = {
   en: {
     joinTitle: "How to join",
-    joinBody: "Click the link below and turn on your mic and camera to join the lesson:",
+    joinBody: "Click the link below and turn on your mic and camera to join the session:",
     joinEarly: "Please join at least 15 minutes early to test your audio and video.",
     cancelTitle: "Cancellation policy",
     cancelBody: (manageUrl, phone) =>
-      `You can cancel or move your lesson up to ${CANCELLATION_WINDOW_HOURS} hours before the scheduled time here: ${manageUrl}. After that, please message us on WhatsApp at ${phone} to let us know you won't be attending.`,
-    cancelLinkLabel: "Cancel or reschedule your lesson",
+      `You can cancel or move your session up to ${CANCELLATION_WINDOW_HOURS} hours before the scheduled time here: ${manageUrl}. After that, please message us on WhatsApp at ${phone} to let us know you won't be attending.`,
+    cancelLinkLabel: "Cancel or reschedule your session",
     lateTitle: "Running late",
-    lateBody: "If you arrive late, the lesson will not be extended beyond its originally scheduled end time.",
+    lateBody: "If you arrive late, the session will not be extended beyond its originally scheduled end time.",
     staffNote:
       "Carray Tutoring reserves the right to modify or cancel this appointment at any time for scheduling reasons, with advance notice.",
   },
   it: {
     joinTitle: "Come collegarti",
-    joinBody: "Clicca sul link qui sotto e attiva microfono e webcam per partecipare alla lezione:",
+    joinBody: "Clicca sul link qui sotto e attiva microfono e webcam per partecipare alla sessione:",
     joinEarly: "Ti consigliamo di collegarti almeno 15 minuti prima per sistemare audio e video.",
     cancelTitle: "Policy di cancellazione",
     cancelBody: (manageUrl, phone) =>
-      `Puoi cancellare o spostare la tua lezione fino a ${CANCELLATION_WINDOW_HOURS} ore prima dell'orario prenotato qui: ${manageUrl}. Oltre questo limite, scrivici su WhatsApp al ${phone} per avvisarci della tua assenza.`,
-    cancelLinkLabel: "Cancella o sposta la tua lezione",
+      `Puoi cancellare o spostare la tua sessione fino a ${CANCELLATION_WINDOW_HOURS} ore prima dell'orario prenotato qui: ${manageUrl}. Oltre questo limite, scrivici su WhatsApp al ${phone} per avvisarci della tua assenza.`,
+    cancelLinkLabel: "Cancella o sposta la tua sessione",
     lateTitle: "Ritardo",
-    lateBody: "In caso di ritardo, la lezione non verrà prolungata oltre l'orario originariamente prenotato.",
+    lateBody: "In caso di ritardo, la sessione non verrà prolungata oltre l'orario originariamente prenotato.",
     staffNote:
       "Carray Tutoring si riserva il diritto di modificare o cancellare l'appuntamento in qualsiasi momento per esigenze di servizio, con comunicazione preventiva.",
   },
   fr: {
     joinTitle: "Comment se connecter",
-    joinBody: "Cliquez sur le lien ci-dessous et activez votre micro et votre caméra pour rejoindre le cours :",
+    joinBody: "Cliquez sur le lien ci-dessous et activez votre micro et votre caméra pour rejoindre la séance :",
     joinEarly: "Merci de vous connecter au moins 15 minutes à l'avance pour tester l'audio et la vidéo.",
     cancelTitle: "Politique d'annulation",
     cancelBody: (manageUrl, phone) =>
-      `Vous pouvez annuler ou déplacer votre cours jusqu'à ${CANCELLATION_WINDOW_HOURS} heures avant l'horaire prévu ici : ${manageUrl}. Passé ce délai, merci de nous écrire sur WhatsApp au ${phone} pour nous prévenir de votre absence.`,
-    cancelLinkLabel: "Annuler ou déplacer votre cours",
+      `Vous pouvez annuler ou déplacer votre séance jusqu'à ${CANCELLATION_WINDOW_HOURS} heures avant l'horaire prévu ici : ${manageUrl}. Passé ce délai, merci de nous écrire sur WhatsApp au ${phone} pour nous prévenir de votre absence.`,
+    cancelLinkLabel: "Annuler ou déplacer votre séance",
     lateTitle: "Retard",
-    lateBody: "En cas de retard, le cours ne sera pas prolongé au-delà de l'heure de fin initialement prévue.",
+    lateBody: "En cas de retard, la séance ne sera pas prolongée au-delà de l'heure de fin initialement prévue.",
     staffNote:
       "Carray Tutoring se réserve le droit de modifier ou d'annuler ce rendez-vous à tout moment pour des raisons d'organisation, avec préavis.",
   },
   de: {
     joinTitle: "So nimmst du teil",
-    joinBody: "Klicke auf den Link unten und schalte Mikrofon und Kamera ein, um an der Stunde teilzunehmen:",
+    joinBody: "Klicke auf den Link unten und schalte Mikrofon und Kamera ein, um an der Sitzung teilzunehmen:",
     joinEarly: "Bitte melde dich mindestens 15 Minuten vorher an, um Audio und Video zu testen.",
     cancelTitle: "Stornierungsrichtlinie",
     cancelBody: (manageUrl, phone) =>
-      `Du kannst deine Stunde bis ${CANCELLATION_WINDOW_HOURS} Stunden vor dem geplanten Termin hier stornieren oder verschieben: ${manageUrl}. Danach schreibe uns bitte auf WhatsApp an ${phone}, um uns über dein Fernbleiben zu informieren.`,
-    cancelLinkLabel: "Stunde stornieren oder verschieben",
+      `Du kannst deine Sitzung bis ${CANCELLATION_WINDOW_HOURS} Stunden vor dem geplanten Termin hier stornieren oder verschieben: ${manageUrl}. Danach schreibe uns bitte auf WhatsApp an ${phone}, um uns über dein Fernbleiben zu informieren.`,
+    cancelLinkLabel: "Sitzung stornieren oder verschieben",
     lateTitle: "Verspätung",
-    lateBody: "Bei Verspätung wird die Stunde nicht über die ursprünglich geplante Endzeit hinaus verlängert.",
+    lateBody: "Bei Verspätung wird die Sitzung nicht über die ursprünglich geplante Endzeit hinaus verlängert.",
     staffNote:
       "Carray Tutoring behält sich das Recht vor, diesen Termin jederzeit aus organisatorischen Gründen mit vorheriger Ankündigung zu ändern oder abzusagen.",
   },
