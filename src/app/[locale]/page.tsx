@@ -6,6 +6,7 @@ import { ReviewsSection } from "@/components/reviews/reviews-section";
 import { Reveal } from "@/components/motion/reveal";
 import { HoverLift, HoverScale } from "@/components/motion/hover-lift";
 import { IconBook, IconCalendar, IconCard } from "@/components/icons";
+import { HomeFloatingPopups } from "@/components/home/floating-popups";
 
 export default async function HomePage({
   params,
@@ -138,6 +139,7 @@ export default async function HomePage({
       </section>
 
       <ReviewsSection />
+      <HomeFloatingPopups />
     </div>
   );
 }

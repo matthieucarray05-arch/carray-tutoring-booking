@@ -108,6 +108,10 @@
       }
     ]
   },
+  "HomePopups": {
+    "testimonialName": "Peter",
+    "ctaHeadline": "Inizia oggi la tua avventura linguistica"
+  },
   "Footer": {
     "rights": "Tutti i diritti riservati.",
     "contact": "Contatto",

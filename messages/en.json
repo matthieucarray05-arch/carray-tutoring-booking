@@ -108,6 +108,10 @@
       }
     ]
   },
+  "HomePopups": {
+    "testimonialName": "Peter",
+    "ctaHeadline": "Start your language adventure today"
+  },
   "Footer": {
     "rights": "All rights reserved.",
     "contact": "Contact",

@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useMemo, useState } from "react";
+import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { useLocale, useTranslations } from "next-intl";
 import { ProductSelector } from "@/components/booking/product-selector";
@@ -8,9 +8,10 @@ import { Calendar } from "@/components/booking/calendar";
 import { SlotPicker } from "@/components/booking/slot-picker";
 import { TimezoneSelector } from "@/components/booking/timezone-selector";
 import { CheckoutStatusBanner } from "@/components/booking/checkout-status-banner";
+import { IntroQueryParamHandler } from "@/components/booking/intro-query-param-handler";
 import { detectBrowserTimezone, formatInTz, resolveDateFnsLocale } from "@/lib/timezone";
 import type { AvailableSlot } from "@/lib/availability";
-import { MOCK_PRODUCTS, type Product } from "@/lib/mock-data";
+import { MOCK_PRODUCTS, FREE_INTRO_PRODUCT, type Product } from "@/lib/mock-data";
 import { formatPrice } from "@/lib/format";
 
 const BOOKING_WINDOW_DAYS = 45;
@@ -20,6 +21,7 @@ export default function BookingPage() {
   const locale = useLocale();
 
   const [product, setProduct] = useState<Product | null>(null);
+  const selectFreeIntro = useCallback(() => setProduct(FREE_INTRO_PRODUCT), []);
   const [timezone, setTimezone] = useState("UTC");
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedSlot, setSelectedSlot] = useState<AvailableSlot | null>(null);
@@ -417,6 +419,9 @@ export default function BookingPage() {
 
       <Suspense fallback={null}>
         <CheckoutStatusBanner />
+      </Suspense>
+      <Suspense fallback={null}>
+        <IntroQueryParamHandler onIntro={selectFreeIntro} />
       </Suspense>
 
       <div className="mt-10 grid gap-10 lg:grid-cols-[2fr_1fr]">

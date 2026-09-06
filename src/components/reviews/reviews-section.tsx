@@ -13,7 +13,7 @@ export async function ReviewsSection() {
   const items = t.raw("items") as ReviewItem[];
 
   return (
-    <section className="border-t border-border">
+    <section id="reviews" className="border-t border-border">
       <div className="mx-auto max-w-6xl px-6 py-20 text-center sm:py-24">
         <Reveal>
           <p className="kicker justify-center">{t("title")}</p>

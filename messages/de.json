@@ -108,6 +108,10 @@
       }
     ]
   },
+  "HomePopups": {
+    "testimonialName": "Peter",
+    "ctaHeadline": "Starte noch heute dein Sprachabenteuer"
+  },
   "Footer": {
     "rights": "Alle Rechte vorbehalten.",
     "contact": "Kontakt",
