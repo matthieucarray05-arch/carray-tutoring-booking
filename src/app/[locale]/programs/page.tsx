@@ -91,7 +91,7 @@ export default function ProgramsPage() {
                 </span>
               )}
 
-              <h2 className="font-display text-xl font-medium uppercase tracking-tight">
+              <h2 className="font-display text-center text-xl font-medium uppercase tracking-tight">
                 {copy.name}
               </h2>
               <p className="mt-1 text-sm text-muted-foreground">{copy.tagline}</p>
