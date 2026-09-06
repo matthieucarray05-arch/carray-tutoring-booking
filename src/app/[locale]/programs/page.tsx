@@ -91,7 +91,9 @@ export default function ProgramsPage() {
                 </span>
               )}
 
-              <h2 className="font-display text-xl font-medium tracking-tight">{copy.name}</h2>
+              <h2 className="font-display text-xl font-medium uppercase tracking-tight">
+                {copy.name}
+              </h2>
               <p className="mt-1 text-sm text-muted-foreground">{copy.tagline}</p>
 
               <div className="mt-4 flex items-baseline gap-2">
