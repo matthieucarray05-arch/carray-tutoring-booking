@@ -88,7 +88,7 @@ export function HomeFloatingPopups() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 16 }}
             transition={{ duration: 0.3 }}
-            className="fixed bottom-28 right-5 z-50 max-w-[78vw] sm:bottom-5 sm:left-5 sm:right-auto sm:max-w-[280px]"
+            className="fixed bottom-32 right-5 z-50 max-w-[82vw] sm:bottom-5 sm:left-5 sm:right-auto sm:max-w-[300px]"
           >
             <div className="relative">
               <button
@@ -97,15 +97,15 @@ export function HomeFloatingPopups() {
                   document.getElementById("reviews")?.scrollIntoView({ behavior: "smooth" });
                   setShowTestimonial(false);
                 }}
-                className="block w-full rounded-2xl border border-border bg-background p-3.5 pr-7 text-left shadow-[0_1px_2px_rgba(21,17,15,0.03),0_16px_32px_-24px_rgba(21,17,15,0.18)] transition-transform hover:-translate-y-0.5"
+                className="block w-full rounded-2xl border border-border bg-background p-4 pr-8 text-left shadow-[0_1px_2px_rgba(21,17,15,0.03),0_16px_32px_-24px_rgba(21,17,15,0.18)] transition-transform hover:-translate-y-0.5"
               >
-                <p className="text-[10px] font-semibold uppercase tracking-wide text-accent">
+                <p className="text-[11px] font-semibold uppercase tracking-wide text-accent">
                   {tReviews("title")}
                 </p>
-                <p className="mt-1 text-xs font-semibold text-foreground">
+                <p className="mt-1 text-sm font-semibold text-foreground">
                   {t("testimonialName")}
                 </p>
-                <p className="mt-0.5 line-clamp-2 text-xs leading-snug text-muted-foreground">
+                <p className="mt-0.5 line-clamp-2 text-[13px] leading-snug text-muted-foreground">
                   &ldquo;{quote}&rdquo;
                 </p>
               </button>
@@ -116,11 +116,11 @@ export function HomeFloatingPopups() {
                   snooze(TESTIMONIAL_STORAGE_KEY);
                 }}
                 aria-label="Close"
-                className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground"
+                className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground"
               >
                 <CloseIcon />
               </button>
-              <span className="absolute -bottom-1.5 left-6 h-3 w-3 rotate-45 border-b border-r border-border bg-background" />
+              <span className="absolute -bottom-1.5 left-6 h-3.5 w-3.5 rotate-45 border-b border-r border-border bg-background" />
             </div>
           </motion.div>
         )}
@@ -133,14 +133,14 @@ export function HomeFloatingPopups() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 16 }}
             transition={{ duration: 0.3, delay: 0.1 }}
-            className="fixed bottom-5 right-5 z-50 max-w-[78vw] sm:max-w-[280px]"
+            className="fixed bottom-5 right-5 z-50 max-w-[82vw] sm:max-w-[340px]"
           >
             <div className="relative">
               <Link
                 href={{ pathname: "/booking", query: { intro: "1" } }}
-                className="block w-full rounded-2xl bg-accent p-3.5 pr-7 text-left text-accent-foreground shadow-[0_1px_2px_rgba(21,17,15,0.03),0_16px_32px_-24px_rgba(21,17,15,0.18)] transition-transform hover:-translate-y-0.5"
+                className="block w-full rounded-2xl bg-accent p-5 pr-9 text-left text-accent-foreground shadow-[0_1px_2px_rgba(21,17,15,0.03),0_16px_32px_-24px_rgba(21,17,15,0.18)] transition-transform hover:-translate-y-0.5"
               >
-                <p className="text-xs font-semibold leading-snug">{t("ctaHeadline")}</p>
+                <p className="text-base font-semibold leading-snug">{t("ctaHeadline")}</p>
               </Link>
               <button
                 type="button"
@@ -149,11 +149,11 @@ export function HomeFloatingPopups() {
                   snooze(CTA_STORAGE_KEY);
                 }}
                 aria-label="Close"
-                className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full text-accent-foreground/80 transition-colors hover:text-accent-foreground"
+                className="absolute right-2.5 top-2.5 flex h-6 w-6 items-center justify-center rounded-full text-accent-foreground/80 transition-colors hover:text-accent-foreground"
               >
                 <CloseIcon />
               </button>
-              <span className="absolute -bottom-1.5 right-6 h-3 w-3 rotate-45 bg-accent" />
+              <span className="absolute -bottom-1.5 right-6 h-3.5 w-3.5 rotate-45 bg-accent" />
             </div>
           </motion.div>
         )}
@@ -164,7 +164,7 @@ export function HomeFloatingPopups() {
 
 function CloseIcon() {
   return (
-    <svg viewBox="0 0 16 16" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth={1.8}>
+    <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={1.8}>
       <path d="M3 3l10 10M13 3L3 13" strokeLinecap="round" />
     </svg>
   );
