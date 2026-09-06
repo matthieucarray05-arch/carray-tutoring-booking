@@ -2,7 +2,8 @@
   "Nav": {
     "brand": "Carray Tutoring",
     "home": "Home",
-    "booking": "Book a lesson"
+    "booking": "Book a lesson",
+    "programs": "Programs"
   },
   "Home": {
     "heroTitle": "Learn better. Communicate smarter.",

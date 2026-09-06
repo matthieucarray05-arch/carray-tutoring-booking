@@ -17,6 +17,12 @@ export function SiteHeader() {
           >
             {t("booking")}
           </Link>
+          <Link
+            href="/programs"
+            className="rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-accent-foreground transition-colors hover:bg-accent-hover"
+          >
+            {t("programs")}
+          </Link>
           <LanguageSwitcher />
         </nav>
       </div>
