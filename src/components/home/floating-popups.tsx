@@ -7,34 +7,11 @@ import { Link } from "@/i18n/navigation";
 
 const SHOW_DELAY_MS = 7000;
 const SCROLL_THRESHOLD_PX = 300;
-const SNOOZE_MS = 7 * 24 * 60 * 60 * 1000;
-
-const TESTIMONIAL_STORAGE_KEY = "ct_popup_testimonial_seen_until";
-const CTA_STORAGE_KEY = "ct_popup_cta_seen_until";
-
-function isSnoozed(key: string): boolean {
-  try {
-    const raw = window.localStorage.getItem(key);
-    return raw != null && Number(raw) > Date.now();
-  } catch {
-    return false;
-  }
-}
-
-function snooze(key: string): void {
-  try {
-    window.localStorage.setItem(key, String(Date.now() + SNOOZE_MS));
-  } catch {
-    // localStorage unavailable (private mode, disabled storage) — the
-    // popup will just show again next visit, which is an acceptable
-    // fallback rather than breaking the page.
-  }
-}
 
 /** Bottom-corner testimonial teaser + free-intro CTA bubbles — homepage only
  * (mounted directly in the homepage, not the shared layout, so it never
- * shows on /booking, /programs, etc.). Each bubble tracks its own 7-day
- * "already seen" snooze in localStorage, independently of the other. */
+ * shows on /booking, /programs, etc.). Reappear on every homepage visit —
+ * closing one only dismisses it for that page view. */
 export function HomeFloatingPopups() {
   const t = useTranslations("HomePopups");
   const tReviews = useTranslations("Reviews");
@@ -43,23 +20,13 @@ export function HomeFloatingPopups() {
   const [showCta, setShowCta] = useState(false);
 
   useEffect(() => {
-    const testimonialSnoozed = isSnoozed(TESTIMONIAL_STORAGE_KEY);
-    const ctaSnoozed = isSnoozed(CTA_STORAGE_KEY);
-    if (testimonialSnoozed && ctaSnoozed) return;
-
     let hasTriggered = false;
 
     function reveal() {
       if (hasTriggered) return;
       hasTriggered = true;
-      if (!testimonialSnoozed) {
-        setShowTestimonial(true);
-        snooze(TESTIMONIAL_STORAGE_KEY);
-      }
-      if (!ctaSnoozed) {
-        setShowCta(true);
-        snooze(CTA_STORAGE_KEY);
-      }
+      setShowTestimonial(true);
+      setShowCta(true);
       window.removeEventListener("scroll", onScroll);
       clearTimeout(timer);
     }
@@ -111,10 +78,7 @@ export function HomeFloatingPopups() {
               </button>
               <button
                 type="button"
-                onClick={() => {
-                  setShowTestimonial(false);
-                  snooze(TESTIMONIAL_STORAGE_KEY);
-                }}
+                onClick={() => setShowTestimonial(false)}
                 aria-label="Close"
                 className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground"
               >
@@ -144,10 +108,7 @@ export function HomeFloatingPopups() {
               </Link>
               <button
                 type="button"
-                onClick={() => {
-                  setShowCta(false);
-                  snooze(CTA_STORAGE_KEY);
-                }}
+                onClick={() => setShowCta(false)}
                 aria-label="Close"
                 className="absolute right-2.5 top-2.5 flex h-6 w-6 items-center justify-center rounded-full text-accent-foreground/80 transition-colors hover:text-accent-foreground"
               >
