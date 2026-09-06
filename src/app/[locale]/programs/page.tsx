@@ -81,7 +81,7 @@ export default function ProgramsPage() {
           return (
             <div
               key={program.id}
-              className={`flex flex-col rounded-2xl border p-6 shadow-[0_1px_2px_rgba(21,17,15,0.03),0_16px_32px_-24px_rgba(21,17,15,0.18)] ${
+              className={`flex flex-col items-center rounded-2xl border p-6 text-center shadow-[0_1px_2px_rgba(21,17,15,0.03),0_16px_32px_-24px_rgba(21,17,15,0.18)] ${
                 program.isBestSeller ? "border-accent" : "border-border"
               }`}
             >
@@ -91,12 +91,12 @@ export default function ProgramsPage() {
                 </span>
               )}
 
-              <h2 className="font-display text-center text-xl font-medium uppercase tracking-tight">
+              <h2 className="font-display text-xl font-medium uppercase tracking-tight">
                 {copy.name}
               </h2>
               <p className="mt-1 text-sm text-muted-foreground">{copy.tagline}</p>
 
-              <div className="mt-4 flex items-baseline gap-2">
+              <div className="mt-4 flex items-baseline justify-center gap-2">
                 <p className="text-2xl font-semibold">
                   {formatPrice(program.priceCents, program.currency, locale)}
                 </p>
@@ -113,7 +113,7 @@ export default function ProgramsPage() {
                 </p>
                 <ul className="mt-2 space-y-1.5 text-sm">
                   {copy.includes.map((item) => (
-                    <li key={item.slice(0, 24)} className="flex gap-2">
+                    <li key={item.slice(0, 24)} className="flex justify-center gap-2">
                       <span className="text-accent">✓</span>
                       <span>{item}</span>
                     </li>
