@@ -8,6 +8,7 @@ import { getStripe } from "@/lib/stripe/client";
 import { notifyNewBooking, notifySlotConflict, notifyProgramPurchase } from "@/lib/notifications";
 import { routing } from "@/i18n/routing";
 import { TUTOR_TIMEZONE } from "@/lib/config";
+import { formatProgramReference } from "@/lib/booking-number";
 import { PROGRAMS, PROGRAM_ASSESSMENT_DURATION_MINUTES, LESSON_DURATION_MINUTES, type ProgramLanguage } from "@/lib/mock-data";
 
 export const dynamic = "force-dynamic";
@@ -85,6 +86,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
 
   const customerEmail = session.customer_details?.email ?? "";
   const customerName = session.customer_details?.name ?? null;
+  const customerPhone = session.customer_details?.phone ?? null;
   const billingAddress = session.customer_details?.address ?? null;
 
   const customFields = session.custom_fields ?? [];
@@ -116,6 +118,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
       currency: (session.currency ?? "eur").toUpperCase(),
       customerEmail,
       customerName,
+      customerPhone,
       companyName,
       vatId,
       billingAddress,
@@ -178,6 +181,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
       durationMinutes,
       customerName,
       customerEmail,
+      customerPhone,
       customerTimezone,
       status: "confirmed",
       manageToken,
@@ -192,6 +196,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
   await notifyNewBooking({
     customerName,
     customerEmail,
+    customerPhone,
     companyName,
     vatId,
     billingAddress,
@@ -238,6 +243,7 @@ async function handleProgramCheckoutCompleted(
 
   const customerEmail = session.customer_details?.email ?? "";
   const customerName = session.customer_details?.name ?? null;
+  const customerPhone = session.customer_details?.phone ?? null;
   const billingAddress = session.customer_details?.address ?? null;
 
   const customFields = session.custom_fields ?? [];
@@ -263,6 +269,7 @@ async function handleProgramCheckoutCompleted(
       currency: (session.currency ?? "eur").toUpperCase(),
       customerEmail,
       customerName,
+      customerPhone,
       companyName,
       vatId,
       billingAddress,
@@ -274,6 +281,7 @@ async function handleProgramCheckoutCompleted(
     return;
   }
   const order = insertedOrders[0];
+  const programReference = formatProgramReference(order);
 
   // The assessment credit is inserted first so it gets the lowest id —
   // credit redemption picks the oldest-by-(createdAt, id) available
@@ -302,11 +310,13 @@ async function handleProgramCheckoutCompleted(
   await notifyProgramPurchase({
     customerName,
     customerEmail,
+    customerPhone,
     companyName,
     vatId,
     billingAddress,
     programId: program.id,
     programLanguage,
+    programReference,
     totalLessons: program.totalLessons,
     amountTotalCents: session.amount_total ?? 0,
     currency: (session.currency ?? "eur").toUpperCase(),

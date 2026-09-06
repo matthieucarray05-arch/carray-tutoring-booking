@@ -19,6 +19,7 @@ import {
 export interface NewBookingNotification {
   customerName: string | null;
   customerEmail: string;
+  customerPhone: string | null;
   companyName: string | null;
   vatId: string | null;
   billingAddress: unknown;
@@ -92,6 +93,7 @@ export async function notifyNewBooking(
 export interface FreeIntroBookingNotification {
   customerName: string;
   customerEmail: string;
+  customerPhone: string;
   bookingStartAt: Date;
   bookingEndAt: Date;
   customerTimezone: string;
@@ -217,11 +219,13 @@ export async function notifyCreditBooking(
 export interface ProgramPurchaseNotification {
   customerName: string | null;
   customerEmail: string;
+  customerPhone: string | null;
   companyName: string | null;
   vatId: string | null;
   billingAddress: unknown;
   programId: string;
   programLanguage: string;
+  programReference: string;
   totalLessons: number;
   amountTotalCents: number;
   currency: string;

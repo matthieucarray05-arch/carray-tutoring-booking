@@ -103,6 +103,7 @@ export async function POST(request: NextRequest) {
       },
     ],
     billing_address_collection: "required",
+    phone_number_collection: { enabled: true },
     custom_fields: [
       {
         key: "company_name",
@@ -182,6 +183,7 @@ async function handleProgramCheckout(
       },
     ],
     billing_address_collection: "required",
+    phone_number_collection: { enabled: true },
     custom_fields: [
       {
         key: "company_name",

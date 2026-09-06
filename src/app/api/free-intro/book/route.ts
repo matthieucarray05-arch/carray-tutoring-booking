@@ -22,12 +22,13 @@ export async function POST(request: NextRequest) {
   const firstName = typeof body?.firstName === "string" ? body.firstName.trim() : "";
   const lastName = typeof body?.lastName === "string" ? body.lastName.trim() : "";
   const email = typeof body?.email === "string" ? body.email.trim() : "";
+  const phone = typeof body?.phone === "string" ? body.phone.trim() : "";
   const slotStartUtc = body?.slotStartUtc;
   const slotEndUtc = body?.slotEndUtc;
   const customerTimezone = typeof body?.customerTimezone === "string" ? body.customerTimezone : "";
   const locale = routing.locales.includes(body?.locale) ? body.locale : routing.defaultLocale;
 
-  if (!firstName || !lastName || !email || !EMAIL_PATTERN.test(email)) {
+  if (!firstName || !lastName || !email || !EMAIL_PATTERN.test(email) || !phone) {
     return NextResponse.json({ error: "invalid_input" }, { status: 400 });
   }
 
@@ -99,6 +100,7 @@ export async function POST(request: NextRequest) {
         durationMinutes: FREE_INTRO_DURATION_MINUTES,
         customerName,
         customerEmail: email,
+        customerPhone: phone,
         customerTimezone: customerTimezone || null,
         status: "confirmed",
         manageToken,
@@ -117,6 +119,7 @@ export async function POST(request: NextRequest) {
   await notifyFreeIntroBooking({
     customerName,
     customerEmail: email,
+    customerPhone: phone,
     bookingStartAt: booking.startAt,
     bookingEndAt: booking.endAt,
     customerTimezone: customerTimezone || TUTOR_TIMEZONE,

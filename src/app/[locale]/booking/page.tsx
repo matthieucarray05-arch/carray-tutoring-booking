@@ -32,6 +32,7 @@ export default function BookingPage() {
     firstName: "",
     lastName: "",
     email: "",
+    phone: "",
   });
   const [isSubmittingFreeIntro, setIsSubmittingFreeIntro] = useState(false);
   const [freeIntroError, setFreeIntroError] = useState<
@@ -195,7 +196,12 @@ export default function BookingPage() {
 
   async function handleFreeIntroSubmit() {
     if (!selectedSlot) return;
-    if (!freeIntroForm.firstName.trim() || !freeIntroForm.lastName.trim() || !freeIntroForm.email.trim()) {
+    if (
+      !freeIntroForm.firstName.trim() ||
+      !freeIntroForm.lastName.trim() ||
+      !freeIntroForm.email.trim() ||
+      !freeIntroForm.phone.trim()
+    ) {
       return;
     }
 
@@ -210,6 +216,7 @@ export default function BookingPage() {
           firstName: freeIntroForm.firstName.trim(),
           lastName: freeIntroForm.lastName.trim(),
           email: freeIntroForm.email.trim(),
+          phone: freeIntroForm.phone.trim(),
           slotStartUtc: selectedSlot.startUtc.toISOString(),
           slotEndUtc: selectedSlot.endUtc.toISOString(),
           customerTimezone: timezone,
@@ -589,6 +596,16 @@ export default function BookingPage() {
                   }
                   className="w-full rounded-lg border border-border px-3 py-2 text-sm outline-none focus:border-accent"
                 />
+                <input
+                  type="tel"
+                  autoComplete="tel"
+                  placeholder={t("freeIntroPhone")}
+                  value={freeIntroForm.phone}
+                  onChange={(e) =>
+                    setFreeIntroForm((f) => ({ ...f, phone: e.target.value }))
+                  }
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm outline-none focus:border-accent"
+                />
               </div>
 
               {freeIntroError === "already_used" && (
@@ -619,7 +636,8 @@ export default function BookingPage() {
                   isSubmittingFreeIntro ||
                   !freeIntroForm.firstName.trim() ||
                   !freeIntroForm.lastName.trim() ||
-                  !freeIntroForm.email.trim()
+                  !freeIntroForm.email.trim() ||
+                  !freeIntroForm.phone.trim()
                 }
                 className="mt-4 w-full rounded-full bg-accent px-4 py-2.5 text-sm font-medium text-accent-foreground transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-40"
               >

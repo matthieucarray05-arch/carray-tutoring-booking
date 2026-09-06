@@ -5,6 +5,7 @@ import { formatBookingNumber } from "@/lib/booking-number";
 export interface BookingEmailDetails {
   customerName: string | null;
   customerEmail: string;
+  customerPhone: string | null;
   companyName: string | null;
   vatId: string | null;
   billingAddress: unknown;
@@ -184,6 +185,7 @@ export function buildAdminNotificationEmail(details: BookingEmailDetails): {
   const rows: [string, string][] = [
     ["Booking number", formatBookingNumber(details.bookingId)],
     ["Customer", `${details.customerName ?? "(no name)"} <${details.customerEmail}>`],
+    ...(details.customerPhone ? ([["Phone", details.customerPhone]] as [string, string][]) : []),
     ...(details.companyName ? ([["Company", details.companyName]] as [string, string][]) : []),
     ...(details.vatId ? ([["VAT ID", details.vatId]] as [string, string][]) : []),
     ["Billing address", JSON.stringify(details.billingAddress)],
@@ -282,6 +284,7 @@ const CUSTOMER_COPY: Record<string, CustomerCopy> = {
 export interface FreeIntroEmailDetails {
   customerName: string;
   customerEmail: string;
+  customerPhone: string;
   bookingStartAt: Date;
   bookingEndAt: Date;
   customerTimezone: string;
@@ -300,6 +303,7 @@ export function buildAdminFreeIntroEmail(details: FreeIntroEmailDetails): {
   const rows: [string, string][] = [
     ["Booking number", formatBookingNumber(details.bookingId)],
     ["Customer", `${details.customerName} <${details.customerEmail}>`],
+    ["Phone", details.customerPhone],
     ["Type", "Free intro consultation"],
     ["Booked slot", slotLabel],
   ];
@@ -609,11 +613,13 @@ export function buildCustomerConfirmationEmail(
 export interface ProgramPurchaseEmailDetails {
   customerName: string | null;
   customerEmail: string;
+  customerPhone: string | null;
   companyName: string | null;
   vatId: string | null;
   billingAddress: unknown;
   programId: string;
   programLanguage: string;
+  programReference: string;
   totalLessons: number;
   amountTotalCents: number;
   currency: string;
@@ -641,7 +647,9 @@ export function buildAdminProgramPurchaseEmail(details: ProgramPurchaseEmailDeta
   const programName = PROGRAM_DISPLAY_NAMES[details.programId] ?? details.programId;
 
   const rows: [string, string][] = [
+    ["Order reference", details.programReference],
     ["Customer", `${details.customerName ?? "(no name)"} <${details.customerEmail}>`],
+    ...(details.customerPhone ? ([["Phone", details.customerPhone]] as [string, string][]) : []),
     ...(details.companyName ? ([["Company", details.companyName]] as [string, string][]) : []),
     ...(details.vatId ? ([["VAT ID", details.vatId]] as [string, string][]) : []),
     ["Billing address", JSON.stringify(details.billingAddress)],
@@ -673,6 +681,7 @@ interface ProgramPurchaseCopy {
   subject: string;
   greeting: (name: string) => string;
   intro: (programName: string, totalLessons: number) => string;
+  referenceLabel: string;
   languageLabel: string;
   whatNextTitle: string;
   whatNextBody: string;
@@ -686,6 +695,7 @@ const PROGRAM_PURCHASE_COPY: Record<string, ProgramPurchaseCopy> = {
     greeting: (name) => `Hi ${name},`,
     intro: (programName, totalLessons) =>
       `Thanks for your payment — your ${programName} program is confirmed! You now have ${totalLessons} lessons plus a free 30-minute level-assessment consultation ready to book.`,
+    referenceLabel: "Order reference",
     languageLabel: "Lesson language",
     whatNextTitle: "What's next",
     whatNextBody:
@@ -698,6 +708,7 @@ const PROGRAM_PURCHASE_COPY: Record<string, ProgramPurchaseCopy> = {
     greeting: (name) => `Ciao ${name},`,
     intro: (programName, totalLessons) =>
       `Grazie per il pagamento — il tuo programma ${programName} è confermato! Hai ora ${totalLessons} lezioni più una consulenza gratuita di 30 minuti per la valutazione del livello, pronte da prenotare.`,
+    referenceLabel: "Codice di riferimento ordine",
     languageLabel: "Lingua delle lezioni",
     whatNextTitle: "Prossimi passi",
     whatNextBody:
@@ -710,6 +721,7 @@ const PROGRAM_PURCHASE_COPY: Record<string, ProgramPurchaseCopy> = {
     greeting: (name) => `Bonjour ${name},`,
     intro: (programName, totalLessons) =>
       `Merci pour votre paiement — votre programme ${programName} est confirmé ! Vous avez maintenant ${totalLessons} cours plus une consultation gratuite de 30 minutes pour évaluer votre niveau, prêts à réserver.`,
+    referenceLabel: "Référence de commande",
     languageLabel: "Langue des cours",
     whatNextTitle: "Prochaines étapes",
     whatNextBody:
@@ -722,6 +734,7 @@ const PROGRAM_PURCHASE_COPY: Record<string, ProgramPurchaseCopy> = {
     greeting: (name) => `Hallo ${name},`,
     intro: (programName, totalLessons) =>
       `Danke für deine Zahlung — dein ${programName}-Programm ist bestätigt! Du hast jetzt ${totalLessons} Unterrichtsstunden plus eine kostenlose 30-minütige Einstufungsberatung zum Buchen.`,
+    referenceLabel: "Bestellreferenz",
     languageLabel: "Unterrichtssprache",
     whatNextTitle: "Nächste Schritte",
     whatNextBody:
@@ -748,6 +761,7 @@ export function buildCustomerProgramPurchaseEmail(
     "",
     intro,
     "",
+    `${copy.referenceLabel}: ${details.programReference}`,
     `${copy.languageLabel}: ${languageName}`,
     "",
     `${copy.whatNextTitle}: ${copy.whatNextBody}`,
@@ -761,6 +775,7 @@ export function buildCustomerProgramPurchaseEmail(
       <p>${escapeHtml(copy.greeting(details.customerName ?? ""))}</p>
       <p>${escapeHtml(intro)}</p>
       <table style="border-collapse:collapse;margin:16px 0;">
+        <tr><td style="padding:4px 12px 4px 0;color:#666;">${escapeHtml(copy.referenceLabel)}</td><td style="padding:4px 0;font-weight:600;">${escapeHtml(details.programReference)}</td></tr>
         <tr><td style="padding:4px 12px 4px 0;color:#666;">${escapeHtml(copy.languageLabel)}</td><td style="padding:4px 0;font-weight:600;">${escapeHtml(languageName)}</td></tr>
       </table>
       <p style="font-weight:600;margin:0 0 4px;">${escapeHtml(copy.whatNextTitle)}</p>

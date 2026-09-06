@@ -63,6 +63,7 @@
     "freeIntroFirstName": "Nome",
     "freeIntroLastName": "Cognome",
     "freeIntroEmail": "Email",
+    "freeIntroPhone": "Numero di telefono",
     "freeIntroSubmit": "Conferma consulenza gratuita",
     "freeIntroSubmitLoading": "Conferma in corso…",
     "freeIntroFormError": "Qualcosa è andato storto. Riprova.",

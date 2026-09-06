@@ -31,6 +31,8 @@ export const orders = pgTable("orders", {
   currency: text("currency").notNull(),
   customerEmail: text("customer_email").notNull(),
   customerName: text("customer_name"),
+  /** Collected via Stripe Checkout's phone_number_collection — mandatory going forward, nullable for pre-existing rows. */
+  customerPhone: text("customer_phone"),
   companyName: text("company_name"),
   vatId: text("vat_id"),
   billingAddress: jsonb("billing_address"),
@@ -77,6 +79,8 @@ export const bookings = pgTable("bookings", {
   durationMinutes: integer("duration_minutes").notNull(),
   customerName: text("customer_name"),
   customerEmail: text("customer_email"),
+  /** Mandatory going forward; nullable for pre-existing rows. Set directly by the free-intro form, or copied from the order for single/pack bookings created immediately at checkout. */
+  customerPhone: text("customer_phone"),
   customerTimezone: text("customer_timezone"),
   status: text("status").notNull().default("confirmed"),
   /** Random token for the self-service manage/cancel link sent in confirmation emails. */
