@@ -10,12 +10,21 @@ interface Booking {
   bookingType: string;
   customerName: string | null;
   customerEmail: string | null;
+  programId: string | null;
+  programLanguage: string | null;
 }
 
 const TYPE_LABELS: Record<string, string> = {
   free_intro: "Free intro",
   single_session: "Single lesson",
   pack: "Package",
+  program: "Program",
+};
+
+const PROGRAM_NAMES: Record<string, string> = {
+  starter: "Starter",
+  progress: "Progress",
+  fluency: "Fluency",
 };
 
 export function UpcomingBookings({ bookings }: { bookings: Booking[] }) {
@@ -45,6 +54,11 @@ export function UpcomingBookings({ bookings }: { bookings: Booking[] }) {
               }`}
             >
               {TYPE_LABELS[b.bookingType] ?? b.bookingType}
+              {b.programId
+                ? ` · ${PROGRAM_NAMES[b.programId] ?? b.programId}${
+                    b.programLanguage ? ` (${b.programLanguage.toUpperCase()})` : ""
+                  }${b.durationMinutes === 30 ? " · Assessment" : ""}`
+                : ""}
             </span>
           </div>
           <p className="text-sm text-muted-foreground">

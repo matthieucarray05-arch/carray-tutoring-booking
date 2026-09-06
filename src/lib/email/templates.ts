@@ -605,3 +605,171 @@ export function buildCustomerConfirmationEmail(
     text: textLines.join("\n") + session.text + emailFooterText(),
   };
 }
+
+export interface ProgramPurchaseEmailDetails {
+  customerName: string | null;
+  customerEmail: string;
+  companyName: string | null;
+  vatId: string | null;
+  billingAddress: unknown;
+  programId: string;
+  programLanguage: string;
+  totalLessons: number;
+  amountTotalCents: number;
+  currency: string;
+}
+
+const PROGRAM_DISPLAY_NAMES: Record<string, string> = {
+  starter: "Carray Starter",
+  progress: "Carray Progress",
+  fluency: "Carray Fluency",
+};
+
+const PROGRAM_LANGUAGE_NAMES: Record<string, Record<string, string>> = {
+  en: { it: "Italian", en: "English" },
+  it: { it: "Italiano", en: "Inglese" },
+  fr: { it: "italien", en: "anglais" },
+  de: { it: "Italienisch", en: "Englisch" },
+};
+
+/** Admin notification for a structured-program purchase — always in English. */
+export function buildAdminProgramPurchaseEmail(details: ProgramPurchaseEmailDetails): {
+  subject: string;
+  html: string;
+  text: string;
+} {
+  const programName = PROGRAM_DISPLAY_NAMES[details.programId] ?? details.programId;
+
+  const rows: [string, string][] = [
+    ["Customer", `${details.customerName ?? "(no name)"} <${details.customerEmail}>`],
+    ...(details.companyName ? ([["Company", details.companyName]] as [string, string][]) : []),
+    ...(details.vatId ? ([["VAT ID", details.vatId]] as [string, string][]) : []),
+    ["Billing address", JSON.stringify(details.billingAddress)],
+    ["Program", programName],
+    ["Lesson language", details.programLanguage === "it" ? "Italian" : "English"],
+    ["Lessons included", `${details.totalLessons} + 1 free assessment`],
+    ["Amount", formatAmount(details.amountTotalCents, details.currency)],
+  ];
+
+  const subject = `New program purchase: ${details.customerName ?? details.customerEmail} — ${programName}`;
+  const text = ["New program purchased", "", ...rows.map(([k, v]) => `${k}: ${v}`)].join("\n") + emailFooterText();
+  const html = `
+    <h2 style="margin:0 0 16px;font-family:sans-serif;">New program purchased</h2>
+    <table style="font-family:sans-serif;font-size:14px;border-collapse:collapse;">
+      ${rows
+        .map(
+          ([k, v]) =>
+            `<tr><td style="padding:4px 12px 4px 0;color:#666;vertical-align:top;">${escapeHtml(k)}</td><td style="padding:4px 0;">${escapeHtml(v)}</td></tr>`,
+        )
+        .join("")}
+    </table>
+    ${emailFooterHtml()}
+  `;
+
+  return { subject, html, text };
+}
+
+interface ProgramPurchaseCopy {
+  subject: string;
+  greeting: (name: string) => string;
+  intro: (programName: string, totalLessons: number) => string;
+  languageLabel: string;
+  whatNextTitle: string;
+  whatNextBody: string;
+  ctaLabel: string;
+  closing: string;
+}
+
+const PROGRAM_PURCHASE_COPY: Record<string, ProgramPurchaseCopy> = {
+  en: {
+    subject: "Your program is confirmed",
+    greeting: (name) => `Hi ${name},`,
+    intro: (programName, totalLessons) =>
+      `Thanks for your payment — your ${programName} program is confirmed! You now have ${totalLessons} lessons plus a free 30-minute level-assessment consultation ready to book.`,
+    languageLabel: "Lesson language",
+    whatNextTitle: "What's next",
+    whatNextBody:
+      'Head to the booking page and use "Use a Credit" with this email address to book your free assessment first — we\'ll use it to plan your personalized path, then you can book the rest of your lessons whenever suits you.',
+    ctaLabel: "Book your first session",
+    closing: "See you soon!\nCarray Tutoring",
+  },
+  it: {
+    subject: "Il tuo programma è confermato",
+    greeting: (name) => `Ciao ${name},`,
+    intro: (programName, totalLessons) =>
+      `Grazie per il pagamento — il tuo programma ${programName} è confermato! Hai ora ${totalLessons} lezioni più una consulenza gratuita di 30 minuti per la valutazione del livello, pronte da prenotare.`,
+    languageLabel: "Lingua delle lezioni",
+    whatNextTitle: "Prossimi passi",
+    whatNextBody:
+      'Vai alla pagina di prenotazione e usa "Usa un credito" con questa email per prenotare prima la tua consulenza gratuita — la useremo per pianificare il tuo percorso personalizzato, poi potrai prenotare le altre lezioni quando preferisci.',
+    ctaLabel: "Prenota la tua prima sessione",
+    closing: "A presto!\nCarray Tutoring",
+  },
+  fr: {
+    subject: "Votre programme est confirmé",
+    greeting: (name) => `Bonjour ${name},`,
+    intro: (programName, totalLessons) =>
+      `Merci pour votre paiement — votre programme ${programName} est confirmé ! Vous avez maintenant ${totalLessons} cours plus une consultation gratuite de 30 minutes pour évaluer votre niveau, prêts à réserver.`,
+    languageLabel: "Langue des cours",
+    whatNextTitle: "Prochaines étapes",
+    whatNextBody:
+      "Rendez-vous sur la page de réservation et utilisez « Utiliser un crédit » avec cette adresse email pour réserver d'abord votre consultation gratuite — elle nous permettra de planifier votre parcours personnalisé, puis vous pourrez réserver le reste de vos cours quand vous le souhaitez.",
+    ctaLabel: "Réserver votre première séance",
+    closing: "À bientôt !\nCarray Tutoring",
+  },
+  de: {
+    subject: "Dein Programm ist bestätigt",
+    greeting: (name) => `Hallo ${name},`,
+    intro: (programName, totalLessons) =>
+      `Danke für deine Zahlung — dein ${programName}-Programm ist bestätigt! Du hast jetzt ${totalLessons} Unterrichtsstunden plus eine kostenlose 30-minütige Einstufungsberatung zum Buchen.`,
+    languageLabel: "Unterrichtssprache",
+    whatNextTitle: "Nächste Schritte",
+    whatNextBody:
+      'Gehe zur Buchungsseite und nutze "Guthaben nutzen" mit dieser E-Mail-Adresse, um zuerst deine kostenlose Beratung zu buchen — wir nutzen sie, um deinen persönlichen Lernweg zu planen. Danach kannst du die restlichen Stunden buchen, wann es dir passt.',
+    ctaLabel: "Erste Sitzung buchen",
+    closing: "Bis bald!\nCarray Tutoring",
+  },
+};
+
+export function buildCustomerProgramPurchaseEmail(
+  locale: string,
+  details: ProgramPurchaseEmailDetails,
+): { subject: string; html: string; text: string } {
+  const copy = PROGRAM_PURCHASE_COPY[locale] ?? PROGRAM_PURCHASE_COPY.en;
+  const programName = PROGRAM_DISPLAY_NAMES[details.programId] ?? details.programId;
+  const languageName =
+    (PROGRAM_LANGUAGE_NAMES[locale] ?? PROGRAM_LANGUAGE_NAMES.en)[details.programLanguage] ??
+    details.programLanguage;
+  const bookingUrl = `${SITE_URL}/${locale}/booking`;
+  const intro = copy.intro(programName, details.totalLessons);
+
+  const text = [
+    copy.greeting(details.customerName ?? ""),
+    "",
+    intro,
+    "",
+    `${copy.languageLabel}: ${languageName}`,
+    "",
+    `${copy.whatNextTitle}: ${copy.whatNextBody}`,
+    bookingUrl,
+    "",
+    copy.closing,
+  ].join("\n") + emailFooterText();
+
+  const html = `
+    <div style="font-family:sans-serif;font-size:15px;color:#1a1a1a;line-height:1.5;">
+      <p>${escapeHtml(copy.greeting(details.customerName ?? ""))}</p>
+      <p>${escapeHtml(intro)}</p>
+      <table style="border-collapse:collapse;margin:16px 0;">
+        <tr><td style="padding:4px 12px 4px 0;color:#666;">${escapeHtml(copy.languageLabel)}</td><td style="padding:4px 0;font-weight:600;">${escapeHtml(languageName)}</td></tr>
+      </table>
+      <p style="font-weight:600;margin:0 0 4px;">${escapeHtml(copy.whatNextTitle)}</p>
+      <p style="margin:0 0 16px;">${escapeHtml(copy.whatNextBody)}</p>
+      <p style="margin:0 0 16px;"><a href="${bookingUrl}" style="color:#e1261c;">${escapeHtml(copy.ctaLabel)}</a></p>
+      <p style="white-space:pre-line;">${escapeHtml(copy.closing)}</p>
+      ${emailFooterHtml()}
+    </div>
+  `;
+
+  return { subject: copy.subject, html, text };
+}

@@ -40,14 +40,24 @@ export default async function HomePage({
           </p>
         </Reveal>
         <Reveal trigger="mount" delay={0.24}>
-          <HoverScale className="inline-block">
-            <Link
-              href="/booking"
-              className="mt-9 inline-block rounded-full bg-accent px-9 py-3.5 text-sm font-medium tracking-wide text-accent-foreground transition-colors hover:bg-accent-hover"
-            >
-              {t("heroCta")}
-            </Link>
-          </HoverScale>
+          <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
+            <HoverScale className="inline-block">
+              <Link
+                href="/booking"
+                className="inline-block rounded-full bg-accent px-9 py-3.5 text-sm font-medium tracking-wide text-accent-foreground transition-colors hover:bg-accent-hover"
+              >
+                {t("heroCta")}
+              </Link>
+            </HoverScale>
+            <HoverScale className="inline-block">
+              <Link
+                href="/programs"
+                className="inline-block rounded-full bg-accent px-9 py-3.5 text-sm font-medium tracking-wide text-accent-foreground transition-colors hover:bg-accent-hover"
+              >
+                {t("heroSecondaryCta")}
+              </Link>
+            </HoverScale>
+          </div>
           <p className="mt-4 text-sm font-light italic text-muted-foreground">
             {t("heroTagline")}
           </p>

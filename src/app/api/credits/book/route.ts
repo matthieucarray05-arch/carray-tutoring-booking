@@ -4,7 +4,6 @@ import { and, asc, eq, gt, lt, sql } from "drizzle-orm";
 import { db } from "@/lib/db/client";
 import { availabilityDates, bookings, lessonCredits } from "@/lib/db/schema";
 import { getAvailableSlots } from "@/lib/availability";
-import { LESSON_DURATION_MINUTES } from "@/lib/mock-data";
 import { TUTOR_TIMEZONE } from "@/lib/config";
 import { routing } from "@/i18n/routing";
 import { notifyCreditBooking } from "@/lib/notifications";
@@ -24,7 +23,6 @@ export async function POST(request: NextRequest) {
   const lastName = typeof body?.lastName === "string" ? body.lastName.trim() : "";
   const email = typeof body?.email === "string" ? body.email.trim() : "";
   const slotStartUtc = body?.slotStartUtc;
-  const slotEndUtc = body?.slotEndUtc;
   const customerTimezone = typeof body?.customerTimezone === "string" ? body.customerTimezone : "";
   const locale = routing.locales.includes(body?.locale) ? body.locale : routing.defaultLocale;
 
@@ -33,42 +31,8 @@ export async function POST(request: NextRequest) {
   }
 
   const slotStart = new Date(slotStartUtc);
-  const slotEnd = new Date(slotEndUtc);
-  if (Number.isNaN(slotStart.getTime()) || Number.isNaN(slotEnd.getTime())) {
+  if (Number.isNaN(slotStart.getTime())) {
     return NextResponse.json({ error: "invalid_input" }, { status: 400 });
-  }
-
-  // Re-validate the slot server-side — same narrow day-window check the
-  // Stripe checkout and free-intro routes use.
-  const dayStart = new Date(slotStart);
-  dayStart.setUTCHours(0, 0, 0, 0);
-  const dayEnd = new Date(dayStart);
-  dayEnd.setUTCDate(dayEnd.getUTCDate() + 1);
-
-  const [dates, confirmedBookings] = await Promise.all([
-    db.select().from(availabilityDates),
-    db
-      .select()
-      .from(bookings)
-      .where(
-        and(eq(bookings.status, "confirmed"), lt(bookings.startAt, dayEnd), gt(bookings.endAt, dayStart)),
-      ),
-  ]);
-
-  const candidateSlots = getAvailableSlots({
-    fromDate: dayStart,
-    toDate: dayEnd,
-    durationMinutes: LESSON_DURATION_MINUTES,
-    tutorTimezone: TUTOR_TIMEZONE,
-    availabilityDates: dates,
-    bookings: confirmedBookings,
-  });
-
-  const isStillAvailable = candidateSlots.some(
-    (slot) => slot.startUtc.getTime() === slotStart.getTime() && slot.endUtc.getTime() === slotEnd.getTime(),
-  );
-  if (!isStillAvailable) {
-    return NextResponse.json({ error: "slot_taken" }, { status: 409 });
   }
 
   const customerName = `${firstName} ${lastName}`;
@@ -76,10 +40,18 @@ export async function POST(request: NextRequest) {
   let result: ClaimResult;
   try {
     result = await db.transaction(async (tx) => {
-      // Row-lock one available credit for this email so two simultaneous
-      // requests can't both claim the same credit (or overdraw the last one).
+      // Row-lock the oldest available credit for this email so two
+      // simultaneous requests can't both claim it (or overdraw the last
+      // one). The credit's OWN duration — not a hardcoded constant —
+      // drives everything below, since a program's free assessment
+      // credit is 30 minutes while regular lesson credits are 60.
       const [credit] = await tx
-        .select({ id: lessonCredits.id })
+        .select({
+          id: lessonCredits.id,
+          durationMinutes: lessonCredits.durationMinutes,
+          programId: lessonCredits.programId,
+          programLanguage: lessonCredits.programLanguage,
+        })
         .from(lessonCredits)
         .where(
           and(
@@ -87,7 +59,7 @@ export async function POST(request: NextRequest) {
             sql`lower(${lessonCredits.customerEmail}) = lower(${email})`,
           ),
         )
-        .orderBy(asc(lessonCredits.createdAt))
+        .orderBy(asc(lessonCredits.createdAt), asc(lessonCredits.id))
         .limit(1)
         .for("update", { skipLocked: true });
 
@@ -95,15 +67,42 @@ export async function POST(request: NextRequest) {
         return { ok: false, reason: "no_credits" };
       }
 
-      // Re-check inside the transaction: a concurrent request could have
-      // just booked this exact slot.
-      const conflicting = await tx
-        .select({ id: bookings.id })
-        .from(bookings)
-        .where(
-          and(eq(bookings.status, "confirmed"), lt(bookings.startAt, slotEnd), gt(bookings.endAt, slotStart)),
-        );
-      if (conflicting.length > 0) {
+      // The end time is always derived server-side from the locked
+      // credit's duration — never trust a client-sent end time, since it
+      // could be stale relative to which credit actually got claimed.
+      const slotEnd = new Date(slotStart.getTime() + credit.durationMinutes * 60 * 1000);
+
+      // Re-validate the slot server-side against THIS credit's duration —
+      // same narrow day-window check the Stripe checkout and free-intro
+      // routes use.
+      const dayStart = new Date(slotStart);
+      dayStart.setUTCHours(0, 0, 0, 0);
+      const dayEnd = new Date(dayStart);
+      dayEnd.setUTCDate(dayEnd.getUTCDate() + 1);
+
+      const [dates, confirmedBookings] = await Promise.all([
+        tx.select().from(availabilityDates),
+        tx
+          .select()
+          .from(bookings)
+          .where(
+            and(eq(bookings.status, "confirmed"), lt(bookings.startAt, dayEnd), gt(bookings.endAt, dayStart)),
+          ),
+      ]);
+
+      const candidateSlots = getAvailableSlots({
+        fromDate: dayStart,
+        toDate: dayEnd,
+        durationMinutes: credit.durationMinutes,
+        tutorTimezone: TUTOR_TIMEZONE,
+        availabilityDates: dates,
+        bookings: confirmedBookings,
+      });
+
+      const isStillAvailable = candidateSlots.some(
+        (slot) => slot.startUtc.getTime() === slotStart.getTime() && slot.endUtc.getTime() === slotEnd.getTime(),
+      );
+      if (!isStillAvailable) {
         return { ok: false, reason: "slot_taken" };
       }
 
@@ -113,15 +112,17 @@ export async function POST(request: NextRequest) {
         .insert(bookings)
         .values({
           creditId: credit.id,
-          bookingType: "pack",
+          bookingType: credit.programId ? "program" : "pack",
           startAt: slotStart,
           endAt: slotEnd,
-          durationMinutes: LESSON_DURATION_MINUTES,
+          durationMinutes: credit.durationMinutes,
           customerName,
           customerEmail: email,
           customerTimezone: customerTimezone || null,
           status: "confirmed",
           manageToken,
+          programId: credit.programId,
+          programLanguage: credit.programLanguage,
         })
         .returning();
 
@@ -151,11 +152,16 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: result.reason }, { status: 409 });
   }
 
+  const [booking] = await db
+    .select({ startAt: bookings.startAt, endAt: bookings.endAt })
+    .from(bookings)
+    .where(eq(bookings.id, result.bookingId));
+
   await notifyCreditBooking({
     customerName,
     customerEmail: email,
-    bookingStartAt: slotStart,
-    bookingEndAt: slotEnd,
+    bookingStartAt: booking.startAt,
+    bookingEndAt: booking.endAt,
     customerTimezone: customerTimezone || TUTOR_TIMEZONE,
     locale,
     remainingCredits: result.remainingCredits,
@@ -164,8 +170,8 @@ export async function POST(request: NextRequest) {
   });
 
   return NextResponse.json({
-    startUtc: slotStart.toISOString(),
-    endUtc: slotEnd.toISOString(),
+    startUtc: booking.startAt.toISOString(),
+    endUtc: booking.endAt.toISOString(),
     remainingCredits: result.remainingCredits,
     bookingNumber: formatBookingNumber(result.bookingId),
   });

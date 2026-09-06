@@ -21,7 +21,8 @@
     "aboutTitle": "À propos de moi",
     "aboutName": "Matthieu Carray",
     "aboutRole": "Fondateur et professeur",
-    "aboutBody": "Bonjour, je suis Matthieu — la personne avec qui vous travaillerez vraiment. Depuis cinq ans, j'enseigne à des apprenants de tous âges et niveaux, toujours avec le même point de départ : parler d'abord, et laisser la confiance grandir grâce à une communication réelle plutôt qu'à des règles apprises par cœur. J'apporte une perspective vraiment internationale à chaque cours, en adaptant le rythme et les contenus à vos besoins réels — qu'il s'agisse de préparer un examen, de rendre un e-mail professionnel plus fluide, ou simplement de profiter davantage de votre prochain voyage."
+    "aboutBody": "Bonjour, je suis Matthieu — la personne avec qui vous travaillerez vraiment. Depuis cinq ans, j'enseigne à des apprenants de tous âges et niveaux, toujours avec le même point de départ : parler d'abord, et laisser la confiance grandir grâce à une communication réelle plutôt qu'à des règles apprises par cœur. J'apporte une perspective vraiment internationale à chaque cours, en adaptant le rythme et les contenus à vos besoins réels — qu'il s'agisse de préparer un examen, de rendre un e-mail professionnel plus fluide, ou simplement de profiter davantage de votre prochain voyage.",
+    "heroSecondaryCta": "Programmes"
   },
   "Booking": {
     "title": "Réserver un cours",
@@ -82,7 +83,8 @@
     "useCreditSubmit": "Confirmer la réservation",
     "useCreditNoCreditsAtBooking": "Il n'y a plus de crédit disponible pour cet email.",
     "useCreditConfirmBody": "{count, plural, =0 {Votre cours est confirmé ! Il ne vous reste plus de cours dans ce forfait.} one {Votre cours est confirmé ! Il vous reste encore # cours dans ce forfait.} other {Votre cours est confirmé ! Il vous reste encore # cours dans ce forfait.}}",
-    "bookingNumberLabel": "Numéro de réservation"
+    "bookingNumberLabel": "Numéro de réservation",
+    "useCreditAssessmentSummaryLabel": "Consultation gratuite d'évaluation de niveau (30 min)"
   },
   "Reviews": {
     "title": "Ce que disent nos clients",
@@ -152,5 +154,58 @@
     "disputeHeading": "Règlement des litiges",
     "disputeBody": "La Commission européenne met à disposition une plateforme de règlement en ligne des litiges (RLL) : ec.europa.eu/consumers/odr. Notre adresse email figure ci-dessus dans ces mentions légales.\n\nNous ne sommes ni disposés ni obligés de participer à une procédure de règlement des litiges devant un organisme de conciliation des consommateurs.\n\nNous nous opposons expressément par la présente à l'utilisation des coordonnées publiées dans le cadre de l'obligation de mentions légales par des tiers à des fins d'envoi de publicité et de matériel d'information non expressément sollicités.",
     "footerNote": "Dernière mise à jour : septembre 2026 · Pour plus d'informations sur le traitement de vos données, consultez notre politique de confidentialité."
+  },
+  "Programs": {
+    "title": "Programmes",
+    "subtitle": "Des parcours structurés à rythme fixe pour des progrès rapides et mesurables.",
+    "languageNotice": "Les cours se déroulent en italien ou en anglais.",
+    "includesTitle": "Ce qui est inclus",
+    "languageSelectLabel": "Langue des cours",
+    "languageOptionIt": "italien",
+    "languageOptionEn": "anglais",
+    "weeksLabel": "{weeks} semaines",
+    "lessonsPerWeekLabel": "{count}x par semaine",
+    "totalLessonsLabel": "{count} cours au total",
+    "bestSellerBadge": "BEST SELLER",
+    "ctaLabel": "Continuer vers le paiement",
+    "ctaLoading": "Redirection vers le paiement…",
+    "checkoutError": "Une erreur s'est produite lors du paiement. Veuillez réessayer.",
+    "checkoutSuccessTitle": "Paiement reçu !",
+    "checkoutSuccessBody": "Nous venons de vous envoyer un email avec tous les détails et un lien pour réserver votre première séance.",
+    "checkoutCanceled": "Paiement annulé — votre carte n'a pas été débitée.",
+    "programs": {
+      "starter": {
+        "name": "Carray Starter",
+        "tagline": "Devenez Conversationnel",
+        "includes": [
+          "8 cours en direct (2x par semaine pendant 4 semaines)",
+          "Consultation gratuite de 30 minutes pour évaluer votre niveau avant de commencer",
+          "Matériel de vocabulaire et d'expressions pour des situations réelles"
+        ]
+      },
+      "progress": {
+        "name": "Carray Progress",
+        "tagline": "Parlez avec Confiance",
+        "includes": [
+          "16 cours en direct (2x par semaine pendant 8 semaines)",
+          "Consultation gratuite de 30 minutes pour évaluer votre niveau avant de commencer",
+          "Plan d'apprentissage personnalisé après la première semaine",
+          "Matériel pédagogique progressif",
+          "Point d'étape à mi-parcours"
+        ]
+      },
+      "fluency": {
+        "name": "Carray Fluency",
+        "tagline": "Votre Chemin vers la Fluidité",
+        "includes": [
+          "24 cours en direct (2x par semaine pendant 12 semaines)",
+          "Consultation gratuite de 30 minutes pour évaluer votre niveau avant de commencer",
+          "Révision mensuelle du plan",
+          "Matériel pédagogique complet",
+          "Suivi des jalons",
+          "Rapport final de niveau"
+        ]
+      }
+    }
   }
 }

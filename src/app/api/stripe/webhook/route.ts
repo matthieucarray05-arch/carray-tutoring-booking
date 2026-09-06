@@ -5,9 +5,10 @@ import type Stripe from "stripe";
 import { db } from "@/lib/db/client";
 import { orders, lessonCredits, bookings } from "@/lib/db/schema";
 import { getStripe } from "@/lib/stripe/client";
-import { notifyNewBooking, notifySlotConflict } from "@/lib/notifications";
+import { notifyNewBooking, notifySlotConflict, notifyProgramPurchase } from "@/lib/notifications";
 import { routing } from "@/i18n/routing";
 import { TUTOR_TIMEZONE } from "@/lib/config";
+import { PROGRAMS, PROGRAM_ASSESSMENT_DURATION_MINUTES, LESSON_DURATION_MINUTES, type ProgramLanguage } from "@/lib/mock-data";
 
 export const dynamic = "force-dynamic";
 
@@ -51,6 +52,11 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
   }
 
   const metadata = session.metadata ?? {};
+
+  if (metadata.programId) {
+    return handleProgramCheckoutCompleted(session, metadata);
+  }
+
   const productId = metadata.productId;
   const productType = metadata.productType;
   const durationMinutes = Number(metadata.durationMinutes);
@@ -201,5 +207,109 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
     remainingCredits: creditsCount - 1,
     manageToken,
     bookingId: booking.id,
+  });
+}
+
+/**
+ * Structured programs don't reserve a slot at checkout, so there's no
+ * "first booking created immediately" step here — just N+1 available
+ * credits (1 free 30-min assessment + the program's regular lessons),
+ * all redeemed later through the existing "use a credit" flow.
+ */
+async function handleProgramCheckoutCompleted(
+  session: Stripe.Checkout.Session,
+  metadata: Stripe.Metadata,
+) {
+  const program = PROGRAMS.find((p) => p.id === metadata.programId);
+  const programLanguage: ProgramLanguage | null =
+    metadata.programLanguage === "it" || metadata.programLanguage === "en"
+      ? metadata.programLanguage
+      : null;
+  const locale = routing.locales.includes(
+    metadata.locale as (typeof routing.locales)[number],
+  )
+    ? metadata.locale
+    : routing.defaultLocale;
+
+  if (!program || !programLanguage) {
+    console.error("Stripe webhook: missing/invalid program metadata on session", session.id, metadata);
+    return;
+  }
+
+  const customerEmail = session.customer_details?.email ?? "";
+  const customerName = session.customer_details?.name ?? null;
+  const billingAddress = session.customer_details?.address ?? null;
+
+  const customFields = session.custom_fields ?? [];
+  const companyName =
+    customFields.find((f) => f.key === "company_name")?.text?.value || null;
+  const vatId = customFields.find((f) => f.key === "vat_id")?.text?.value || null;
+
+  const paymentIntentId =
+    typeof session.payment_intent === "string"
+      ? session.payment_intent
+      : (session.payment_intent?.id ?? null);
+
+  const insertedOrders = await db
+    .insert(orders)
+    .values({
+      stripeCheckoutSessionId: session.id,
+      stripePaymentIntentId: paymentIntentId,
+      productId: program.id,
+      productType: "program",
+      durationMinutes: LESSON_DURATION_MINUTES,
+      creditsCount: program.totalLessons + 1,
+      amountTotalCents: session.amount_total ?? 0,
+      currency: (session.currency ?? "eur").toUpperCase(),
+      customerEmail,
+      customerName,
+      companyName,
+      vatId,
+      billingAddress,
+    })
+    .onConflictDoNothing({ target: orders.stripeCheckoutSessionId })
+    .returning();
+
+  if (insertedOrders.length === 0) {
+    return;
+  }
+  const order = insertedOrders[0];
+
+  // The assessment credit is inserted first so it gets the lowest id —
+  // credit redemption picks the oldest-by-(createdAt, id) available
+  // credit, so this guarantees the assessment is booked before any
+  // regular lesson even though every row in this insert shares the same
+  // transaction timestamp.
+  await db.insert(lessonCredits).values([
+    {
+      orderId: order.id,
+      customerEmail,
+      durationMinutes: PROGRAM_ASSESSMENT_DURATION_MINUTES,
+      status: "available",
+      programId: program.id,
+      programLanguage,
+    },
+    ...Array.from({ length: program.totalLessons }, () => ({
+      orderId: order.id,
+      customerEmail,
+      durationMinutes: LESSON_DURATION_MINUTES,
+      status: "available" as const,
+      programId: program.id,
+      programLanguage,
+    })),
+  ]);
+
+  await notifyProgramPurchase({
+    customerName,
+    customerEmail,
+    companyName,
+    vatId,
+    billingAddress,
+    programId: program.id,
+    programLanguage,
+    totalLessons: program.totalLessons,
+    amountTotalCents: session.amount_total ?? 0,
+    currency: (session.currency ?? "eur").toUpperCase(),
+    locale,
   });
 }

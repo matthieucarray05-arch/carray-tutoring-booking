@@ -21,7 +21,8 @@
     "aboutTitle": "Über mich",
     "aboutName": "Matthieu Carray",
     "aboutRole": "Gründer und Lehrer",
-    "aboutBody": "Hallo, ich bin Matthieu — die Person, mit der du tatsächlich arbeiten wirst. In den letzten fünf Jahren habe ich Lernende jeden Alters und Niveaus unterrichtet, immer mit demselben Ausgangspunkt: zuerst sprechen, und Selbstvertrauen durch echte Kommunikation statt auswendig gelernter Regeln aufbauen. Ich bringe eine wirklich internationale Perspektive in jede Stunde ein und passe Tempo und Material an das an, was du wirklich brauchst — ob Prüfungsvorbereitung, eine flüssigere berufliche E-Mail oder einfach mehr Freude an deiner nächsten Reise."
+    "aboutBody": "Hallo, ich bin Matthieu — die Person, mit der du tatsächlich arbeiten wirst. In den letzten fünf Jahren habe ich Lernende jeden Alters und Niveaus unterrichtet, immer mit demselben Ausgangspunkt: zuerst sprechen, und Selbstvertrauen durch echte Kommunikation statt auswendig gelernter Regeln aufbauen. Ich bringe eine wirklich internationale Perspektive in jede Stunde ein und passe Tempo und Material an das an, was du wirklich brauchst — ob Prüfungsvorbereitung, eine flüssigere berufliche E-Mail oder einfach mehr Freude an deiner nächsten Reise.",
+    "heroSecondaryCta": "Programme"
   },
   "Booking": {
     "title": "Unterrichtsstunde buchen",
@@ -82,7 +83,8 @@
     "useCreditSubmit": "Buchung bestätigen",
     "useCreditNoCreditsAtBooking": "Für diese E-Mail ist kein Guthaben mehr verfügbar.",
     "useCreditConfirmBody": "{count, plural, =0 {Deine Unterrichtsstunde ist bestätigt! Du hast keine Stunden mehr in diesem Paket.} one {Deine Unterrichtsstunde ist bestätigt! Du hast noch # Stunde in diesem Paket übrig.} other {Deine Unterrichtsstunde ist bestätigt! Du hast noch # Stunden in diesem Paket übrig.}}",
-    "bookingNumberLabel": "Buchungsnummer"
+    "bookingNumberLabel": "Buchungsnummer",
+    "useCreditAssessmentSummaryLabel": "Kostenlose Einstufungsberatung (30 Min.)"
   },
   "Reviews": {
     "title": "Was unsere Kunden sagen",
@@ -152,5 +154,58 @@
     "disputeHeading": "Streitbeilegung",
     "disputeBody": "Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: ec.europa.eu/consumers/odr. Unsere E-Mail-Adresse finden Sie oben im Impressum.\n\nWir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.\n\nDer Nutzung von im Rahmen der Impressumspflicht veröffentlichten Kontaktdaten durch Dritte zur Übersendung nicht ausdrücklich angeforderter Werbung und Informationsmaterialien wird hiermit ausdrücklich widersprochen.",
     "footerNote": "Stand: September 2026 · Hinweise zum Umgang mit Ihren Daten finden Sie in unserer Datenschutzerklärung."
+  },
+  "Programs": {
+    "title": "Programme",
+    "subtitle": "Strukturierte Programme mit festem Rhythmus für schnelle, messbare Fortschritte.",
+    "languageNotice": "Der Unterricht findet auf Italienisch oder Englisch statt.",
+    "includesTitle": "Was enthalten ist",
+    "languageSelectLabel": "Unterrichtssprache",
+    "languageOptionIt": "Italienisch",
+    "languageOptionEn": "Englisch",
+    "weeksLabel": "{weeks} Wochen",
+    "lessonsPerWeekLabel": "{count}x pro Woche",
+    "totalLessonsLabel": "{count} Unterrichtsstunden insgesamt",
+    "bestSellerBadge": "BEST SELLER",
+    "ctaLabel": "Weiter zur Zahlung",
+    "ctaLoading": "Weiterleitung zur Zahlung…",
+    "checkoutError": "Beim Starten der Zahlung ist ein Fehler aufgetreten. Bitte versuche es erneut.",
+    "checkoutSuccessTitle": "Zahlung erhalten!",
+    "checkoutSuccessBody": "Wir haben dir gerade eine E-Mail mit allen Details und einem Link zur Buchung deiner ersten Sitzung geschickt.",
+    "checkoutCanceled": "Zahlung abgebrochen — deine Karte wurde nicht belastet.",
+    "programs": {
+      "starter": {
+        "name": "Carray Starter",
+        "tagline": "Werde Gesprächssicher",
+        "includes": [
+          "8 Live-Unterrichtsstunden (2x pro Woche über 4 Wochen)",
+          "Kostenlose 30-minütige Einstufungsberatung vor Beginn",
+          "Vokabel- und Redewendungsmaterial für reale Situationen"
+        ]
+      },
+      "progress": {
+        "name": "Carray Progress",
+        "tagline": "Sprich mit Selbstvertrauen",
+        "includes": [
+          "16 Live-Unterrichtsstunden (2x pro Woche über 8 Wochen)",
+          "Kostenlose 30-minütige Einstufungsberatung vor Beginn",
+          "Personalisierter Lernplan nach der ersten Woche",
+          "Progressives Lernmaterial",
+          "Fortschritts-Check-in zur Programm-Mitte"
+        ]
+      },
+      "fluency": {
+        "name": "Carray Fluency",
+        "tagline": "Dein Weg zur Fließenden Sprache",
+        "includes": [
+          "24 Live-Unterrichtsstunden (2x pro Woche über 12 Wochen)",
+          "Kostenlose 30-minütige Einstufungsberatung vor Beginn",
+          "Monatliche Planüberprüfung",
+          "Vollständiges Lernmaterial",
+          "Meilenstein-Tracking",
+          "Abschlussbericht zum Sprachniveau"
+        ]
+      }
+    }
   }
 }

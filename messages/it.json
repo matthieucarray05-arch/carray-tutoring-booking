@@ -21,7 +21,8 @@
     "aboutTitle": "Chi sono",
     "aboutName": "Matthieu Carray",
     "aboutRole": "Fondatore e insegnante",
-    "aboutBody": "Ciao, sono Matthieu — la persona con cui lavorerai davvero. Negli ultimi cinque anni ho insegnato a studenti di ogni età e livello, sempre con lo stesso punto di partenza: parlare prima, e lasciare che la sicurezza cresca attraverso la comunicazione reale invece che le regole a memoria. Porto una prospettiva davvero internazionale in ogni lezione, adattando ritmo e materiali a ciò di cui hai davvero bisogno — che si tratti di preparazione a un esame, un'email di lavoro più scorrevole, o semplicemente goderti di più il tuo prossimo viaggio."
+    "aboutBody": "Ciao, sono Matthieu — la persona con cui lavorerai davvero. Negli ultimi cinque anni ho insegnato a studenti di ogni età e livello, sempre con lo stesso punto di partenza: parlare prima, e lasciare che la sicurezza cresca attraverso la comunicazione reale invece che le regole a memoria. Porto una prospettiva davvero internazionale in ogni lezione, adattando ritmo e materiali a ciò di cui hai davvero bisogno — che si tratti di preparazione a un esame, un'email di lavoro più scorrevole, o semplicemente goderti di più il tuo prossimo viaggio.",
+    "heroSecondaryCta": "Programmi"
   },
   "Booking": {
     "title": "Prenota una lezione",
@@ -82,7 +83,8 @@
     "useCreditSubmit": "Conferma prenotazione",
     "useCreditNoCreditsAtBooking": "Non risultano più crediti disponibili per questa email.",
     "useCreditConfirmBody": "{count, plural, =0 {La tua lezione è confermata! Non hai più lezioni rimanenti in questo pacchetto.} one {La tua lezione è confermata! Ti resta ancora # lezione in questo pacchetto.} other {La tua lezione è confermata! Ti restano ancora # lezioni in questo pacchetto.}}",
-    "bookingNumberLabel": "Numero di prenotazione"
+    "bookingNumberLabel": "Numero di prenotazione",
+    "useCreditAssessmentSummaryLabel": "Consulenza gratuita di valutazione del livello (30 min)"
   },
   "Reviews": {
     "title": "Cosa dicono i clienti",
@@ -152,5 +154,58 @@
     "disputeHeading": "Risoluzione delle controversie",
     "disputeBody": "La Commissione Europea mette a disposizione una piattaforma per la risoluzione online delle controversie (ODR): ec.europa.eu/consumers/odr. Il nostro indirizzo email si trova sopra in questa pagina.\n\nNon siamo disponibili né obbligati a partecipare a procedure di risoluzione delle controversie davanti a un organismo di conciliazione per i consumatori.\n\nCi opponiamo espressamente all'uso dei dati di contatto pubblicati nell'ambito dell'obbligo di Impressum da parte di terzi per l'invio di materiale pubblicitario e informativo non espressamente richiesto.",
     "footerNote": "Ultimo aggiornamento: Settembre 2026 · Per informazioni sul trattamento dei dati, consulta la nostra Informativa Privacy."
+  },
+  "Programs": {
+    "title": "Programmi",
+    "subtitle": "Percorsi strutturati con cadenza fissa per progressi rapidi e misurabili.",
+    "languageNotice": "Le lezioni si svolgono in italiano o in inglese.",
+    "includesTitle": "Cosa include",
+    "languageSelectLabel": "Lingua delle lezioni",
+    "languageOptionIt": "Italiano",
+    "languageOptionEn": "Inglese",
+    "weeksLabel": "{weeks} settimane",
+    "lessonsPerWeekLabel": "{count}x a settimana",
+    "totalLessonsLabel": "{count} lezioni totali",
+    "bestSellerBadge": "BEST SELLER",
+    "ctaLabel": "Continua al pagamento",
+    "ctaLoading": "Reindirizzamento al pagamento…",
+    "checkoutError": "Qualcosa è andato storto nell'avviare il pagamento. Riprova.",
+    "checkoutSuccessTitle": "Pagamento ricevuto!",
+    "checkoutSuccessBody": "Ti abbiamo appena inviato un'email con tutti i dettagli e il link per prenotare la tua prima sessione.",
+    "checkoutCanceled": "Pagamento annullato — la tua carta non è stata addebitata.",
+    "programs": {
+      "starter": {
+        "name": "Carray Starter",
+        "tagline": "Inizia a Conversare",
+        "includes": [
+          "8 lezioni live (2 volte a settimana per 4 settimane)",
+          "Consulenza gratuita di 30 minuti per la valutazione del livello prima di iniziare",
+          "Materiali di vocabolario e frasi per situazioni reali"
+        ]
+      },
+      "progress": {
+        "name": "Carray Progress",
+        "tagline": "Parla con Sicurezza",
+        "includes": [
+          "16 lezioni live (2 volte a settimana per 8 settimane)",
+          "Consulenza gratuita di 30 minuti per la valutazione del livello prima di iniziare",
+          "Piano di apprendimento personalizzato dopo la prima settimana",
+          "Materiali didattici progressivi",
+          "Check-in di metà percorso sui progressi"
+        ]
+      },
+      "fluency": {
+        "name": "Carray Fluency",
+        "tagline": "Il Tuo Percorso verso la Fluidità",
+        "includes": [
+          "24 lezioni live (2 volte a settimana per 12 settimane)",
+          "Consulenza gratuita di 30 minuti per la valutazione del livello prima di iniziare",
+          "Revisione mensile del piano",
+          "Materiali didattici completi",
+          "Monitoraggio dei traguardi",
+          "Report finale sul livello raggiunto"
+        ]
+      }
+    }
   }
 }

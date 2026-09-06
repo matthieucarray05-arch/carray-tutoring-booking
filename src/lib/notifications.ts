@@ -8,9 +8,12 @@ import {
   buildCustomerFreeIntroEmail,
   buildAdminCreditBookingEmail,
   buildCustomerCreditBookingEmail,
+  buildAdminProgramPurchaseEmail,
+  buildCustomerProgramPurchaseEmail,
   type BookingEmailDetails,
   type FreeIntroEmailDetails,
   type CreditBookingEmailDetails,
+  type ProgramPurchaseEmailDetails,
 } from "@/lib/email/templates";
 
 export interface NewBookingNotification {
@@ -205,6 +208,73 @@ export async function notifyCreditBooking(
     if (result.status === "rejected") {
       console.error(
         `notifyCreditBooking: failed to send ${i === 0 ? "admin" : "customer"} email`,
+        result.reason,
+      );
+    }
+  }
+}
+
+export interface ProgramPurchaseNotification {
+  customerName: string | null;
+  customerEmail: string;
+  companyName: string | null;
+  vatId: string | null;
+  billingAddress: unknown;
+  programId: string;
+  programLanguage: string;
+  totalLessons: number;
+  amountTotalCents: number;
+  currency: string;
+  locale: string;
+}
+
+/**
+ * Sends the admin notification and customer confirmation emails for a
+ * structured-program purchase. Unlike the other notify* functions, there's
+ * no specific booked slot yet — the customer books their sessions
+ * afterwards through the existing credit-redemption flow — so this is
+ * purely a "payment received, here's what's next" receipt.
+ */
+export async function notifyProgramPurchase(
+  details: ProgramPurchaseNotification,
+): Promise<void> {
+  const emailDetails: ProgramPurchaseEmailDetails = details;
+  const adminEmail = process.env.ADMIN_EMAIL;
+  const from = process.env.EMAIL_FROM;
+
+  if (!adminEmail || !from) {
+    console.warn(
+      "notifyProgramPurchase: ADMIN_EMAIL or EMAIL_FROM not set — skipping email, logging instead.",
+      JSON.stringify({ ...details, billingAddress: details.billingAddress }),
+    );
+    return;
+  }
+
+  const resend = getResend();
+  const admin = buildAdminProgramPurchaseEmail(emailDetails);
+  const customer = buildCustomerProgramPurchaseEmail(details.locale, emailDetails);
+
+  const results = await Promise.allSettled([
+    resend.emails.send({
+      from,
+      to: adminEmail,
+      subject: admin.subject,
+      html: admin.html,
+      text: admin.text,
+    }),
+    resend.emails.send({
+      from,
+      to: details.customerEmail,
+      subject: customer.subject,
+      html: customer.html,
+      text: customer.text,
+    }),
+  ]);
+
+  for (const [i, result] of results.entries()) {
+    if (result.status === "rejected") {
+      console.error(
+        `notifyProgramPurchase: failed to send ${i === 0 ? "admin" : "customer"} email`,
         result.reason,
       );
     }

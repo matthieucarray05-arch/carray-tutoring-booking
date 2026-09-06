@@ -53,6 +53,10 @@ export const lessonCredits = pgTable("lesson_credits", {
   status: text("status").notNull().default("available"),
   /** Not a DB-level FK (would be circular with bookings.credit_id) — set once the credit is consumed. */
   bookingId: integer("booking_id"),
+  /** Set only for structured-program credits (e.g. "progress"); null for regular single/package credits. */
+  programId: text("program_id"),
+  /** "it" or "en" — the language track chosen at purchase, independent of site UI locale. */
+  programLanguage: text("program_language"),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
 });
 
@@ -79,5 +83,8 @@ export const bookings = pgTable("bookings", {
   manageToken: text("manage_token").notNull().unique(),
   /** Set when a customer self-service cancels via the manage link — null while still confirmed. */
   cancelledAt: timestamp("cancelled_at", { withTimezone: true }),
+  /** Denormalized from the credit that was redeemed — set only for structured-program bookings. */
+  programId: text("program_id"),
+  programLanguage: text("program_language"),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
 });

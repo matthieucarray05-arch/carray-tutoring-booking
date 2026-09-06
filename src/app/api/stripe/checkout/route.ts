@@ -4,7 +4,7 @@ import { db } from "@/lib/db/client";
 import { availabilityDates, bookings } from "@/lib/db/schema";
 import { getStripe } from "@/lib/stripe/client";
 import { getAvailableSlots } from "@/lib/availability";
-import { MOCK_PRODUCTS } from "@/lib/mock-data";
+import { MOCK_PRODUCTS, PROGRAMS, type ProgramLanguage } from "@/lib/mock-data";
 import { TUTOR_TIMEZONE } from "@/lib/config";
 import { routing } from "@/i18n/routing";
 
@@ -16,6 +16,12 @@ const PRODUCT_NAMES: Record<string, string> = {
   "package-60-8": "8-lesson package (60 min each)",
 };
 
+const PROGRAM_NAMES: Record<string, string> = {
+  starter: "Carray Starter — Get Conversational",
+  progress: "Carray Progress — Speak with Confidence",
+  fluency: "Carray Fluency — Your Path to Fluency",
+};
+
 const STRIPE_LOCALES: Record<string, string> = {
   en: "en",
   it: "it",
@@ -25,6 +31,11 @@ const STRIPE_LOCALES: Record<string, string> = {
 
 export async function POST(request: NextRequest) {
   const body = await request.json().catch(() => null);
+
+  if (typeof body?.programId === "string") {
+    return handleProgramCheckout(request, body);
+  }
+
   const productId = body?.productId;
   const slotStartUtc = body?.slotStartUtc;
   const slotEndUtc = body?.slotEndUtc;
@@ -119,6 +130,81 @@ export async function POST(request: NextRequest) {
     locale: (STRIPE_LOCALES[locale] ?? "auto") as "en" | "it" | "fr" | "de" | "auto",
     success_url: `${origin}/${locale}/booking?checkout=success&session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${origin}/${locale}/booking?checkout=canceled`,
+  });
+
+  if (!session.url) {
+    return NextResponse.json({ error: "Failed to create checkout session" }, { status: 500 });
+  }
+
+  return NextResponse.json({ url: session.url });
+}
+
+/**
+ * Structured programs have no slot to reserve at checkout time — the
+ * customer pays, gets N+1 lesson credits (see the webhook), then books
+ * each session afterwards through the existing "use a credit" flow. So
+ * this skips all the availability/slot-conflict checks the ad-hoc path
+ * above needs.
+ */
+async function handleProgramCheckout(
+  request: NextRequest,
+  body: { programId?: unknown; programLanguage?: unknown; locale?: unknown },
+) {
+  const program = PROGRAMS.find((p) => p.id === body.programId);
+  if (!program) {
+    return NextResponse.json({ error: "Unknown program" }, { status: 400 });
+  }
+
+  const programLanguage: ProgramLanguage | null =
+    body.programLanguage === "it" || body.programLanguage === "en" ? body.programLanguage : null;
+  if (!programLanguage) {
+    return NextResponse.json({ error: "Invalid program language" }, { status: 400 });
+  }
+
+  const locale = routing.locales.includes(body.locale as (typeof routing.locales)[number])
+    ? (body.locale as string)
+    : routing.defaultLocale;
+
+  const origin = new URL(request.url).origin;
+  const stripe = getStripe();
+
+  const session = await stripe.checkout.sessions.create({
+    mode: "payment",
+    payment_method_types: ["card"],
+    line_items: [
+      {
+        price_data: {
+          currency: program.currency.toLowerCase(),
+          product_data: { name: PROGRAM_NAMES[program.id] ?? program.id },
+          unit_amount: program.priceCents,
+        },
+        quantity: 1,
+      },
+    ],
+    billing_address_collection: "required",
+    custom_fields: [
+      {
+        key: "company_name",
+        label: { type: "custom", custom: "Company name (optional)" },
+        type: "text",
+        optional: true,
+      },
+      {
+        key: "vat_id",
+        label: { type: "custom", custom: "VAT ID (optional)" },
+        type: "text",
+        optional: true,
+      },
+    ],
+    metadata: {
+      programId: program.id,
+      programLanguage,
+      totalLessons: String(program.totalLessons),
+      locale,
+    },
+    locale: (STRIPE_LOCALES[locale] ?? "auto") as "en" | "it" | "fr" | "de" | "auto",
+    success_url: `${origin}/${locale}/programs?checkout=success&session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${origin}/${locale}/programs?checkout=canceled`,
   });
 
   if (!session.url) {

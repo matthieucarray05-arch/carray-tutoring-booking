@@ -21,7 +21,8 @@
     "aboutTitle": "About me",
     "aboutName": "Matthieu Carray",
     "aboutRole": "Founder & Tutor",
-    "aboutBody": "Hi, I'm Matthieu — the person you'll actually be working with. Over the past five years I've taught learners of all ages and levels, always with the same starting point: speak first, and let confidence grow through real communication rather than memorised rules. I bring a genuinely international perspective to every lesson, tailoring the pace and material to what you actually need — whether that's exam prep, a smoother professional email, or just enjoying your next trip a little more."
+    "aboutBody": "Hi, I'm Matthieu — the person you'll actually be working with. Over the past five years I've taught learners of all ages and levels, always with the same starting point: speak first, and let confidence grow through real communication rather than memorised rules. I bring a genuinely international perspective to every lesson, tailoring the pace and material to what you actually need — whether that's exam prep, a smoother professional email, or just enjoying your next trip a little more.",
+    "heroSecondaryCta": "Programs"
   },
   "Booking": {
     "title": "Book a lesson",
@@ -82,7 +83,8 @@
     "useCreditSubmit": "Confirm booking",
     "useCreditNoCreditsAtBooking": "No available credits found for this email anymore.",
     "useCreditConfirmBody": "{count, plural, =0 {Your lesson is confirmed! You have no lessons left in this package.} one {Your lesson is confirmed! You have # lesson left in this package.} other {Your lesson is confirmed! You have # lessons left in this package.}}",
-    "bookingNumberLabel": "Booking number"
+    "bookingNumberLabel": "Booking number",
+    "useCreditAssessmentSummaryLabel": "Free level-assessment consultation (30 min)"
   },
   "Reviews": {
     "title": "What Clients Say",
@@ -152,5 +154,58 @@
     "disputeHeading": "Dispute resolution",
     "disputeBody": "The European Commission provides a platform for online dispute resolution (ODR): ec.europa.eu/consumers/odr. Our email address can be found above in this legal notice.\n\nWe are neither willing nor obligated to participate in dispute resolution proceedings before a consumer arbitration board.\n\nWe hereby expressly object to the use of contact details published within the scope of the legal notice obligation by third parties for sending unsolicited advertising and informational materials.",
     "footerNote": "Last updated: September 2026 · For information on how we handle your data, please see our Privacy Policy."
+  },
+  "Programs": {
+    "title": "Programs",
+    "subtitle": "Structured, fixed-cadence programs for fast, measurable progress.",
+    "languageNotice": "Lessons are conducted in Italian or English.",
+    "includesTitle": "What's included",
+    "languageSelectLabel": "Lesson language",
+    "languageOptionIt": "Italian",
+    "languageOptionEn": "English",
+    "weeksLabel": "{weeks} weeks",
+    "lessonsPerWeekLabel": "{count}x per week",
+    "totalLessonsLabel": "{count} total lessons",
+    "bestSellerBadge": "BEST SELLER",
+    "ctaLabel": "Continue to payment",
+    "ctaLoading": "Redirecting to payment…",
+    "checkoutError": "Something went wrong starting checkout. Please try again.",
+    "checkoutSuccessTitle": "Payment received!",
+    "checkoutSuccessBody": "We've just sent you an email with all the details and a link to book your first session.",
+    "checkoutCanceled": "Checkout was canceled — your card was not charged.",
+    "programs": {
+      "starter": {
+        "name": "Carray Starter",
+        "tagline": "Get Conversational",
+        "includes": [
+          "8 live lessons (2x per week for 4 weeks)",
+          "Free 30-minute level assessment & consultation before you start",
+          "Vocabulary & phrase materials for real-life situations"
+        ]
+      },
+      "progress": {
+        "name": "Carray Progress",
+        "tagline": "Speak with Confidence",
+        "includes": [
+          "16 live lessons (2x per week for 8 weeks)",
+          "Free 30-minute level assessment & consultation before you start",
+          "Personalized learning plan after week 1",
+          "Progressive learning materials",
+          "Mid-program progress check-in"
+        ]
+      },
+      "fluency": {
+        "name": "Carray Fluency",
+        "tagline": "Your Path to Fluency",
+        "includes": [
+          "24 live lessons (2x per week for 12 weeks)",
+          "Free 30-minute level assessment & consultation before you start",
+          "Monthly plan review",
+          "Full learning materials",
+          "Milestone tracking",
+          "Final level report"
+        ]
+      }
+    }
   }
 }

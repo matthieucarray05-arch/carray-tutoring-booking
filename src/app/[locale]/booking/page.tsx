@@ -49,6 +49,8 @@ export default function BookingPage() {
     "idle" | "checking" | "verified" | "not_found" | "error"
   >("idle");
   const [creditsAvailable, setCreditsAvailable] = useState(0);
+  const [creditNextDurationMinutes, setCreditNextDurationMinutes] = useState<number | null>(null);
+  const [creditNextIsAssessment, setCreditNextIsAssessment] = useState(false);
   const [creditForm, setCreditForm] = useState({ firstName: "", lastName: "" });
   const [isSubmittingCredit, setIsSubmittingCredit] = useState(false);
   const [creditBookError, setCreditBookError] = useState<
@@ -71,15 +73,24 @@ export default function BookingPage() {
 
   useEffect(() => {
     // product starts null (nothing selected yet) and is never reset back to
-    // null, so there's no state to unwind here — just skip the fetch.
+    // null, so there's no state to unwind here — just skip the fetch. For
+    // the "use a credit" flow, the real duration (30min assessment vs
+    // 60min lesson) isn't known until the email check comes back, so wait
+    // for that instead of fetching a default that might be wrong.
     if (!product) return;
+    if (product.type === "use_credit" && (creditCheckStatus !== "verified" || creditNextDurationMinutes == null)) {
+      return;
+    }
+
+    const durationMinutes =
+      product.type === "use_credit" ? creditNextDurationMinutes! : product.durationMinutes;
 
     const from = new Date();
     const to = new Date();
     to.setDate(to.getDate() + BOOKING_WINDOW_DAYS);
 
     const params = new URLSearchParams({
-      duration: String(product.durationMinutes),
+      duration: String(durationMinutes),
       from: from.toISOString(),
       to: to.toISOString(),
     });
@@ -108,7 +119,7 @@ export default function BookingPage() {
     return () => {
       cancelled = true;
     };
-  }, [product]);
+  }, [product, creditCheckStatus, creditNextDurationMinutes]);
 
   const availableDates = useMemo(() => {
     const set = new Set<string>();
@@ -134,6 +145,8 @@ export default function BookingPage() {
     setCreditEmail("");
     setCreditCheckStatus("idle");
     setCreditsAvailable(0);
+    setCreditNextDurationMinutes(null);
+    setCreditNextIsAssessment(false);
     setCreditForm({ firstName: "", lastName: "" });
     setCreditBookError(null);
   }
@@ -259,9 +272,15 @@ export default function BookingPage() {
         return;
       }
 
-      const data = (await res.json()) as { available: number };
+      const data = (await res.json()) as {
+        available: number;
+        nextDurationMinutes: number | null;
+        nextIsAssessment: boolean;
+      };
       if (data.available > 0) {
         setCreditsAvailable(data.available);
+        setCreditNextDurationMinutes(data.nextDurationMinutes);
+        setCreditNextIsAssessment(data.nextIsAssessment);
         setCreditCheckStatus("verified");
       } else {
         setCreditCheckStatus("not_found");
@@ -504,7 +523,9 @@ export default function BookingPage() {
                   {product.type === "free_intro"
                     ? t("freeIntroSummaryLabel", { minutes: product.durationMinutes })
                     : product.type === "use_credit"
-                      ? t("useCreditSummaryLabel")
+                      ? creditNextIsAssessment
+                        ? t("useCreditAssessmentSummaryLabel")
+                        : t("useCreditSummaryLabel")
                       : t("duration60")}
                   {product.type === "lesson_package" &&
                     ` · ${t("creditsLabel", { count: product.creditsCount })}`}
