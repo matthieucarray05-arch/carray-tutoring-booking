@@ -3,7 +3,12 @@
 import { Suspense, useState } from "react";
 import { motion } from "framer-motion";
 import { useLocale, useTranslations } from "next-intl";
-import { PROGRAMS, type ProgramId, type ProgramLanguage } from "@/lib/mock-data";
+import {
+  PROGRAMS,
+  PROGRAM_ASSESSMENT_DURATION_MINUTES,
+  type ProgramId,
+  type ProgramLanguage,
+} from "@/lib/mock-data";
 import { formatPrice } from "@/lib/format";
 import { ProgramsCheckoutStatusBanner } from "@/components/programs/checkout-status-banner";
 import { IconStar } from "@/components/icons";
@@ -118,6 +123,10 @@ export default function ProgramsPage() {
               <h2 className="font-display text-xl font-medium uppercase tracking-tight">
                 {copy.name}
               </h2>
+
+              <span className="mt-3 inline-block rounded-full bg-info-soft px-3 py-1.5 text-xs font-semibold text-info">
+                {t("assessmentIncluded", { minutes: PROGRAM_ASSESSMENT_DURATION_MINUTES })}
+              </span>
 
               <dl className="mt-5 w-full space-y-3">
                 {fields.map((field) => (

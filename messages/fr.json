@@ -213,6 +213,7 @@
       "condition": "Condition :",
       "whyLevel": "Pourquoi ce niveau ?",
       "extra": "Extra :"
-    }
+    },
+    "assessmentIncluded": "Comprend une consultation gratuite de {minutes} minutes"
   }
 }

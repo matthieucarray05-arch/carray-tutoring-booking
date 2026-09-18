@@ -213,6 +213,7 @@
       "condition": "Bedingung:",
       "whyLevel": "Warum diese Stufe?",
       "extra": "Extra:"
-    }
+    },
+    "assessmentIncluded": "Beinhaltet eine kostenlose {minutes}-minütige Beratung"
   }
 }
