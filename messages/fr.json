@@ -3,7 +3,7 @@
     "brand": "Carray Tutoring",
     "home": "Accueil",
     "booking": "Réserver un cours",
-    "programs": "Programmes"
+    "programs": "Parcours"
   },
   "Home": {
     "heroTitle": "Apprenez mieux. Communiquez plus intelligemment.",
@@ -23,7 +23,7 @@
     "aboutName": "Matthieu Carray",
     "aboutRole": "Fondateur et professeur",
     "aboutBody": "Bonjour, je suis Matthieu — la personne avec qui vous travaillerez vraiment. Depuis cinq ans, j'enseigne à des apprenants de tous âges et niveaux, toujours avec le même point de départ : parler d'abord, et laisser la confiance grandir grâce à une communication réelle plutôt qu'à des règles apprises par cœur. J'apporte une perspective vraiment internationale à chaque cours, en adaptant le rythme et les contenus à vos besoins réels — qu'il s'agisse de préparer un examen, de rendre un e-mail professionnel plus fluide, ou simplement de profiter davantage de votre prochain voyage.",
-    "heroSecondaryCta": "Programmes"
+    "heroSecondaryCta": "Parcours"
   },
   "Booking": {
     "title": "Réserver un cours",
@@ -162,16 +162,12 @@
     "footerNote": "Dernière mise à jour : septembre 2026 · Pour plus d'informations sur le traitement de vos données, consultez notre politique de confidentialité."
   },
   "Programs": {
-    "title": "Programmes",
+    "title": "Nos parcours",
     "subtitle": "Des parcours structurés à rythme fixe pour des progrès rapides et mesurables.",
     "languageNotice": "Les cours se déroulent en italien ou en anglais.",
-    "includesTitle": "Ce qui est inclus",
     "languageSelectLabel": "Langue des cours",
     "languageOptionIt": "italien",
     "languageOptionEn": "anglais",
-    "weeksLabel": "{weeks} semaines",
-    "lessonsPerWeekLabel": "{count}x par semaine",
-    "totalLessonsLabel": "{count} cours au total",
     "bestSellerBadge": "BEST SELLER",
     "ctaLabel": "Continuer vers le paiement",
     "ctaLoading": "Redirection vers le paiement…",
@@ -182,36 +178,41 @@
     "programs": {
       "starter": {
         "name": "Carray Starter",
-        "tagline": "Devenez Conversationnel",
-        "includes": [
-          "8 cours en direct (2x par semaine pendant 4 semaines)",
-          "Consultation gratuite de 30 minutes pour évaluer votre niveau avant de commencer",
-          "Matériel de vocabulaire et d'expressions pour des situations réelles"
-        ]
+        "what": "Cours : 1 leçon individuelle par semaine (45 min)",
+        "duration": "1 mois (4 leçons au total)",
+        "how": "Matériel inclus (tableau blanc partagé), devoirs inclus (grammaire, écriture, présentations, dialogues — toujours orientés vers l'expression orale, jamais « scolaires »)",
+        "withWhom": "Un tuteur de l'académie",
+        "condition": "Réservé aux nouveaux élèves de l'académie",
+        "whyLevel": "C'est le premier pas, pensé pour ceux qui n'ont jamais essayé un parcours structuré — un rythme léger (1x/semaine) pour commencer sans pression, comprendre la méthode et voir les premiers résultats concrets en un mois. C'est le point d'entrée naturel dans l'écosystème Carray, réservé aux nouveaux élèves."
       },
       "progress": {
         "name": "Carray Progress",
-        "tagline": "Parlez avec Confiance",
-        "includes": [
-          "16 cours en direct (2x par semaine pendant 8 semaines)",
-          "Consultation gratuite de 30 minutes pour évaluer votre niveau avant de commencer",
-          "Plan d'apprentissage personnalisé après la première semaine",
-          "Matériel pédagogique progressif",
-          "Point d'étape à mi-parcours"
-        ]
+        "what": "Cours : 2 leçons individuelles par semaine (45 min)",
+        "duration": "8 semaines (16 leçons au total)",
+        "how": "Matériel inclus et actualisé selon votre plan personnalisé, devoirs orientés vers l'expression orale, point d'étape à mi-parcours",
+        "withWhom": "Un tuteur personnel dédié",
+        "whyLevel": "Une fois le premier aperçu passé, le rythme double (2x/semaine) et la durée s'étend à 8 semaines — assez de temps pour construire une vraie aisance, pas seulement une familiarité. C'est la suite naturelle après Starter."
       },
       "fluency": {
         "name": "Carray Fluency",
-        "tagline": "Votre Chemin vers la Fluidité",
-        "includes": [
-          "24 cours en direct (2x par semaine pendant 12 semaines)",
-          "Consultation gratuite de 30 minutes pour évaluer votre niveau avant de commencer",
-          "Révision mensuelle du plan",
-          "Matériel pédagogique complet",
-          "Suivi des jalons",
-          "Rapport final de niveau"
-        ]
+        "what": "Cours : 2 leçons individuelles par semaine (45 min)",
+        "duration": "12 semaines (24 leçons au total)",
+        "how": "Matériel complet pour tout le parcours, révision mensuelle du plan, étapes clés aux semaines 4/8/12, rapport final de niveau",
+        "withWhom": "Un tuteur personnel dédié",
+        "whyLevel": "C'est l'aboutissement du parcours Carray — même rythme que Progress, mais étendu à 12 semaines pour ceux qui ont un objectif important (université, travail, déménagement). Ceux qui arrivent ici ont déjà validé la méthode dans les niveaux précédents.",
+        "extra": "Aide incluse pour l'obtention d'une certification (Cambridge English, IELTS, TOEFL)",
+        "extraNote": "Les certifications linguistiques sont des diplômes officiels attestant du niveau de connaissance d'une langue étrangère selon le Cadre Européen Commun de Référence (CECR), de A1 à C2."
       }
+    },
+    "fieldLabels": {
+      "what": "Quoi ?",
+      "duration": "Combien de temps dure le parcours ?",
+      "how": "Comment ?",
+      "withWhom": "Avec qui ?",
+      "price": "Combien ça coûte ?",
+      "condition": "Condition :",
+      "whyLevel": "Pourquoi ce niveau ?",
+      "extra": "Extra :"
     }
   }
 }

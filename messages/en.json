@@ -165,13 +165,9 @@
     "title": "Programs",
     "subtitle": "Structured, fixed-cadence programs for fast, measurable progress.",
     "languageNotice": "Lessons are conducted in Italian or English.",
-    "includesTitle": "What's included",
     "languageSelectLabel": "Lesson language",
     "languageOptionIt": "Italian",
     "languageOptionEn": "English",
-    "weeksLabel": "{weeks} weeks",
-    "lessonsPerWeekLabel": "{count}x per week",
-    "totalLessonsLabel": "{count} total lessons",
     "bestSellerBadge": "BEST SELLER",
     "ctaLabel": "Continue to payment",
     "ctaLoading": "Redirecting to payment…",
@@ -182,36 +178,41 @@
     "programs": {
       "starter": {
         "name": "Carray Starter",
-        "tagline": "Get Conversational",
-        "includes": [
-          "8 live lessons (2x per week for 4 weeks)",
-          "Free 30-minute level assessment & consultation before you start",
-          "Vocabulary & phrase materials for real-life situations"
-        ]
+        "what": "Lessons: 1 individual lesson per week (45 min)",
+        "duration": "1 month (4 lessons total)",
+        "how": "Materials included (shared whiteboard), homework included (grammar, writing, presentations, dialogues — always speaking-focused, never \"school-style\")",
+        "withWhom": "An academy tutor",
+        "condition": "Only for new students of the academy",
+        "whyLevel": "This is the first step, designed for those who've never tried a structured program before — a light pace (1x/week) to get started without pressure, understand the method, and see real first results within a month. It's the natural entry point into the Carray ecosystem, reserved for new students to make that first step even more accessible."
       },
       "progress": {
         "name": "Carray Progress",
-        "tagline": "Speak with Confidence",
-        "includes": [
-          "16 live lessons (2x per week for 8 weeks)",
-          "Free 30-minute level assessment & consultation before you start",
-          "Personalized learning plan after week 1",
-          "Progressive learning materials",
-          "Mid-program progress check-in"
-        ]
+        "what": "Lessons: 2 individual lessons per week (45 min)",
+        "duration": "8 weeks (16 lessons total)",
+        "how": "Materials included and updated to your personalised plan, speaking-focused homework, mid-program check-in",
+        "withWhom": "A dedicated personal tutor",
+        "whyLevel": "Once you've had your first taste, the pace doubles (2x/week) and the timeline extends to 8 weeks — enough time to build real fluency, not just familiarity. It's the natural next step after Starter, for those ready to see real, measurable change."
       },
       "fluency": {
         "name": "Carray Fluency",
-        "tagline": "Your Path to Fluency",
-        "includes": [
-          "24 live lessons (2x per week for 12 weeks)",
-          "Free 30-minute level assessment & consultation before you start",
-          "Monthly plan review",
-          "Full learning materials",
-          "Milestone tracking",
-          "Final level report"
-        ]
+        "what": "Lessons: 2 individual lessons per week (45 min)",
+        "duration": "12 weeks (24 lessons total)",
+        "how": "Full materials for the entire program, monthly plan review, milestones at weeks 4/8/12, final level report",
+        "withWhom": "A dedicated personal tutor",
+        "whyLevel": "This is the final milestone of the Carray program — same pace as Progress, extended to 12 weeks for those with an important goal (university, work, relocation) who want to reach real fluency. Those who reach this level have already validated the method in earlier stages.",
+        "extra": "Includes support toward earning an official certification (Cambridge English, IELTS, TOEFL)",
+        "extraNote": "Language certifications are official qualifications that attest to your level of a foreign language according to the Common European Framework of Reference for Languages (CEFR), from A1 to C2."
       }
+    },
+    "fieldLabels": {
+      "what": "What?",
+      "duration": "How long does the program last?",
+      "how": "How?",
+      "withWhom": "With whom?",
+      "price": "How much does it cost?",
+      "condition": "Condition:",
+      "whyLevel": "Why this level?",
+      "extra": "Extra:"
     }
   }
 }

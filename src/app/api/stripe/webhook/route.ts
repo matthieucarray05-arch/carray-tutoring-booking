@@ -9,7 +9,7 @@ import { notifyNewBooking, notifySlotConflict, notifyProgramPurchase } from "@/l
 import { routing } from "@/i18n/routing";
 import { TUTOR_TIMEZONE } from "@/lib/config";
 import { formatProgramReference } from "@/lib/booking-number";
-import { PROGRAMS, PROGRAM_ASSESSMENT_DURATION_MINUTES, LESSON_DURATION_MINUTES, type ProgramLanguage } from "@/lib/mock-data";
+import { PROGRAMS, PROGRAM_ASSESSMENT_DURATION_MINUTES, PROGRAM_LESSON_DURATION_MINUTES, type ProgramLanguage } from "@/lib/mock-data";
 
 export const dynamic = "force-dynamic";
 
@@ -263,7 +263,7 @@ async function handleProgramCheckoutCompleted(
       stripePaymentIntentId: paymentIntentId,
       productId: program.id,
       productType: "program",
-      durationMinutes: LESSON_DURATION_MINUTES,
+      durationMinutes: PROGRAM_LESSON_DURATION_MINUTES,
       creditsCount: program.totalLessons + 1,
       amountTotalCents: session.amount_total ?? 0,
       currency: (session.currency ?? "eur").toUpperCase(),
@@ -300,7 +300,7 @@ async function handleProgramCheckoutCompleted(
     ...Array.from({ length: program.totalLessons }, () => ({
       orderId: order.id,
       customerEmail,
-      durationMinutes: LESSON_DURATION_MINUTES,
+      durationMinutes: PROGRAM_LESSON_DURATION_MINUTES,
       status: "available" as const,
       programId: program.id,
       programLanguage,

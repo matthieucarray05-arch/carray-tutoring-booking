@@ -6,6 +6,19 @@ import { useLocale, useTranslations } from "next-intl";
 import { PROGRAMS, type ProgramId, type ProgramLanguage } from "@/lib/mock-data";
 import { formatPrice } from "@/lib/format";
 import { ProgramsCheckoutStatusBanner } from "@/components/programs/checkout-status-banner";
+import { IconStar } from "@/components/icons";
+
+interface ProgramCopy {
+  name: string;
+  what: string;
+  duration: string;
+  how: string;
+  withWhom: string;
+  condition?: string;
+  whyLevel: string;
+  extra?: string;
+  extraNote?: string;
+}
 
 export default function ProgramsPage() {
   const t = useTranslations("Programs");
@@ -71,12 +84,22 @@ export default function ProgramsPage() {
 
       <div className="mt-12 grid gap-6 sm:grid-cols-3">
         {PROGRAMS.map((program) => {
-          const copy = t.raw(`programs.${program.id}`) as {
-            name: string;
-            tagline: string;
-            includes: string[];
-          };
+          const copy = t.raw(`programs.${program.id}`) as ProgramCopy;
+          const fieldLabels = t.raw("fieldLabels") as Record<string, string>;
           const selectedLanguage = languages[program.id];
+
+          const fields: { label: string; value: string; emphasize?: boolean }[] = [
+            { label: fieldLabels.what, value: copy.what },
+            { label: fieldLabels.duration, value: copy.duration },
+            { label: fieldLabels.how, value: copy.how },
+            { label: fieldLabels.withWhom, value: copy.withWhom },
+            {
+              label: fieldLabels.price,
+              value: formatPrice(program.priceCents, program.currency, locale),
+              emphasize: true,
+            },
+            ...(copy.condition ? [{ label: fieldLabels.condition, value: copy.condition }] : []),
+          ];
 
           return (
             <div
@@ -86,7 +109,8 @@ export default function ProgramsPage() {
               }`}
             >
               {program.isBestSeller && (
-                <span className="mb-3 inline-block w-fit rounded-full bg-accent px-2.5 py-0.5 text-xs font-semibold text-accent-foreground">
+                <span className="mb-3 inline-flex w-fit items-center gap-1.5 rounded-full bg-accent px-2.5 py-0.5 text-xs font-semibold text-accent-foreground">
+                  <IconStar className="h-3 w-3" />
                   {t("bestSellerBadge")}
                 </span>
               )}
@@ -94,32 +118,48 @@ export default function ProgramsPage() {
               <h2 className="font-display text-xl font-medium uppercase tracking-tight">
                 {copy.name}
               </h2>
-              <p className="mt-1 text-sm text-muted-foreground">{copy.tagline}</p>
 
-              <div className="mt-4 flex items-baseline justify-center gap-2">
-                <p className="text-2xl font-semibold">
-                  {formatPrice(program.priceCents, program.currency, locale)}
+              <dl className="mt-5 w-full space-y-3">
+                {fields.map((field) => (
+                  <div key={field.label}>
+                    <dt className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                      {field.label}
+                    </dt>
+                    <dd
+                      className={
+                        field.emphasize
+                          ? "mt-0.5 text-base font-semibold text-accent"
+                          : "mt-0.5 text-sm leading-snug text-foreground"
+                      }
+                    >
+                      {field.value}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+
+              <div className="mt-5 border-t border-border pt-5">
+                <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                  {fieldLabels.whyLevel}
+                </p>
+                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+                  {copy.whyLevel}
                 </p>
               </div>
-              <p className="mt-1 text-xs text-muted-foreground">
-                {t("weeksLabel", { weeks: program.weeks })} ·{" "}
-                {t("lessonsPerWeekLabel", { count: program.lessonsPerWeek })} ·{" "}
-                {t("totalLessonsLabel", { count: program.totalLessons })}
-              </p>
 
-              <div className="mt-5">
-                <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                  {t("includesTitle")}
-                </p>
-                <ul className="mt-2 space-y-1.5 text-sm">
-                  {copy.includes.map((item) => (
-                    <li key={item.slice(0, 24)} className="flex justify-center gap-2">
-                      <span className="text-accent">✓</span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              {copy.extra && (
+                <div className="mt-5 border-t border-border pt-5">
+                  <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                    {fieldLabels.extra}
+                  </p>
+                  <p className="mt-1.5 text-sm leading-snug text-foreground">{copy.extra}</p>
+                  {copy.extraNote && (
+                    <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                      {copy.extraNote}
+                    </p>
+                  )}
+                </div>
+              )}
 
               <div className="mt-6">
                 <p className="text-xs font-medium text-muted-foreground">

@@ -69,6 +69,10 @@ export type ProgramLanguage = "it" | "en";
 /** Every program includes one of these before the regular lessons start. */
 export const PROGRAM_ASSESSMENT_DURATION_MINUTES = 30;
 
+/** Regular program lessons are 45 minutes — shorter than the 60-minute
+ * single/package lessons sold outside the structured-program offering. */
+export const PROGRAM_LESSON_DURATION_MINUTES = 45;
+
 export interface Program {
   id: ProgramId;
   weeks: number;
@@ -83,9 +87,9 @@ export const PROGRAMS: Program[] = [
   {
     id: "starter",
     weeks: 4,
-    lessonsPerWeek: 2,
-    totalLessons: 8,
-    priceCents: 14900,
+    lessonsPerWeek: 1,
+    totalLessons: 4,
+    priceCents: 8900,
     currency: "EUR",
   },
   {
@@ -93,7 +97,7 @@ export const PROGRAMS: Program[] = [
     weeks: 8,
     lessonsPerWeek: 2,
     totalLessons: 16,
-    priceCents: 26900,
+    priceCents: 27900,
     currency: "EUR",
     isBestSeller: true,
   },
@@ -102,7 +106,7 @@ export const PROGRAMS: Program[] = [
     weeks: 12,
     lessonsPerWeek: 2,
     totalLessons: 24,
-    priceCents: 39900,
+    priceCents: 41900,
     currency: "EUR",
   },
 ];

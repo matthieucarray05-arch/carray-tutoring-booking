@@ -3,7 +3,7 @@
     "brand": "Carray Tutoring",
     "home": "Startseite",
     "booking": "Unterrichtsstunde buchen",
-    "programs": "Programme"
+    "programs": "Lernpfade"
   },
   "Home": {
     "heroTitle": "Besser lernen. Klüger kommunizieren.",
@@ -23,7 +23,7 @@
     "aboutName": "Matthieu Carray",
     "aboutRole": "Gründer und Lehrer",
     "aboutBody": "Hallo, ich bin Matthieu — die Person, mit der du tatsächlich arbeiten wirst. In den letzten fünf Jahren habe ich Lernende jeden Alters und Niveaus unterrichtet, immer mit demselben Ausgangspunkt: zuerst sprechen, und Selbstvertrauen durch echte Kommunikation statt auswendig gelernter Regeln aufbauen. Ich bringe eine wirklich internationale Perspektive in jede Stunde ein und passe Tempo und Material an das an, was du wirklich brauchst — ob Prüfungsvorbereitung, eine flüssigere berufliche E-Mail oder einfach mehr Freude an deiner nächsten Reise.",
-    "heroSecondaryCta": "Programme"
+    "heroSecondaryCta": "Lernpfade"
   },
   "Booking": {
     "title": "Unterrichtsstunde buchen",
@@ -162,16 +162,12 @@
     "footerNote": "Stand: September 2026 · Hinweise zum Umgang mit Ihren Daten finden Sie in unserer Datenschutzerklärung."
   },
   "Programs": {
-    "title": "Programme",
+    "title": "Unsere Lernpfade",
     "subtitle": "Strukturierte Programme mit festem Rhythmus für schnelle, messbare Fortschritte.",
     "languageNotice": "Der Unterricht findet auf Italienisch oder Englisch statt.",
-    "includesTitle": "Was enthalten ist",
     "languageSelectLabel": "Unterrichtssprache",
     "languageOptionIt": "Italienisch",
     "languageOptionEn": "Englisch",
-    "weeksLabel": "{weeks} Wochen",
-    "lessonsPerWeekLabel": "{count}x pro Woche",
-    "totalLessonsLabel": "{count} Unterrichtsstunden insgesamt",
     "bestSellerBadge": "BEST SELLER",
     "ctaLabel": "Weiter zur Zahlung",
     "ctaLoading": "Weiterleitung zur Zahlung…",
@@ -182,36 +178,41 @@
     "programs": {
       "starter": {
         "name": "Carray Starter",
-        "tagline": "Werde Gesprächssicher",
-        "includes": [
-          "8 Live-Unterrichtsstunden (2x pro Woche über 4 Wochen)",
-          "Kostenlose 30-minütige Einstufungsberatung vor Beginn",
-          "Vokabel- und Redewendungsmaterial für reale Situationen"
-        ]
+        "what": "Unterricht: 1 Einzelstunde pro Woche (45 Min.)",
+        "duration": "1 Monat (4 Lektionen insgesamt)",
+        "how": "Material inklusive (gemeinsames Whiteboard), Hausaufgaben inklusive (Grammatik, Schreiben, Präsentationen, Dialoge — stets sprechorientiert, nie „schulisch“)",
+        "withWhom": "Ein Tutor der Academy",
+        "condition": "Nur für neue Schüler der Academy",
+        "whyLevel": "Dies ist der erste Schritt — konzipiert für alle, die noch nie einen strukturierten Kurs ausprobiert haben. Ein leichtes Tempo (1x/Woche), um ohne Druck zu starten, die Methode kennenzulernen und innerhalb eines Monats erste echte Ergebnisse zu sehen. Es ist der natürliche Einstieg in das Carray-Ökosystem, neuen Schülern vorbehalten."
       },
       "progress": {
         "name": "Carray Progress",
-        "tagline": "Sprich mit Selbstvertrauen",
-        "includes": [
-          "16 Live-Unterrichtsstunden (2x pro Woche über 8 Wochen)",
-          "Kostenlose 30-minütige Einstufungsberatung vor Beginn",
-          "Personalisierter Lernplan nach der ersten Woche",
-          "Progressives Lernmaterial",
-          "Fortschritts-Check-in zur Programm-Mitte"
-        ]
+        "what": "Unterricht: 2 Einzelstunden pro Woche (45 Min.)",
+        "duration": "8 Wochen (16 Lektionen insgesamt)",
+        "how": "Material inklusive und an deinen persönlichen Plan angepasst, sprechorientierte Hausaufgaben, Fortschritts-Check-in in der Kursmitte",
+        "withWhom": "Ein persönlicher Tutor",
+        "whyLevel": "Nach dem ersten Geschmack verdoppelt sich das Tempo (2x/Woche) und die Dauer verlängert sich auf 8 Wochen — genug Zeit, um echte Sprachgewandtheit aufzubauen, nicht nur Vertrautheit. Es ist der natürliche nächste Schritt nach Starter."
       },
       "fluency": {
         "name": "Carray Fluency",
-        "tagline": "Dein Weg zur Fließenden Sprache",
-        "includes": [
-          "24 Live-Unterrichtsstunden (2x pro Woche über 12 Wochen)",
-          "Kostenlose 30-minütige Einstufungsberatung vor Beginn",
-          "Monatliche Planüberprüfung",
-          "Vollständiges Lernmaterial",
-          "Meilenstein-Tracking",
-          "Abschlussbericht zum Sprachniveau"
-        ]
+        "what": "Unterricht: 2 Einzelstunden pro Woche (45 Min.)",
+        "duration": "12 Wochen (24 Lektionen insgesamt)",
+        "how": "Vollständiges Material für den gesamten Kurs, monatliche Plan-Überprüfung, Meilensteine in Woche 4/8/12, abschließender Niveaubericht",
+        "withWhom": "Ein persönlicher Tutor",
+        "whyLevel": "Dies ist der letzte Meilenstein des Carray-Weges — gleiches Tempo wie Progress, aber auf 12 Wochen ausgedehnt für alle mit einem wichtigen Ziel (Studium, Beruf, Umzug). Wer hier ankommt, hat die Methode bereits in den vorherigen Stufen bestätigt.",
+        "extra": "Unterstützung beim Erwerb einer offiziellen Zertifizierung inbegriffen (Cambridge English, IELTS, TOEFL)",
+        "extraNote": "Sprachzertifikate sind offizielle Nachweise, die das Niveau einer Fremdsprache gemäß dem Gemeinsamen Europäischen Referenzrahmen (GER) bescheinigen, von A1 bis C2."
       }
+    },
+    "fieldLabels": {
+      "what": "Was?",
+      "duration": "Wie lange dauert der Kurs?",
+      "how": "Wie?",
+      "withWhom": "Mit wem?",
+      "price": "Wie viel kostet es?",
+      "condition": "Bedingung:",
+      "whyLevel": "Warum diese Stufe?",
+      "extra": "Extra:"
     }
   }
 }

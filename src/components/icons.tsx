@@ -39,3 +39,12 @@ export function IconCard({ className }: { className?: string }) {
     </svg>
   );
 }
+
+/** Small filled star — used next to the "BEST SELLER" badge. */
+export function IconStar({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
+      <path d="M12 2.5l2.76 5.95 6.49.68-4.86 4.47 1.33 6.4L12 16.9l-5.72 3.1 1.33-6.4-4.86-4.47 6.49-.68L12 2.5Z" />
+    </svg>
+  );
+}
