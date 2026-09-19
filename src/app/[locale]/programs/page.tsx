@@ -114,12 +114,14 @@ export default function ProgramsPage() {
                 program.isBestSeller ? "border-accent" : "border-border"
               }`}
             >
-              {program.isBestSeller && (
-                <span className="mb-3 inline-flex w-fit items-center gap-1.5 rounded-full bg-accent px-2.5 py-0.5 text-xs font-semibold text-accent-foreground">
-                  <IconStar className="h-3 w-3" />
-                  {t("bestSellerBadge")}
-                </span>
-              )}
+              <div className="mb-3 flex h-6 items-center justify-center">
+                {program.isBestSeller && (
+                  <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-accent px-2.5 py-0.5 text-xs font-semibold text-accent-foreground">
+                    <IconStar className="h-3 w-3" />
+                    {t("bestSellerBadge")}
+                  </span>
+                )}
+              </div>
 
               <h2 className="font-display text-xl font-medium uppercase tracking-tight">
                 {copy.name}
@@ -129,10 +131,10 @@ export default function ProgramsPage() {
                 {t("assessmentIncluded", { minutes: PROGRAM_ASSESSMENT_DURATION_MINUTES })}
               </span>
 
-              <dl className="mt-5 w-full space-y-3">
+              <dl className="mt-5 w-full space-y-3 text-left">
                 {fields.map((field) => (
                   <div key={field.label}>
-                    <dt className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                    <dt className="text-[11px] font-bold uppercase tracking-wide text-muted-foreground">
                       {field.label}
                     </dt>
                     <dd
@@ -148,18 +150,18 @@ export default function ProgramsPage() {
                 ))}
               </dl>
 
-              <div className="mt-5 border-t border-border pt-5">
-                <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+              <div className="mt-5 w-full border-t border-border pt-5 text-left">
+                <p className="text-[11px] font-bold uppercase tracking-wide text-muted-foreground">
                   {fieldLabels.whyLevel}
                 </p>
-                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+                <p className="mt-1.5 text-justify text-sm leading-relaxed text-muted-foreground">
                   {copy.whyLevel}
                 </p>
               </div>
 
               {copy.extra && (
-                <div className="mt-5 border-t border-border pt-5">
-                  <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                <div className="mt-5 w-full border-t border-border pt-5 text-left">
+                  <p className="text-[11px] font-bold uppercase tracking-wide text-muted-foreground">
                     {fieldLabels.extra}
                   </p>
                   <p className="mt-1.5 text-sm leading-snug text-foreground">{copy.extra}</p>
