@@ -13,6 +13,7 @@ import { detectBrowserTimezone, formatInTz, resolveDateFnsLocale } from "@/lib/t
 import type { AvailableSlot } from "@/lib/availability";
 import { MOCK_PRODUCTS, FREE_INTRO_PRODUCT, type Product } from "@/lib/mock-data";
 import { formatPrice } from "@/lib/format";
+import { Spinner } from "@/components/ui/spinner";
 
 const BOOKING_WINDOW_DAYS = 45;
 
@@ -456,7 +457,7 @@ export default function BookingPage() {
                     setCreditEmail(e.target.value);
                     if (creditCheckStatus !== "idle") setCreditCheckStatus("idle");
                   }}
-                  className="w-full rounded-lg border border-border px-3 py-2 text-sm outline-none focus:border-accent"
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm outline-none focus:border-accent focus:ring-2 focus:ring-accent/30"
                 />
                 {creditCheckStatus === "not_found" && (
                   <div className="rounded-lg bg-muted px-3 py-2.5 text-sm">
@@ -479,15 +480,19 @@ export default function BookingPage() {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   disabled={creditCheckStatus === "checking" || !creditEmail.trim()}
-                  className="rounded-full bg-accent px-4 py-2.5 text-sm font-medium text-accent-foreground transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-40"
+                  className="flex items-center justify-center gap-2 rounded-full bg-accent px-4 py-2.5 text-sm font-medium text-accent-foreground transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-40"
                 >
+                  {creditCheckStatus === "checking" && <Spinner className="h-4 w-4" />}
                   {creditCheckStatus === "checking"
                     ? t("useCreditCheckLoading")
                     : t("useCreditCheckSubmit")}
                 </motion.button>
               </div>
             ) : isLoadingSlots && slots.length === 0 ? (
-              <p className="text-sm text-muted-foreground">{t("loadingSlots")}</p>
+              <p className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Spinner className="h-4 w-4" />
+                {t("loadingSlots")}
+              </p>
             ) : (
               <div className="grid gap-8 sm:grid-cols-2">
                 {product.type === "use_credit" && (
@@ -579,7 +584,7 @@ export default function BookingPage() {
                   onChange={(e) =>
                     setFreeIntroForm((f) => ({ ...f, firstName: e.target.value }))
                   }
-                  className="w-full rounded-lg border border-border px-3 py-2 text-sm outline-none focus:border-accent"
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm outline-none focus:border-accent focus:ring-2 focus:ring-accent/30"
                 />
                 <input
                   type="text"
@@ -589,7 +594,7 @@ export default function BookingPage() {
                   onChange={(e) =>
                     setFreeIntroForm((f) => ({ ...f, lastName: e.target.value }))
                   }
-                  className="w-full rounded-lg border border-border px-3 py-2 text-sm outline-none focus:border-accent"
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm outline-none focus:border-accent focus:ring-2 focus:ring-accent/30"
                 />
                 <input
                   type="email"
@@ -599,7 +604,7 @@ export default function BookingPage() {
                   onChange={(e) =>
                     setFreeIntroForm((f) => ({ ...f, email: e.target.value }))
                   }
-                  className="w-full rounded-lg border border-border px-3 py-2 text-sm outline-none focus:border-accent"
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm outline-none focus:border-accent focus:ring-2 focus:ring-accent/30"
                 />
                 <input
                   type="tel"
@@ -609,7 +614,7 @@ export default function BookingPage() {
                   onChange={(e) =>
                     setFreeIntroForm((f) => ({ ...f, phone: e.target.value }))
                   }
-                  className="w-full rounded-lg border border-border px-3 py-2 text-sm outline-none focus:border-accent"
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm outline-none focus:border-accent focus:ring-2 focus:ring-accent/30"
                 />
               </div>
 
@@ -644,8 +649,9 @@ export default function BookingPage() {
                   !freeIntroForm.email.trim() ||
                   !freeIntroForm.phone.trim()
                 }
-                className="mt-4 w-full rounded-full bg-accent px-4 py-2.5 text-sm font-medium text-accent-foreground transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-40"
+                className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-accent px-4 py-2.5 text-sm font-medium text-accent-foreground transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-40"
               >
+                {isSubmittingFreeIntro && <Spinner className="h-4 w-4" />}
                 {isSubmittingFreeIntro
                   ? t("freeIntroSubmitLoading")
                   : t("freeIntroSubmit")}
@@ -662,7 +668,7 @@ export default function BookingPage() {
                   onChange={(e) =>
                     setCreditForm((f) => ({ ...f, firstName: e.target.value }))
                   }
-                  className="w-full rounded-lg border border-border px-3 py-2 text-sm outline-none focus:border-accent"
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm outline-none focus:border-accent focus:ring-2 focus:ring-accent/30"
                 />
                 <input
                   type="text"
@@ -672,7 +678,7 @@ export default function BookingPage() {
                   onChange={(e) =>
                     setCreditForm((f) => ({ ...f, lastName: e.target.value }))
                   }
-                  className="w-full rounded-lg border border-border px-3 py-2 text-sm outline-none focus:border-accent"
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm outline-none focus:border-accent focus:ring-2 focus:ring-accent/30"
                 />
               </div>
 
@@ -696,8 +702,9 @@ export default function BookingPage() {
                   !creditForm.firstName.trim() ||
                   !creditForm.lastName.trim()
                 }
-                className="mt-4 w-full rounded-full bg-accent px-4 py-2.5 text-sm font-medium text-accent-foreground transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-40"
+                className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-accent px-4 py-2.5 text-sm font-medium text-accent-foreground transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-40"
               >
+                {isSubmittingCredit && <Spinner className="h-4 w-4" />}
                 {isSubmittingCredit
                   ? t("freeIntroSubmitLoading")
                   : t("useCreditSubmit")}
@@ -714,8 +721,9 @@ export default function BookingPage() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 disabled={!product || !selectedSlot || isCheckingOut}
-                className="mt-6 w-full rounded-full bg-accent px-4 py-2.5 text-sm font-medium text-accent-foreground transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-40"
+                className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-accent px-4 py-2.5 text-sm font-medium text-accent-foreground transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-40"
               >
+                {isCheckingOut && <Spinner className="h-4 w-4" />}
                 {isCheckingOut ? t("continueToPaymentLoading") : t("continueToPayment")}
               </motion.button>
             </>

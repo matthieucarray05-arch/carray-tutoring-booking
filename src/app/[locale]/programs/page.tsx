@@ -12,6 +12,7 @@ import {
 import { formatPrice } from "@/lib/format";
 import { ProgramsCheckoutStatusBanner } from "@/components/programs/checkout-status-banner";
 import { IconStar } from "@/components/icons";
+import { Spinner } from "@/components/ui/spinner";
 
 interface ProgramCopy {
   name: string;
@@ -204,8 +205,9 @@ export default function ProgramsPage() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 disabled={checkingOutId === program.id}
-                className="mt-5 w-full rounded-full bg-accent px-4 py-2.5 text-sm font-medium text-accent-foreground transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-40"
+                className="mt-5 flex w-full items-center justify-center gap-2 rounded-full bg-accent px-4 py-2.5 text-sm font-medium text-accent-foreground transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-40"
               >
+                {checkingOutId === program.id && <Spinner className="h-4 w-4" />}
                 {checkingOutId === program.id ? t("ctaLoading") : t("ctaLabel")}
               </motion.button>
             </div>

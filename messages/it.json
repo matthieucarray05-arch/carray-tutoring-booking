@@ -115,7 +115,9 @@
   "Footer": {
     "rights": "Tutti i diritti riservati.",
     "contact": "Contatto",
-    "impressum": "Impressum"
+    "impressum": "Impressum",
+    "refundPolicy": "Politica di rimborso",
+    "cookiePolicy": "Cookie Policy"
   },
   "Manage": {
     "pageTitle": "Cambia sessione",
@@ -215,5 +217,42 @@
       "extra": "Extra:"
     },
     "assessmentIncluded": "Include una consulenza gratuita di {minutes} minuti"
+  },
+  "NotFound": {
+    "code": "404",
+    "title": "Pagina non trovata",
+    "body": "La pagina che cerchi non esiste o potrebbe essere stata spostata.",
+    "cta": "Torna alla home"
+  },
+  "RefundPolicy": {
+    "title": "Politica di rimborso",
+    "subtitle": "Quando un acquisto può essere rimborsato e come richiederlo.",
+    "eligibilityHeading": "Rimborso entro 14 giorni",
+    "eligibilityBody": "Le lezioni singole, i pacchetti da 4 e 8 lezioni e i percorsi strutturati Carray (Starter, Progress, Fluency) possono essere rimborsati integralmente entro 14 giorni dall'acquisto, a condizione che non sia stata ancora utilizzata nessuna lezione di quell'acquisto.",
+    "usedHeading": "Una volta utilizzata una lezione",
+    "usedBody": "Non appena viene svolta una lezione di un acquisto, quell'acquisto — e le eventuali lezioni o crediti residui — non è più rimborsabile. Questo vale anche se si è ancora entro i 14 giorni.",
+    "distinctionHeading": "In cosa differisce dalle altre policy",
+    "distinctionBody": "Questa Politica di rimborso è distinta da altre due policy del sito:\n\n• Il diritto di recesso legale (Widerrufsrecht) previsto dalla normativa UE/tedesca sui consumatori, descritto nella pagina Diritto di Recesso, che si applica indipendentemente e prevale su questa policy.\n• La nostra policy di cancellazione e riprogrammazione con preavviso di 12 ore per le sessioni già prenotate, che non è influenzata da questa Politica di rimborso e resta valida come indicato nella conferma di prenotazione.",
+    "requestHeading": "Come richiedere un rimborso",
+    "requestBody": "Per richiedere un rimborso, scrivici a info@carraytutoring.com indicando il numero di prenotazione o d'ordine. Verificheremo l'idoneità e processeremo i rimborsi approvati sul metodo di pagamento originale.",
+    "footerNote": "Ultimo aggiornamento: Settembre 2026."
+  },
+  "CookiePolicy": {
+    "title": "Cookie Policy",
+    "subtitle": "Quali cookie e tecnologie simili utilizziamo, e perché.",
+    "whatAreCookiesHeading": "Cosa sono i cookie?",
+    "whatAreCookiesBody": "I cookie sono piccoli file di testo memorizzati sul tuo dispositivo quando visiti un sito web. Possono essere usati per ricordare le tue preferenze, mantenerti connesso o tracciare la tua attività tra i siti.",
+    "analyticsHeading": "Analytics — Plausible",
+    "analyticsBody": "Utilizziamo Plausible Analytics per capire come i visitatori usano questo sito. Plausible è uno strumento di analytics senza cookie: non utilizza cookie, non raccoglie dati personali e non traccia gli individui tra siti web o dispositivi. Poiché non vengono impostati cookie o identificatori di tracciamento, non è richiesto alcun consenso ai sensi del GDPR o della normativa tedesca TTDSG.",
+    "functionalHeading": "Cookie strettamente necessari",
+    "functionalBody": "Un numero minimo di cookie è necessario per il corretto funzionamento del sito. Questi non richiedono consenso ai sensi del GDPR/TTDSG poiché sono essenziali per fornire il servizio richiesto.\n\n• Preferenza di lingua — ricorda in quale delle nostre 4 lingue del sito stai navigando.\n• Sessione admin — utilizzata solo dall'amministratore del sito per rimanere connesso al pannello di gestione prenotazioni; non viene impostata per i visitatori normali.",
+    "paymentHeading": "Elaborazione dei pagamenti — Stripe",
+    "paymentBody": "Quando effettui un acquisto, vieni reindirizzato alla pagina di pagamento sicura ospitata da Stripe per inserire i tuoi dati di pagamento. Stripe potrebbe impostare i propri cookie sul proprio dominio come parte di questo processo — questo è regolato dalle policy sulla privacy e sui cookie di Stripe, consultabili su stripe.com/privacy.",
+    "questionsHeading": "Domande",
+    "questionsBody": "Per qualsiasi domanda sull'uso dei cookie, contattaci a info@carraytutoring.com.",
+    "footerNote": "Ultimo aggiornamento: Settembre 2026.",
+    "noticeBody": "Utilizziamo analytics senza cookie e un paio di cookie strettamente necessari per far funzionare questo sito.",
+    "noticeLink": "Scopri di più",
+    "noticeDismiss": "Ho capito"
   }
 }

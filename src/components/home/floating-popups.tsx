@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { COOKIE_NOTICE_STORAGE_KEY } from "@/components/layout/cookie-notice";
 
 const SHOW_DELAY_MS = 7000;
 const SCROLL_THRESHOLD_PX = 300;
@@ -18,6 +19,21 @@ export function HomeFloatingPopups() {
 
   const [showTestimonial, setShowTestimonial] = useState(false);
   const [showCta, setShowCta] = useState(false);
+  // Lifted clear of the full-width cookie notice at the bottom of the
+  // screen when that notice hasn't been dismissed yet, so the two never
+  // visually overlap.
+  const [makeRoomForCookieNotice, setMakeRoomForCookieNotice] = useState(false);
+
+  useEffect(() => {
+    const timer0 = setTimeout(() => {
+      try {
+        setMakeRoomForCookieNotice(!window.localStorage.getItem(COOKIE_NOTICE_STORAGE_KEY));
+      } catch {
+        setMakeRoomForCookieNotice(true);
+      }
+    }, 0);
+    return () => clearTimeout(timer0);
+  }, []);
 
   useEffect(() => {
     let hasTriggered = false;
@@ -55,7 +71,9 @@ export function HomeFloatingPopups() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 16 }}
             transition={{ duration: 0.3 }}
-            className="fixed bottom-32 right-5 z-50 max-w-[82vw] sm:bottom-5 sm:left-5 sm:right-auto sm:max-w-[300px]"
+            className={`fixed right-5 z-50 max-w-[82vw] sm:left-5 sm:right-auto sm:max-w-[300px] ${
+              makeRoomForCookieNotice ? "bottom-52 sm:bottom-24" : "bottom-32 sm:bottom-5"
+            }`}
           >
             <div className="relative">
               <button
@@ -97,7 +115,9 @@ export function HomeFloatingPopups() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 16 }}
             transition={{ duration: 0.3, delay: 0.1 }}
-            className="fixed bottom-5 right-5 z-50 max-w-[82vw] sm:max-w-[340px]"
+            className={`fixed right-5 z-50 max-w-[82vw] sm:max-w-[340px] ${
+              makeRoomForCookieNotice ? "bottom-24" : "bottom-5"
+            }`}
           >
             <div className="relative">
               <Link

@@ -115,7 +115,9 @@
   "Footer": {
     "rights": "Alle Rechte vorbehalten.",
     "contact": "Kontakt",
-    "impressum": "Impressum"
+    "impressum": "Impressum",
+    "refundPolicy": "Rückerstattung",
+    "cookiePolicy": "Cookies"
   },
   "Manage": {
     "pageTitle": "Sitzung ändern",
@@ -215,5 +217,42 @@
       "extra": "Extra:"
     },
     "assessmentIncluded": "Beinhaltet eine kostenlose {minutes}-minütige Beratung"
+  },
+  "NotFound": {
+    "code": "404",
+    "title": "Seite nicht gefunden",
+    "body": "Die gesuchte Seite existiert nicht oder wurde verschoben.",
+    "cta": "Zurück zur Startseite"
+  },
+  "RefundPolicy": {
+    "title": "Rückerstattungsrichtlinie",
+    "subtitle": "Wann ein Kauf erstattet werden kann und wie du eine Rückerstattung beantragst.",
+    "eligibilityHeading": "14-tägige Rückerstattungsfrist",
+    "eligibilityBody": "Einzelstunden, 4er- und 8er-Pakete sowie die strukturierten Carray-Programme (Starter, Progress, Fluency) können innerhalb von 14 Tagen nach dem Kauf vollständig erstattet werden, sofern noch keine Sitzung aus diesem Kauf stattgefunden hat.",
+    "usedHeading": "Sobald eine Sitzung stattgefunden hat",
+    "usedBody": "Sobald eine Sitzung aus einem Kauf stattgefunden hat, ist dieser Kauf — sowie alle verbleibenden Guthaben oder Sitzungen darin — nicht mehr erstattungsfähig. Dies gilt auch, wenn du dich noch innerhalb der 14-Tage-Frist befindest.",
+    "distinctionHeading": "Abgrenzung zu anderen Richtlinien",
+    "distinctionBody": "Diese Rückerstattungsrichtlinie ist getrennt von zwei weiteren Richtlinien dieser Website zu betrachten:\n\n• Das gesetzliche Widerrufsrecht nach EU-/deutschem Verbraucherrecht, beschrieben auf unserer Widerrufsbelehrung-Seite, das unabhängig von dieser Richtlinie gilt und ihr vorgeht.\n• Unsere 12-Stunden-Storno- und Umbuchungsrichtlinie für bereits gebuchte Sitzungen, die von dieser Rückerstattungsrichtlinie nicht berührt wird und wie in deiner Buchungsbestätigung beschrieben weiter gilt.",
+    "requestHeading": "So beantragst du eine Rückerstattung",
+    "requestBody": "Um eine Rückerstattung zu beantragen, schreibe uns an info@carraytutoring.com mit deiner Buchungs- oder Bestellnummer. Wir prüfen deinen Anspruch und erstatten genehmigte Beträge auf deine ursprüngliche Zahlungsmethode.",
+    "footerNote": "Stand: September 2026."
+  },
+  "CookiePolicy": {
+    "title": "Cookie-Richtlinie",
+    "subtitle": "Welche Cookies und ähnliche Technologien wir verwenden und warum.",
+    "whatAreCookiesHeading": "Was sind Cookies?",
+    "whatAreCookiesBody": "Cookies sind kleine Textdateien, die beim Besuch einer Website auf deinem Gerät gespeichert werden. Sie können verwendet werden, um deine Einstellungen zu speichern, dich angemeldet zu halten oder deine Aktivität über Websites hinweg zu verfolgen.",
+    "analyticsHeading": "Analyse — Plausible",
+    "analyticsBody": "Wir verwenden Plausible Analytics, um zu verstehen, wie Besucher diese Website nutzen. Plausible ist ein cookie-freies Analysetool: Es verwendet keine Cookies, sammelt keine personenbezogenen Daten und verfolgt keine Personen über Websites oder Geräte hinweg. Da keine Cookies oder Tracking-Kennungen gesetzt werden, ist hierfür nach DSGVO oder dem deutschen TTDSG keine Einwilligung erforderlich.",
+    "functionalHeading": "Technisch notwendige Cookies",
+    "functionalBody": "Eine kleine Anzahl von Cookies ist für den ordnungsgemäßen Betrieb der Website erforderlich. Diese erfordern keine Einwilligung nach DSGVO/TTDSG, da sie für die Bereitstellung des von dir angeforderten Dienstes unerlässlich sind.\n\n• Spracheinstellung — merkt sich, in welcher unserer 4 Sprachen du die Seite besuchst.\n• Admin-Sitzung — wird ausschließlich vom Website-Administrator verwendet, um im Buchungsverwaltungs-Panel angemeldet zu bleiben; wird für normale Besucher nicht gesetzt.",
+    "paymentHeading": "Zahlungsabwicklung — Stripe",
+    "paymentBody": "Beim Kauf wirst du auf die sichere, von Stripe gehostete Checkout-Seite weitergeleitet, um deine Zahlungsdaten einzugeben. Stripe kann dabei eigene Cookies auf seiner eigenen Domain setzen — dies unterliegt den eigenen Datenschutz- und Cookie-Richtlinien von Stripe, die du unter stripe.com/privacy einsehen kannst.",
+    "questionsHeading": "Fragen",
+    "questionsBody": "Bei Fragen zu unserer Verwendung von Cookies kontaktiere uns bitte unter info@carraytutoring.com.",
+    "footerNote": "Stand: September 2026.",
+    "noticeBody": "Wir verwenden cookie-freie Analysen und ein paar technisch notwendige Cookies, um diese Website zu betreiben.",
+    "noticeLink": "Mehr erfahren",
+    "noticeDismiss": "Verstanden"
   }
 }

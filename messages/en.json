@@ -115,7 +115,9 @@
   "Footer": {
     "rights": "All rights reserved.",
     "contact": "Contact",
-    "impressum": "Legal Notice"
+    "impressum": "Legal Notice",
+    "refundPolicy": "Refund Policy",
+    "cookiePolicy": "Cookie Policy"
   },
   "Manage": {
     "pageTitle": "Change session",
@@ -215,5 +217,42 @@
       "extra": "Extra:"
     },
     "assessmentIncluded": "Includes a free {minutes}-minute consultation"
+  },
+  "NotFound": {
+    "code": "404",
+    "title": "Page not found",
+    "body": "Sorry, the page you're looking for doesn't exist or may have moved.",
+    "cta": "Back to homepage"
+  },
+  "RefundPolicy": {
+    "title": "Refund Policy",
+    "subtitle": "When a purchase can be refunded, and how to request it.",
+    "eligibilityHeading": "14-day refund window",
+    "eligibilityBody": "Single sessions, 4- and 8-lesson packages, and Carray structured programs (Starter, Progress, Fluency) can be refunded in full within 14 days of purchase, provided no session from that purchase has been used yet.",
+    "usedHeading": "Once a session has been used",
+    "usedBody": "As soon as one session from a purchase has taken place, that purchase — and any remaining credits or sessions within it — is no longer eligible for a refund. This applies even if you are still within the 14-day window.",
+    "distinctionHeading": "How this differs from other policies",
+    "distinctionBody": "This Refund Policy is separate from two other policies on this site:\n\n• The statutory right of withdrawal (Widerrufsrecht) under EU/German consumer law, described on our Right of Withdrawal page, which applies independently of and takes precedence over this policy.\n• Our 12-hour cancellation and rescheduling policy for sessions you have already booked, which is unaffected by this Refund Policy and continues to apply as described in your booking confirmation.",
+    "requestHeading": "How to request a refund",
+    "requestBody": "To request a refund, email us at info@carraytutoring.com with your booking or order reference number. We'll confirm your eligibility and process approved refunds to your original payment method.",
+    "footerNote": "Last updated: September 2026."
+  },
+  "CookiePolicy": {
+    "title": "Cookie Policy",
+    "subtitle": "What cookies and similar technologies we use, and why.",
+    "whatAreCookiesHeading": "What are cookies?",
+    "whatAreCookiesBody": "Cookies are small text files stored on your device when you visit a website. They can be used to remember your preferences, keep you logged in, or track your activity across sites.",
+    "analyticsHeading": "Analytics — Plausible",
+    "analyticsBody": "We use Plausible Analytics to understand how visitors use this site. Plausible is a cookieless analytics tool: it does not use cookies, does not collect personal data, and does not track individuals across websites or devices. Because no cookies or tracking identifiers are set, no consent is required for this under the GDPR or the German TTDSG.",
+    "functionalHeading": "Strictly necessary cookies",
+    "functionalBody": "A small number of cookies are required for the site to function correctly. These do not require consent under GDPR/TTDSG because they are essential to providing the service you requested.\n\n• Language preference — remembers which of our 4 site languages you're browsing in.\n• Admin session — used only by the site administrator to stay logged in to the booking-management panel; not set for regular visitors.",
+    "paymentHeading": "Payment processing — Stripe",
+    "paymentBody": "When you make a purchase, you are redirected to Stripe's secure hosted checkout page to enter your payment details. Stripe may set its own cookies on its own domain as part of that process — this is governed by Stripe's own privacy and cookie policies, which you can review at stripe.com/privacy.",
+    "questionsHeading": "Questions",
+    "questionsBody": "If you have any questions about our use of cookies, please contact us at info@carraytutoring.com.",
+    "footerNote": "Last updated: September 2026.",
+    "noticeBody": "We use cookie-free analytics and a couple of strictly necessary cookies to run this site.",
+    "noticeLink": "Learn more",
+    "noticeDismiss": "Got it"
   }
 }

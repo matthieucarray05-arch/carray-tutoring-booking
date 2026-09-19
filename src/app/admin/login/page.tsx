@@ -26,7 +26,7 @@ export default async function AdminLoginPage({
               type="password"
               required
               autoFocus
-              className="mt-1.5 w-full rounded-lg border border-border px-3 py-2 text-sm outline-none focus:border-accent"
+              className="mt-1.5 w-full rounded-lg border border-border px-3 py-2 text-sm outline-none focus:border-accent focus:ring-2 focus:ring-accent/30"
             />
           </div>
           {error && (

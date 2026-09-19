@@ -11,12 +11,24 @@ export function SiteFooter() {
         <p>
           © {year} Carray Tutoring. {t("rights")}
         </p>
-        <div className="flex items-center gap-5">
+        <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
           <Link
             href="/impressum"
             className="font-medium text-foreground transition-colors hover:text-accent"
           >
             {t("impressum")}
+          </Link>
+          <Link
+            href="/refund-policy"
+            className="font-medium text-foreground transition-colors hover:text-accent"
+          >
+            {t("refundPolicy")}
+          </Link>
+          <Link
+            href="/cookie-policy"
+            className="font-medium text-foreground transition-colors hover:text-accent"
+          >
+            {t("cookiePolicy")}
           </Link>
           <a
             href="mailto:info@carraytutoring.com"

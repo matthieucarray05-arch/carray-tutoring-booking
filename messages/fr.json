@@ -115,7 +115,9 @@
   "Footer": {
     "rights": "Tous droits réservés.",
     "contact": "Contact",
-    "impressum": "Mentions légales"
+    "impressum": "Mentions légales",
+    "refundPolicy": "Remboursement",
+    "cookiePolicy": "Cookies"
   },
   "Manage": {
     "pageTitle": "Changer de séance",
@@ -215,5 +217,42 @@
       "extra": "Extra :"
     },
     "assessmentIncluded": "Comprend une consultation gratuite de {minutes} minutes"
+  },
+  "NotFound": {
+    "code": "404",
+    "title": "Page introuvable",
+    "body": "La page que vous recherchez n'existe pas ou a peut-être été déplacée.",
+    "cta": "Retour à l'accueil"
+  },
+  "RefundPolicy": {
+    "title": "Politique de remboursement",
+    "subtitle": "Quand un achat peut être remboursé, et comment en faire la demande.",
+    "eligibilityHeading": "Remboursement sous 14 jours",
+    "eligibilityBody": "Les cours uniques, les forfaits de 4 et 8 cours ainsi que les parcours structurés Carray (Starter, Progress, Fluency) peuvent être intégralement remboursés dans les 14 jours suivant l'achat, à condition qu'aucun cours de cet achat n'ait encore été utilisé.",
+    "usedHeading": "Une fois qu'un cours a été utilisé",
+    "usedBody": "Dès qu'un cours d'un achat a eu lieu, cet achat — ainsi que tout crédit ou cours restant — n'est plus remboursable. Cela s'applique même si vous êtes encore dans le délai de 14 jours.",
+    "distinctionHeading": "Différence avec les autres politiques",
+    "distinctionBody": "Cette politique de remboursement est distincte de deux autres politiques du site :\n\n• Le droit de rétractation légal prévu par le droit de la consommation de l'UE/allemand, décrit sur notre page Droit de rétractation, qui s'applique indépendamment de cette politique et prévaut sur elle.\n• Notre politique d'annulation et de report avec un préavis de 12 heures pour les cours déjà réservés, qui n'est pas affectée par cette politique de remboursement et continue de s'appliquer comme indiqué dans votre confirmation de réservation.",
+    "requestHeading": "Comment demander un remboursement",
+    "requestBody": "Pour demander un remboursement, écrivez-nous à info@carraytutoring.com en indiquant votre numéro de réservation ou de commande. Nous vérifierons votre éligibilité et traiterons les remboursements approuvés sur votre moyen de paiement d'origine.",
+    "footerNote": "Dernière mise à jour : septembre 2026."
+  },
+  "CookiePolicy": {
+    "title": "Politique de cookies",
+    "subtitle": "Quels cookies et technologies similaires nous utilisons, et pourquoi.",
+    "whatAreCookiesHeading": "Que sont les cookies ?",
+    "whatAreCookiesBody": "Les cookies sont de petits fichiers texte stockés sur votre appareil lorsque vous visitez un site web. Ils peuvent être utilisés pour mémoriser vos préférences, vous maintenir connecté ou suivre votre activité sur différents sites.",
+    "analyticsHeading": "Analyse — Plausible",
+    "analyticsBody": "Nous utilisons Plausible Analytics pour comprendre comment les visiteurs utilisent ce site. Plausible est un outil d'analyse sans cookies : il n'utilise pas de cookies, ne collecte pas de données personnelles et ne suit pas les individus sur les sites web ou les appareils. Aucun cookie ni identifiant de suivi n'étant déposé, aucun consentement n'est requis à ce titre au regard du RGPD ou de la loi allemande TTDSG.",
+    "functionalHeading": "Cookies strictement nécessaires",
+    "functionalBody": "Un petit nombre de cookies est nécessaire au bon fonctionnement du site. Ceux-ci ne nécessitent pas de consentement au regard du RGPD/TTDSG car ils sont indispensables à la fourniture du service demandé.\n\n• Préférence de langue — mémorise dans laquelle de nos 4 langues vous naviguez sur le site.\n• Session admin — utilisée uniquement par l'administrateur du site pour rester connecté au panneau de gestion des réservations ; non déposée pour les visiteurs habituels.",
+    "paymentHeading": "Traitement des paiements — Stripe",
+    "paymentBody": "Lors d'un achat, vous êtes redirigé vers la page de paiement sécurisée hébergée par Stripe pour saisir vos informations de paiement. Stripe peut déposer ses propres cookies sur son propre domaine dans le cadre de ce processus — ceci est régi par les propres politiques de confidentialité et de cookies de Stripe, consultables sur stripe.com/privacy.",
+    "questionsHeading": "Questions",
+    "questionsBody": "Pour toute question concernant notre utilisation des cookies, contactez-nous à info@carraytutoring.com.",
+    "footerNote": "Dernière mise à jour : septembre 2026.",
+    "noticeBody": "Nous utilisons des analyses sans cookies et quelques cookies strictement nécessaires pour faire fonctionner ce site.",
+    "noticeLink": "En savoir plus",
+    "noticeDismiss": "Compris"
   }
 }
