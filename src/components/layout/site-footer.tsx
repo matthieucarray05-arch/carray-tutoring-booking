@@ -30,12 +30,12 @@ export function SiteFooter() {
           >
             {t("cookiePolicy")}
           </Link>
-          <a
-            href="mailto:info@carraytutoring.com"
+          <Link
+            href="/contact"
             className="font-medium text-foreground transition-colors hover:text-accent"
           >
             {t("contact")}
-          </a>
+          </Link>
         </div>
       </div>
     </footer>

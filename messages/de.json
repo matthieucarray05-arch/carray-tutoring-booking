@@ -254,5 +254,38 @@
     "noticeBody": "Wir verwenden cookie-freie Analysen und ein paar technisch notwendige Cookies, um diese Website zu betreiben.",
     "noticeLink": "Mehr erfahren",
     "noticeDismiss": "Verstanden"
+  },
+  "Contact": {
+    "title": "Kontakt",
+    "subtitle": "Hast du eine Frage? Schreib mir eine Nachricht, ich melde mich bald bei dir.",
+    "nameLabel": "Name",
+    "emailLabel": "E-Mail",
+    "messageLabel": "Nachricht",
+    "consentPrefix": "Ich akzeptiere die",
+    "consentLinkLabel": "Datenschutzerklärung",
+    "submitLabel": "Nachricht senden",
+    "submitLoading": "Wird gesendet…",
+    "formError": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
+    "confirmTitle": "Danke — ich melde mich bald bei dir!",
+    "confirmBody": "Deine Nachricht wurde gesendet. Ich antworte in der Regel innerhalb von ein bis zwei Tagen."
+  },
+  "Privacy": {
+    "title": "Datenschutzerklärung",
+    "subtitle": "Wie wir deine personenbezogenen Daten erheben, verwenden und schützen.",
+    "controllerHeading": "Verantwortlicher",
+    "controllerBody": "Verantwortlicher für diese Website ist der in unserem Impressum genannte Anbieter, das unsere vollständige rechtliche Identität und Kontaktdaten enthält.",
+    "collectionHeading": "Welche Daten wir erheben",
+    "collectionBody": "Je nachdem, wie du diese Website nutzt, erheben wir möglicherweise:\n\n• Kontaktformular: deinen Namen, deine E-Mail-Adresse und den Inhalt deiner Nachricht.\n• Buchung und Kauf: deinen Namen, deine E-Mail-Adresse, deine Telefonnummer und — bei Käufen mit Rechnung — Rechnungsdaten wie Firmenname und USt-IdNr.\n• Zahlung: wird vollständig von Stripe auf dessen sicherer Checkout-Seite abgewickelt; wir sehen oder speichern deine Kartendaten zu keinem Zeitpunkt selbst.\n• Nutzungsdaten: cookie-freie, aggregierte Analysen über Plausible (Details dazu in unserer Cookie-Richtlinie).",
+    "purposeHeading": "Warum wir sie verwenden",
+    "purposeBody": "Wir verwenden diese Daten, um auf deine Anfragen zu antworten, Buchungen und Zahlungen zu verarbeiten, die von dir erworbenen Lektionen oder Kurse bereitzustellen und zugehörige Bestätigungs- und Erinnerungs-E-Mails zu versenden. Wir verwenden deine Daten nicht für Werbezwecke und verkaufen sie nicht an Dritte.",
+    "thirdPartiesHeading": "Von uns genutzte Dienstleister",
+    "thirdPartiesBody": "Wir teilen Daten mit einer kleinen Anzahl von Auftragsverarbeitern, die für den Betrieb dieses Dienstes zwingend erforderlich sind: Stripe (Zahlungsabwicklung), Resend (Versand transaktionaler E-Mails), Plausible (cookie-freie Analysen) sowie unsere Hosting-/Datenbankanbieter. Jeder verarbeitet Daten in unserem Auftrag gemäß seiner eigenen Datenschutzerklärung und den geltenden Auftragsverarbeitungsvereinbarungen.",
+    "retentionHeading": "Wie lange wir deine Daten speichern",
+    "retentionBody": "Wir speichern Buchungs- und Kaufdaten so lange, wie es für die Erbringung des Dienstes sowie zur Erfüllung unserer rechtlichen und steuerlichen Pflichten erforderlich ist. Nachrichten aus dem Kontaktformular werden nur so lange gespeichert, wie es zur Bearbeitung deiner Anfrage nötig ist, sofern nicht aus rechtlichen Gründen eine längere Aufbewahrungsfrist gilt.",
+    "rightsHeading": "Deine Rechte",
+    "rightsBody": "Gemäß der DSGVO hast du das Recht auf Auskunft, Berichtigung oder Löschung deiner personenbezogenen Daten, auf Einschränkung oder Widerspruch gegen deren Verarbeitung sowie auf Erhalt deiner Daten in einem übertragbaren Format. Um eines dieser Rechte auszuüben, einschließlich der Löschung deiner Daten, kontaktiere uns über die unten angegebenen Kontaktdaten.",
+    "contactHeading": "Kontakt",
+    "contactBody": "Bei Fragen oder Anliegen zum Datenschutz, einschließlich der Löschung deiner Daten, schreib uns an info@carraytutoring.com.",
+    "footerNote": "Stand: September 2026."
   }
 }

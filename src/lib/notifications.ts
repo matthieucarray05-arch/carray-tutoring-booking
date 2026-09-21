@@ -371,3 +371,38 @@ export async function notifyBookingCancelled(details: {
     console.error("notifyBookingCancelled: failed to send admin alert email", err);
   }
 }
+
+/**
+ * Emailed to the admin when someone submits the /contact form. Reply-To is
+ * set to the sender's address so replying goes straight to them.
+ */
+export async function notifyContactMessage(details: {
+  name: string;
+  email: string;
+  message: string;
+}): Promise<void> {
+  const adminEmail = process.env.ADMIN_EMAIL;
+  const from = process.env.EMAIL_FROM;
+
+  const text = [`Name: ${details.name}`, `Email: ${details.email}`, "", details.message].join(
+    "\n",
+  );
+
+  if (!adminEmail || !from) {
+    console.warn("notifyContactMessage: ADMIN_EMAIL or EMAIL_FROM not set — logging instead.", text);
+    return;
+  }
+
+  try {
+    const resend = getResend();
+    await resend.emails.send({
+      from,
+      to: adminEmail,
+      replyTo: details.email,
+      subject: `New contact form message from ${details.name}`,
+      text,
+    });
+  } catch (err) {
+    console.error("notifyContactMessage: failed to send admin email", err);
+  }
+}

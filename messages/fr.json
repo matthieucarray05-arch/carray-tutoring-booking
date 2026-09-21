@@ -254,5 +254,38 @@
     "noticeBody": "Nous utilisons des analyses sans cookies et quelques cookies strictement nécessaires pour faire fonctionner ce site.",
     "noticeLink": "En savoir plus",
     "noticeDismiss": "Compris"
+  },
+  "Contact": {
+    "title": "Contact",
+    "subtitle": "Une question ? Envoyez-moi un message, je vous répondrai rapidement.",
+    "nameLabel": "Nom",
+    "emailLabel": "Email",
+    "messageLabel": "Message",
+    "consentPrefix": "J'accepte la",
+    "consentLinkLabel": "Politique de confidentialité",
+    "submitLabel": "Envoyer le message",
+    "submitLoading": "Envoi en cours…",
+    "formError": "Une erreur s'est produite. Merci de réessayer.",
+    "confirmTitle": "Merci — je vous répondrai bientôt !",
+    "confirmBody": "Votre message a été envoyé. Je réponds généralement sous un à deux jours."
+  },
+  "Privacy": {
+    "title": "Politique de confidentialité",
+    "subtitle": "Comment nous collectons, utilisons et protégeons vos données personnelles.",
+    "controllerHeading": "Responsable du traitement",
+    "controllerBody": "Le responsable du traitement de ce site est le prestataire mentionné dans nos Mentions légales, qui indique notre identité légale complète et nos coordonnées.",
+    "collectionHeading": "Quelles données nous collectons",
+    "collectionBody": "Selon votre utilisation du site, nous pouvons collecter :\n\n• Formulaire de contact : votre nom, votre adresse email et le contenu de votre message.\n• Réservation et achat : votre nom, votre adresse email, votre numéro de téléphone et — pour les achats facturés — des informations de facturation telles que la raison sociale et le numéro de TVA.\n• Paiement : entièrement géré par Stripe sur sa page de paiement sécurisée ; nous ne voyons ni ne conservons jamais vos données de carte bancaire.\n• Données d'utilisation : analyses agrégées et sans cookies via Plausible (voir notre Politique de cookies pour plus de détails).",
+    "purposeHeading": "Pourquoi nous les utilisons",
+    "purposeBody": "Nous utilisons ces données pour répondre à vos demandes, traiter les réservations et paiements, fournir les cours ou parcours que vous avez achetés, et envoyer les emails de confirmation et de rappel associés. Nous n'utilisons pas vos données à des fins publicitaires et ne les vendons pas à des tiers.",
+    "thirdPartiesHeading": "Prestataires que nous utilisons",
+    "thirdPartiesBody": "Nous partageons des données avec un nombre restreint de sous-traitants, strictement nécessaires au fonctionnement de ce service : Stripe (traitement des paiements), Resend (envoi d'emails transactionnels), Plausible (analyses sans cookies) et nos prestataires d'hébergement/de base de données. Chacun traite les données pour notre compte selon sa propre politique de confidentialité et les accords de traitement des données applicables.",
+    "retentionHeading": "Durée de conservation de vos données",
+    "retentionBody": "Nous conservons les données de réservation et d'achat aussi longtemps que nécessaire pour fournir le service et respecter nos obligations légales et fiscales. Les messages du formulaire de contact ne sont conservés que le temps nécessaire pour traiter votre demande, sauf durée de conservation plus longue exigée par la loi.",
+    "rightsHeading": "Vos droits",
+    "rightsBody": "Conformément au RGPD, vous disposez d'un droit d'accès, de rectification ou de suppression de vos données personnelles, ainsi que d'un droit de limitation ou d'opposition à leur traitement et de recevoir vos données dans un format portable. Pour exercer l'un de ces droits, y compris une demande de suppression de vos données, contactez-nous aux coordonnées ci-dessous.",
+    "contactHeading": "Contact",
+    "contactBody": "Pour toute question ou demande relative à la confidentialité, y compris la suppression de données, écrivez-nous à info@carraytutoring.com.",
+    "footerNote": "Dernière mise à jour : septembre 2026."
   }
 }

@@ -254,5 +254,38 @@
     "noticeBody": "We use cookie-free analytics and a couple of strictly necessary cookies to run this site.",
     "noticeLink": "Learn more",
     "noticeDismiss": "Got it"
+  },
+  "Contact": {
+    "title": "Contact",
+    "subtitle": "Have a question? Send a message and I'll get back to you soon.",
+    "nameLabel": "Name",
+    "emailLabel": "Email",
+    "messageLabel": "Message",
+    "consentPrefix": "I accept the",
+    "consentLinkLabel": "Privacy Policy",
+    "submitLabel": "Send message",
+    "submitLoading": "Sending…",
+    "formError": "Something went wrong. Please try again.",
+    "confirmTitle": "Thanks — I'll get back to you soon!",
+    "confirmBody": "Your message has been sent. I usually reply within a day or two."
+  },
+  "Privacy": {
+    "title": "Privacy Policy",
+    "subtitle": "How we collect, use, and protect your personal data.",
+    "controllerHeading": "Data controller",
+    "controllerBody": "The data controller for this website is the provider named in our Legal Notice (Impressum), which lists our full legal identity and contact details.",
+    "collectionHeading": "What data we collect",
+    "collectionBody": "Depending on how you use this site, we may collect:\n\n• Contact form: your name, email address, and the content of your message.\n• Booking and purchase: your name, email address, phone number, and — for invoiced purchases — billing details such as company name and VAT ID.\n• Payment: handled entirely by Stripe on its own secure checkout page; we never see or store your card details ourselves.\n• Usage data: cookie-free, aggregated analytics via Plausible (see our Cookie Policy for details).",
+    "purposeHeading": "Why we use it",
+    "purposeBody": "We use this data to respond to your enquiries, process bookings and payments, deliver the lessons or programs you've purchased, and send related confirmation and reminder emails. We do not use your data for advertising and we do not sell it to third parties.",
+    "thirdPartiesHeading": "Service providers we use",
+    "thirdPartiesBody": "We share data with a small number of processors strictly to run this service: Stripe (payment processing), Resend (transactional email delivery), Plausible (cookie-free analytics), and our hosting/database providers. Each processes data on our behalf under its own privacy policy and applicable data processing terms.",
+    "retentionHeading": "How long we keep your data",
+    "retentionBody": "We keep booking and purchase records for as long as needed to provide the service and to meet our legal and tax obligations. Contact form messages are kept only as long as needed to handle your enquiry, unless a longer retention period applies for legal reasons.",
+    "rightsHeading": "Your rights",
+    "rightsBody": "Under the GDPR, you have the right to access, correct, or request deletion of your personal data, to restrict or object to its processing, and to receive your data in a portable format. To exercise any of these rights, including requesting deletion of your data, contact us using the details below.",
+    "contactHeading": "Contact",
+    "contactBody": "For any privacy-related question or request, including data deletion, email us at info@carraytutoring.com.",
+    "footerNote": "Last updated: September 2026."
   }
 }
