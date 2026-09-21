@@ -257,7 +257,7 @@
   },
   "Contact": {
     "title": "Contact",
-    "subtitle": "Have a question? Send a message and I'll get back to you soon.",
+    "subtitle": "Have a question? Send us a message and we'll get back to you soon.",
     "nameLabel": "Name",
     "emailLabel": "Email",
     "messageLabel": "Message",
@@ -266,8 +266,8 @@
     "submitLabel": "Send message",
     "submitLoading": "Sending…",
     "formError": "Something went wrong. Please try again.",
-    "confirmTitle": "Thanks — I'll get back to you soon!",
-    "confirmBody": "Your message has been sent. I usually reply within a day or two."
+    "confirmTitle": "Thanks — we'll get back to you soon!",
+    "confirmBody": "Your message has been sent. We usually reply within a day or two."
   },
   "Privacy": {
     "title": "Privacy Policy",

@@ -257,7 +257,7 @@
   },
   "Contact": {
     "title": "Kontakt",
-    "subtitle": "Hast du eine Frage? Schreib mir eine Nachricht, ich melde mich bald bei dir.",
+    "subtitle": "Hast du eine Frage? Schreib uns eine Nachricht, wir melden uns bald bei dir.",
     "nameLabel": "Name",
     "emailLabel": "E-Mail",
     "messageLabel": "Nachricht",
@@ -266,8 +266,8 @@
     "submitLabel": "Nachricht senden",
     "submitLoading": "Wird gesendet…",
     "formError": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
-    "confirmTitle": "Danke — ich melde mich bald bei dir!",
-    "confirmBody": "Deine Nachricht wurde gesendet. Ich antworte in der Regel innerhalb von ein bis zwei Tagen."
+    "confirmTitle": "Danke — wir melden uns bald bei dir!",
+    "confirmBody": "Deine Nachricht wurde gesendet. Wir antworten in der Regel innerhalb von ein bis zwei Tagen."
   },
   "Privacy": {
     "title": "Datenschutzerklärung",

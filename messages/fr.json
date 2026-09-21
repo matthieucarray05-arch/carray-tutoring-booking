@@ -257,7 +257,7 @@
   },
   "Contact": {
     "title": "Contact",
-    "subtitle": "Une question ? Envoyez-moi un message, je vous répondrai rapidement.",
+    "subtitle": "Une question ? Envoyez-nous un message, nous vous répondrons rapidement.",
     "nameLabel": "Nom",
     "emailLabel": "Email",
     "messageLabel": "Message",
@@ -266,8 +266,8 @@
     "submitLabel": "Envoyer le message",
     "submitLoading": "Envoi en cours…",
     "formError": "Une erreur s'est produite. Merci de réessayer.",
-    "confirmTitle": "Merci — je vous répondrai bientôt !",
-    "confirmBody": "Votre message a été envoyé. Je réponds généralement sous un à deux jours."
+    "confirmTitle": "Merci — nous vous répondrons bientôt !",
+    "confirmBody": "Votre message a été envoyé. Nous répondons généralement sous un à deux jours."
   },
   "Privacy": {
     "title": "Politique de confidentialité",
