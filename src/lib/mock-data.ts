@@ -103,9 +103,9 @@ export const PROGRAMS: Program[] = [
   },
   {
     id: "fluency",
-    weeks: 26,
+    weeks: 24,
     lessonsPerWeek: 1,
-    totalLessons: 26,
+    totalLessons: 24,
     priceCents: 79900,
     currency: "EUR",
   },
