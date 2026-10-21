@@ -47,8 +47,6 @@ export default async function ImpressumPage({
         <p className={`mt-3 ${BODY_TEXT}`}>
           <span className="text-muted-foreground">{t("phoneLabel")}:</span> {CONTACT_PHONE}
         </p>
-        {/* TODO: swap in info@carraytutoring.de once that mailbox is active — update
-            emailValue in messages/{en,it,fr,de}.json (Impressum namespace) at the same time. */}
         <p className={BODY_TEXT}>
           <span className="text-muted-foreground">{t("emailLabel")}:</span> {t("emailValue")}
         </p>
