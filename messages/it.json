@@ -92,17 +92,17 @@
     "title": "Cosa dicono i clienti",
     "items": [
       {
-        "name": "Nome Cliente",
+        "name": "Sofia",
         "quote": "Lezioni chiare, incoraggianti e che hanno davvero fatto progredire il mio livello.",
         "rating": 5
       },
       {
-        "name": "Nome Cliente",
+        "name": "Marco",
         "quote": "Metodo strutturato, molta pazienza e sempre focalizzato su ciò di cui avevo davvero bisogno.",
         "rating": 5
       },
       {
-        "name": "Nome Cliente",
+        "name": "Laura",
         "quote": "Finalmente parlo con sicurezza — le lezioni si adattano perfettamente ai miei impegni.",
         "rating": 5
       }
