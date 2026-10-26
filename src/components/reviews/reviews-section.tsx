@@ -13,6 +13,7 @@ interface ReviewItem {
  * a real photo — see public/reviews/ for the image files. */
 const REVIEW_PHOTOS: Record<string, string> = {
   Kevin: "/reviews/kevin.jpg",
+  Timmy: "/reviews/timmy.jpg",
 };
 
 export async function ReviewsSection() {
