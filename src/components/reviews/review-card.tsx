@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { StarRating } from "./star-rating";
 
@@ -7,10 +8,12 @@ export function ReviewCard({
   name,
   quote,
   rating,
+  photo,
 }: {
   name: string;
   quote: string;
   rating: number;
+  photo?: string;
 }) {
   const initial = name.trim().charAt(0).toUpperCase();
 
@@ -25,9 +28,15 @@ export function ReviewCard({
         “{quote}”
       </p>
       <div className="mt-6 flex items-center gap-3">
-        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent-soft text-sm font-semibold text-accent">
-          {initial}
-        </span>
+        {photo ? (
+          <span className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full">
+            <Image src={photo} alt={name} fill sizes="36px" className="object-cover" />
+          </span>
+        ) : (
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent-soft text-sm font-semibold text-accent">
+            {initial}
+          </span>
+        )}
         <span className="text-sm font-medium">{name}</span>
       </div>
     </motion.div>
