@@ -29,11 +29,11 @@ export function ReviewCard({
       </p>
       <div className="mt-6 flex items-center gap-3">
         {photo ? (
-          <span className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full">
-            <Image src={photo} alt={name} fill sizes="36px" className="object-cover" />
+          <span className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full">
+            <Image src={photo} alt={name} fill sizes="44px" className="object-cover" />
           </span>
         ) : (
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent-soft text-sm font-semibold text-accent">
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent-soft text-sm font-semibold text-accent">
             {initial}
           </span>
         )}
